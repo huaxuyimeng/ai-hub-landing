@@ -39,8 +39,20 @@ const MD = join(SCRIPTS, 'brief-to-md.mjs')
 // ai-news-kit/data 的 Vercel 替身（/tmp/aihub/data）
 const DATA_DIR = process.env.AIHUB_DATA_DIR || join(TMP_ROOT, 'data')
 
-// 产物路径由 pathsFor() 统一管理，指向 ${cwd}/AI日报_${date}/...（与 build-pptx.mjs 默认一致）
+// ⚠ Vercel Function 的 /var/task 是只读，build-pptx 默认写 ${cwd}/AI日报_${date}/...
+// 所以我们把所有产物路径都转到 /tmp/aihub/out
+const OUT_DIR = join(TMP_ROOT, 'out')
 
+// 启动时确保 /tmp/aihub 及子目录可写
+import { mkdirSync } from 'node:fs'
+try {
+  mkdirSync(DATA_DIR, { recursive: true })
+  mkdirSync(OUT_DIR, { recursive: true })
+} catch (e) {
+  console.error('[kit.js] mkdir /tmp/aihub 失败：', e.message)
+}
+
+// 产物路径由 pathsFor() 统一管理，全部指向 /tmp/aihub（Vercel /tmp 可写）
 const KIT_VERSION = (() => {
   try {
     return JSON.parse(readFileSync(join(KIT_ROOT, 'package.json'), 'utf8')).version
@@ -70,14 +82,14 @@ function today() {
 }
 const isDate = (s) => typeof s === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(s)
 
-// ============== 产物路径（与 build-pptx.mjs / brief-to-md.mjs 默认输出一致） ==============
-// build-pptx 默认：${cwd}/AI日报_${date}/AI日报_${date}[_机器草稿].pptx
-// brief-to-md 默认：${cwd}/AI新闻推送_${date}[_机器草稿].md
-// cwd = ai-hub-landing/（kit.js spawn 时 cwd=KIT_ROOT）
+// ============== 产物路径（全部指向 /tmp/aihub，Vercel 上 /tmp 可写） ==============
+// 本地：默认也走 TMP_ROOT（AIHUB_TMP=D:\...\ai-news-kit\）→ 不污染 ai-hub-landing/ 根
+// 之前默认 join(KIT_ROOT, '..', ...) 在 Vercel 上写 /var/task（只读），会导致 build-pptx 失败。
 function pathsFor(date, draft) {
+  const tag = draft ? '_机器草稿' : ''
   return {
-    pptx: join(KIT_ROOT, '..', `AI日报_${date}`, draft ? `AI日报_${date}_机器草稿.pptx` : `AI日报_${date}.pptx`),
-    md: join(KIT_ROOT, '..', draft ? `AI新闻推送_${date}_机器草稿.md` : `AI新闻推送_${date}.md`),
+    pptx: join(OUT_DIR, `AI日报_${date}${tag}.pptx`),
+    md: join(OUT_DIR, `AI新闻推送_${date}${tag}.md`),
     brief: join(DATA_DIR, date, 'brief.json'),
     draftBrief: join(DATA_DIR, date, 'brief.draft.json'),
     news: join(DATA_DIR, date, 'news.json'),
@@ -260,8 +272,9 @@ async function execute(job) {
   // --- ④ 渲染 ---
   job.phase = '渲染 PPTX…'
   step(job, 'render').status = 'running'
-  // 不传 --out：build-pptx.mjs 默认写到 ${cwd}/../AI日报_${date}/（无空格 bug）
-  const rb = await run([BUILD, '--brief', briefFile])
+  // 显式传 --out 写到 OUT_DIR（/tmp/aihub/out）—— build-pptx.mjs 默认写 ${cwd}/...，
+  // 在 Vercel 上 ${cwd} = /var/task（只读），会导致渲染失败。
+  const rb = await run([BUILD, '--brief', briefFile, '--out', OUT_DIR])
   step(job, 'render').ms = rb.ms
   if (rb.code !== 0) return fail(job, 'render', rb)
   const pagesM = /页数：(\d+)/.exec(rb.out)
