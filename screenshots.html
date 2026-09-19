@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light" />
+  <title>AIHub · 真实运行截图</title>
+  <meta name="description" content="AIHub 四大核心模块的真实运行截图：34 源新闻聚合、314 模型性价比排行、7 位 UP 主追踪、每日自动早报 PPT。全部来自本地 dev / Vercel 部署环境。" />
+  <meta name="author" content="AIHub" />
+  <meta name="theme-color" content="#ffffff" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="zh_CN" />
+  <meta property="og:title" content="AIHub · 真实运行截图" />
+  <meta property="og:description" content="四大核心模块实际运行截图，不是设计稿。" />
+  <meta property="og:image" content="assets/og/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="AIHub · AI 行业情报，一个工作台全部搞定" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Crect width='28' height='28' rx='8' fill='%23BE123C'/%3E%3Ctext x='14' y='19' text-anchor='middle' font-family='Arial' font-size='13' font-weight='700' fill='white'%3EAI%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="assets/css/tokens.css?v=20260913c" />
+  <link rel="stylesheet" href="assets/css/base.css?v=20260913c" />
+  <link rel="stylesheet" href="assets/css/aurora.css?v=20260913c" />
+  <link rel="stylesheet" href="assets/css/components.css?v=20260913c" />
+  <link rel="stylesheet" href="assets/css/pages.css?v=20260913c" />
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主内容</a>
+
+  <header class="nav">
+    <div class="container nav__inner">
+      <a class="nav__brand" href="index.html" aria-label="AIHub 首页">
+        <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true">
+          <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#BE123C"/><stop offset="0.35" stop-color="#C2410C"/><stop offset="0.65" stop-color="#B45309"/><stop offset="1" stop-color="#047857"/></linearGradient></defs>
+          <rect width="28" height="28" rx="8" fill="url(#lg)"/>
+          <text x="14" y="19" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#fff">AI</text>
+        </svg>
+        AIHub
+      </a>
+      <nav class="nav__links" aria-label="主导航">
+        <a class="nav__link" href="index.html">首页</a>
+        <a class="nav__link" href="features.html">功能</a>
+        <a class="nav__link" href="briefing.html">每日早报</a>
+        <a class="nav__link" href="screenshots.html" aria-current="page">截图</a>
+        <a class="nav__link" href="architecture.html">架构</a>
+        <a class="nav__link" href="security.html">安全合规</a>
+        <a class="nav__link" href="roadmap.html">路线图</a>
+        <a class="nav__link" href="faq.html">常见问题</a>
+      </nav>
+      <div class="nav__actions">
+        <a class="btn btn--primary btn--sm" href="features.html">看功能详解</a>
+      </div>
+      <button class="nav__toggle" aria-label="打开导航菜单" aria-expanded="false" aria-controls="nav-drawer">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="nav__drawer" id="nav-drawer">
+      <nav aria-label="移动端导航">
+        <a class="nav__link" href="index.html">首页</a>
+        <a class="nav__link" href="features.html">功能</a>
+        <a class="nav__link" href="briefing.html">每日早报</a>
+        <a class="nav__link" href="screenshots.html" aria-current="page">截图</a>
+        <a class="nav__link" href="architecture.html">架构</a>
+        <a class="nav__link" href="security.html">安全合规</a>
+        <a class="nav__link" href="roadmap.html">路线图</a>
+        <a class="nav__link" href="faq.html">常见问题</a>
+      </nav>
+      <div class="nav__drawer-actions">
+        <a class="btn btn--primary btn--block" href="features.html">看功能详解</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- S1 Hero -->
+    <section class="hero" id="hero">
+      <div class="container hero__inner">
+        <div class="hero__copy">
+          <span class="tag">Screenshots · 真实生产环境</span>
+          <h1 class="hero__title">看实际跑起来的样子。</h1>
+          <p class="hero__lead">以下截图全部来自本地 dev 与 Vercel 部署的真实运行环境，不是设计稿。</p>
+          <div class="hero__cta">
+            <a class="btn btn--primary" href="#gallery">看四大模块</a>
+            <a class="btn btn--secondary" href="features.html">看功能拆解</a>
+          </div>
+        </div>
+        <div class="hero__media">
+          <div class="window">
+            <div class="window__bar">
+              <span class="window__dot"></span><span class="window__dot"></span><span class="window__dot"></span>
+              <span class="window__addr">aihub.app/news</span>
+            </div>
+            <div class="window__body window__body--flush">
+              <img class="window__img" src="assets/screenshots/04-briefing.png" srcset="assets/screenshots/04-briefing-720.png 720w, assets/screenshots/04-briefing.png 1440w" sizes="(max-width: 768px) 92vw, 620px" alt="AIHub 早报面板运行截图：生成今日早报按钮与最近 5 天历史早报列表" width="1440" height="900" fetchpriority="high" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- S2 截图画廊 -->
+    <section class="section" id="gallery">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="section__eyebrow">六大模块</span>
+          <h2 class="section__title">六大模块，实际运行截图。</h2>
+          <p class="section__lead">截图内的一切数据——新闻条目、模型价格、UP 主列表、会话记录、清理任务——都是系统真实抓取与计算的结果。</p>
+        </div>
+        <div class="grid grid--2" data-stagger="90">
+          <figure class="shot reveal">
+            <div class="shot__frame">
+              <div class="shot__bar"><span></span><span></span><span></span><span class="shot__url">aihub.app/news</span></div>
+              <img class="shot__img" src="assets/screenshots/01-news.png" srcset="assets/screenshots/01-news-720.png 720w, assets/screenshots/01-news.png 2880w" sizes="(max-width: 768px) 92vw, 560px" alt="AI 新闻聚合页：今日快讯列表，每条新闻带来源标签与发布时间" width="2880" height="1800" loading="lazy" />
+            </div>
+            <figcaption class="shot__body">
+              <div>
+                <div class="shot__title">01 · AI 新闻聚合</div>
+                <div class="shot__desc">34 个数据源统一聚合 + A/B/C/D 置信度分级 + 实体去重，真实抓取于 2026-09-10。</div>
+              </div>
+              <span class="shot__tag">/news</span>
+            </figcaption>
+          </figure>
+
+          <figure class="shot reveal">
+            <div class="shot__frame">
+              <div class="shot__bar"><span></span><span></span><span></span><span class="shot__url">aihub.app/rankings</span></div>
+              <img class="shot__img" src="assets/screenshots/02-rankings.png" srcset="assets/screenshots/02-rankings-720.png 720w, assets/screenshots/02-rankings.png 2880w" sizes="(max-width: 768px) 92vw, 560px" alt="AI 模型性价比排行页：Top3 领奖台与能力-价格帕累托散点图" width="2880" height="1800" loading="lazy" />
+            </div>
+            <figcaption class="shot__body">
+              <div>
+                <div class="shot__title">02 · AI 模型性价比排行</div>
+                <div class="shot__desc">314 个模型入库 · 15 家厂商 · 已验证 35 个 · 均价 $0.50/M，帕累托前沿一眼看清。</div>
+              </div>
+              <span class="shot__tag">/rankings</span>
+            </figcaption>
+          </figure>
+
+          <figure class="shot reveal">
+            <div class="shot__frame">
+              <div class="shot__bar"><span></span><span></span><span></span><span class="shot__url">aihub.app/news · B 站资讯</span></div>
+              <img class="shot__img" src="assets/screenshots/03-bilibili.png" srcset="assets/screenshots/03-bilibili-720.png 720w, assets/screenshots/03-bilibili.png 1440w" sizes="(max-width: 768px) 92vw, 560px" alt="B 站 UP 主追踪：7 位 UP 主的订阅列表与视频资讯统计" width="1440" height="900" loading="lazy" />
+            </div>
+            <figcaption class="shot__body">
+              <div>
+                <div class="shot__title">03 · B 站 UP 主追踪</div>
+                <div class="shot__desc">7 位 UP 主 · 15 条视频 · 27 条资讯，wbi 签名 + 写保护合并稳定抓取。</div>
+              </div>
+              <span class="shot__tag">/news · B站资讯</span>
+            </figcaption>
+          </figure>
+
+          <figure class="shot reveal">
+            <div class="shot__frame">
+              <div class="shot__bar"><span></span><span></span><span></span><span class="shot__url">aihub.app/news · AI 早报</span></div>
+              <img class="shot__img" src="assets/screenshots/04-briefing.png" srcset="assets/screenshots/04-briefing-720.png 720w, assets/screenshots/04-briefing.png 1440w" sizes="(max-width: 768px) 92vw, 560px" alt="AI 早报面板：生成今日早报按钮与最近 5 天的历史早报列表" width="1440" height="900" loading="lazy" />
+            </div>
+            <figcaption class="shot__body">
+              <div>
+                <div class="shot__title">04 · AI 早报 PPT</div>
+                <div class="shot__desc">每天早 7 点（北京时间）自动生成 11 页研究报告，历史早报随时回看下载。</div>
+              </div>
+              <span class="shot__tag">/news · AI早报</span>
+            </figcaption>
+          </figure>
+
+          <figure class="shot reveal">
+            <div class="shot__frame">
+              <div class="shot__bar"><span></span><span></span><span></span><span class="shot__url">aihub.app/chat</span></div>
+              <img class="shot__img" src="assets/screenshots/05-chat.png" srcset="assets/screenshots/05-chat-720.png 720w, assets/screenshots/05-chat.png 2880w" sizes="(max-width: 768px) 92vw, 560px" alt="AI 对话面板：左侧会话时间分组列表、主区对话流与模型选择" width="2880" height="1800" loading="lazy" />
+            </div>
+            <figcaption class="shot__body">
+              <div>
+                <div class="shot__title">05 · AI 对话</div>
+                <div class="shot__desc">多 Provider 路由 · Key 三级解析（租户自带 → 系统默认 → 一次性）· 会话侧栏按时间分组。</div>
+              </div>
+              <span class="shot__tag">/chat</span>
+            </figcaption>
+          </figure>
+
+          <figure class="shot reveal">
+            <div class="shot__frame">
+              <div class="shot__bar"><span></span><span></span><span></span><span class="shot__url">aihub.app/cleanup</span></div>
+              <img class="shot__img" src="assets/screenshots/06-cleanup.png" srcset="assets/screenshots/06-cleanup-720.png 720w, assets/screenshots/06-cleanup.png 2880w" sizes="(max-width: 768px) 92vw, 560px" alt="清理中心：扫描 / 处理 / 报告三视图与回滚入口" width="2880" height="1800" loading="lazy" />
+            </div>
+            <figcaption class="shot__body">
+              <div>
+                <div class="shot__title">06 · 清理中心</div>
+                <div class="shot__desc">重复 / 空值 / 孤儿扫描 · 智能合并 · 一键回滚 · 扫描 / 处理 / 报告三视图分离。</div>
+              </div>
+              <span class="shot__tag">/cleanup</span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- S3 早报 6 主题预览 -->
+    <section class="section" id="themes">
+      <div class="container split split--57">
+        <div class="split__body">
+          <span class="section__eyebrow">AI 早报 · 6 套主题</span>
+          <h2>每天 11 页，6 套主题换着看</h2>
+          <div class="split__list">
+            <div class="split__item">
+              <h3>每天早 7 点（北京时间）自动生成</h3>
+              <p>Vercel Cron 定时触发，自动采集当日新闻成稿，无需人工。</p>
+            </div>
+            <div class="split__item">
+              <h3>11 页三幕研究报告结构</h3>
+              <p>今日速览 → 深度分析 → 行动建议，研究报告风格排版，可直接汇报。</p>
+            </div>
+            <div class="split__item">
+              <h3>6 套可切换主题</h3>
+              <p>不同视觉风格一键切换，支持历史早报回看与 PPTX 一键下载。</p>
+            </div>
+          </div>
+          <div class="tags mt-3">
+            <span class="chip">11 页</span><span class="chip">三幕叙事</span><span class="chip">6 套主题</span><span class="chip">北京 7:00</span><span class="chip">PPTX 下载</span>
+          </div>
+        </div>
+        <div class="split__media">
+          <figure class="shot">
+            <div class="shot__frame">
+              <div class="shot__bar"><span></span><span></span><span></span><span class="shot__url">aihub.app/news</span></div>
+              <img class="shot__img" src="assets/screenshots/04-briefing.png" srcset="assets/screenshots/04-briefing-720.png 720w, assets/screenshots/04-briefing.png 1440w" sizes="(max-width: 768px) 92vw, 560px" alt="AI 早报面板：生成今日早报按钮与最近历史早报列表，支持 6 套主题切换" width="1440" height="900" loading="lazy" />
+            </div>
+            <figcaption class="shot__body">
+              <div><div class="shot__title">04 · AI 早报 PPT</div><div class="shot__desc">每天早 7 点自动生成 · 历史回看 · 一键下载 PPTX（真实运行截图）。</div></div>
+              <span class="shot__tag">/news · AI早报</span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- S4 如何自己生成截图 -->
+    <section class="section section--subtle" id="capture">
+      <div class="container container--reading">
+        <div class="section__head reveal">
+          <span class="section__eyebrow">How to Capture</span>
+          <h2 class="section__title">想自己生成一套截图？</h2>
+        </div>
+        <div class="code reveal" role="group" aria-label="截图生成命令">
+          <div class="code__bar">
+            <span class="code__lang">bash</span>
+            <button class="code__copy" type="button" aria-live="polite">复制</button>
+          </div>
+          <pre><code><span class="tok-com"># 1. 启动开发服务器</span>
+$ pnpm dev
+
+<span class="tok-com"># 2. 跑 Playwright 截图脚本（自动登录 + 访问模块页）</span>
+$ node scripts/screenshot-landing.js
+  <span class="tok-key">→</span> 输出到 <span class="tok-str">landing/assets/screenshots/</span>
+
+<span class="tok-com"># 3. 刷新本页即可看到最新截图</span></code></pre>
+        </div>
+        <p class="diagram-note">截图脚本与站点解耦：dev server 跑起来后随时可以重新生成，画廊数据永远与真实环境一致。</p>
+      </div>
+    </section>
+
+    <!-- S4 CTA -->
+    <section class="section" id="cta">
+      <div class="container">
+        <div class="cta reveal">
+          <h2 class="cta__title">截图只是证据，功能才是本体</h2>
+          <p class="cta__text">每一个像素背后的抓取、去重、算法与渲染管线，都有完整的架构文档。</p>
+          <div class="cta__actions">
+            <a class="btn btn--light" href="features.html">看功能拆解</a>
+            <a class="btn btn--secondary" href="architecture.html#diagram">看技术架构</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brandcol">
+          <div class="footer__brand">
+            <svg width="24" height="24" viewBox="0 0 28 28" aria-hidden="true">
+              <defs><linearGradient id="lgf" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#BE123C"/><stop offset="0.35" stop-color="#C2410C"/><stop offset="0.65" stop-color="#B45309"/><stop offset="1" stop-color="#047857"/></linearGradient></defs>
+              <rect width="28" height="28" rx="8" fill="url(#lgf)"/>
+              <text x="14" y="19" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#fff">AI</text>
+            </svg>
+            AIHub
+          </div>
+          <p class="footer__desc">AI 行业信息聚合与决策辅助平台，把分散的情报收拢成一个可操作的工作台。</p>
+        </div>
+        <div class="footer__col">
+          <h3>产品</h3>
+          <ul>
+            <li><a href="features.html#news">四大模块</a></li>
+            <li><a href="screenshots.html">真实截图</a></li>
+            <li><a href="architecture.html">技术架构</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h3>资源</h3>
+          <ul>
+            <li><span class="footer__soon">在线 Demo<em>即将开放</em></span></li>
+            <li><span class="footer__soon">GitHub 仓库<em>整理后公开</em></span></li>
+            <li><a href="roadmap.html">路线图</a></li>
+            <li><a href="faq.html">常见问题</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h3>关于</h3>
+          <ul>
+            <li><a href="faq.html#product">项目背景（毕业设计 MVP）</a></li>
+            <li><a href="security.html">安全合规</a></li>
+            <li><a href="roadmap.html#shipped">工程亮点</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>© 2026 AIHub · Built with Next.js &amp; Vercel · 浅色主题</span>
+        <span class="footer__clock" aria-hidden="true">UTC+8 <span data-clock>00:00:00</span></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js?v=20260913c"></script>
+</body>
+</html>

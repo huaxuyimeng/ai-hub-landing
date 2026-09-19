@@ -1,0 +1,22 @@
+ai-news-kit 渲染回归测试
+运行时间：2026-09-15T16:48:44.858Z（本地 2026/9/16 00:48:44）
+Node：v22.22.2  fixture：tests/brief.sample.json
+--------------------------------------------------------
+  OK   正常用例 exit 0
+  OK   产出 pptx 文件
+  OK   文件大小 > 40KB
+  OK   页数 == picks+7（12）
+  OK   背景图 == 页数（12）
+  OK   图表 == 6 个
+  OK   无非法负 cx/cy
+  OK   缺 charts 仍 exit 0（降级不阻断）
+  OK   缺 charts 时明确告警
+  OK   缺 charts 页数 == picks+5（10）
+  OK   超长内容 exit 1（fail-fast）
+  OK   溢出时不产出文件
+  OK   报错列出溢出位置
+  OK   brief 不存在 exit 2
+  OK   validate-brief 对 fixture exit 0
+  OK   validate-brief 抓到「标A但源不足」
+  OK   validate-brief 提示空话 why
+PASS：17 passed, 0 failed

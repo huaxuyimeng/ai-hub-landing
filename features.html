@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light" />
+  <title>AIHub · 功能详解：六大模块，一套工作台</title>
+  <meta name="description" content="AIHub 六大模块逐模块拆解（含真实运行截图）：AI 新闻聚合（34 源）、AI 模型排行（帕累托前沿）、B 站追踪、AI 早报 PPT、AI 对话（多 Provider）、清理中心。" />
+  <meta name="author" content="AIHub" />
+  <meta name="theme-color" content="#ffffff" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="zh_CN" />
+  <meta property="og:title" content="AIHub · 功能详解" />
+  <meta property="og:description" content="四大核心模块 + 平台基座逐模块拆解：聚合、排行、追踪、自动早报。" />
+  <meta property="og:image" content="assets/og/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="AIHub · AI 行业情报，一个工作台全部搞定" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Crect width='28' height='28' rx='8' fill='%23BE123C'/%3E%3Ctext x='14' y='19' text-anchor='middle' font-family='Arial' font-size='13' font-weight='700' fill='white'%3EAI%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="assets/css/tokens.css?v=20260913c" />
+  <link rel="stylesheet" href="assets/css/base.css?v=20260913c" />
+  <link rel="stylesheet" href="assets/css/aurora.css?v=20260913c" />
+  <link rel="stylesheet" href="assets/css/components.css?v=20260913c" />
+  <link rel="stylesheet" href="assets/css/pages.css?v=20260913c" />
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主内容</a>
+
+  <header class="nav">
+    <div class="container nav__inner">
+      <a class="nav__brand" href="index.html" aria-label="AIHub 首页">
+        <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true">
+          <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#BE123C"/><stop offset="0.35" stop-color="#C2410C"/><stop offset="0.65" stop-color="#B45309"/><stop offset="1" stop-color="#047857"/></linearGradient></defs>
+          <rect width="28" height="28" rx="8" fill="url(#lg)"/>
+          <text x="14" y="19" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#fff">AI</text>
+        </svg>
+        AIHub
+      </a>
+      <nav class="nav__links" aria-label="主导航">
+        <a class="nav__link" href="index.html">首页</a>
+        <a class="nav__link" href="features.html" aria-current="page">功能</a>
+        <a class="nav__link" href="briefing.html">每日早报</a>
+        <a class="nav__link" href="screenshots.html">截图</a>
+        <a class="nav__link" href="architecture.html">架构</a>
+        <a class="nav__link" href="security.html">安全合规</a>
+        <a class="nav__link" href="roadmap.html">路线图</a>
+        <a class="nav__link" href="faq.html">常见问题</a>
+      </nav>
+      <div class="nav__actions">
+        <a class="btn btn--primary btn--sm" href="screenshots.html">看真实截图</a>
+      </div>
+      <button class="nav__toggle" aria-label="打开导航菜单" aria-expanded="false" aria-controls="nav-drawer">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="nav__drawer" id="nav-drawer">
+      <nav aria-label="移动端导航">
+        <a class="nav__link" href="index.html">首页</a>
+        <a class="nav__link" href="features.html" aria-current="page">功能</a>
+        <a class="nav__link" href="briefing.html">每日早报</a>
+        <a class="nav__link" href="screenshots.html">截图</a>
+        <a class="nav__link" href="architecture.html">架构</a>
+        <a class="nav__link" href="security.html">安全合规</a>
+        <a class="nav__link" href="roadmap.html">路线图</a>
+        <a class="nav__link" href="faq.html">常见问题</a>
+      </nav>
+      <div class="nav__drawer-actions">
+        <a class="btn btn--primary btn--block" href="screenshots.html">看真实截图</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- S1 Hero -->
+    <section class="hero" id="hero">
+      <div class="container hero__inner">
+        <div class="hero__copy">
+          <span class="tag">功能详解</span>
+          <h1 class="hero__title">四个模块，一台机器。</h1>
+          <p class="hero__lead">每个模块都是完整的子产品，又能彼此协同。以下截图全部来自真实运行环境。</p>
+          <div class="hero__cta">
+            <a class="btn btn--primary" href="#news">看模块拆解</a>
+            <a class="btn btn--secondary" href="screenshots.html">直达截图画廊</a>
+          </div>
+        </div>
+        <div class="hero__media">
+          <div class="window">
+            <div class="window__bar">
+              <span class="window__dot"></span><span class="window__dot"></span><span class="window__dot"></span>
+              <span class="window__addr">aihub.app/news</span>
+            </div>
+            <div class="window__body window__body--flush">
+              <img class="window__img" src="assets/screenshots/01-news.png" srcset="assets/screenshots/01-news-720.png 720w, assets/screenshots/01-news.png 2880w" sizes="(max-width: 768px) 92vw, 620px" alt="AIHub 新闻聚合页运行截图：今日快讯列表带来源标签、发布时间与置信度分级" width="2880" height="1800" fetchpriority="high" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- S2 模块一：AI 新闻聚合 -->
+    <section class="section" id="news">
+      <div class="container split">
+        <div class="split__body">
+          <div class="card__num">MODULE 01 — 34 SOURCES</div>
+          <h2>AI 新闻聚合 — 多源抓取，去重分流</h2>
+          <div class="split__list">
+            <div class="split__item">
+              <h3>34 个启用数据源</h3>
+              <p>RSS / API / HTML 三型接入：量子位、InfoQ、Hacker News、The Verge 等 8 路解析器统一处理。</p>
+            </div>
+            <div class="split__item">
+              <h3>A/B/C/D 四档置信度</h3>
+              <p>多源交叉验证自动分级：A 极高（≥3 独立信源）到 D 存疑（多转载同源），噪声自动沉底。</p>
+            </div>
+            <div class="split__item">
+              <h3>智能检索 + 日期诚信</h3>
+              <p>LLM 意图搜索（失败自动降级字面检索）；日期多级回退，绝不用抓取时间冒充发布时间。</p>
+            </div>
+          </div>
+        </div>
+        <div class="split__media">
+          <figure class="shot">
+            <div class="shot__frame">
+              <div class="shot__bar"><span></span><span></span><span></span><span class="shot__url">aihub.app/news</span></div>
+              <img class="shot__img" src="assets/screenshots/01-news.png" srcset="assets/screenshots/01-news-720.png 720w, assets/screenshots/01-news.png 2880w" sizes="(max-width: 768px) 92vw, 560px" alt="AI 新闻聚合页真实截图：今日快讯列表含来源标签与发布时间" width="2880" height="1800" loading="lazy" />
+            </div>
+            <figcaption class="shot__body">
+              <div>
+                <div class="shot__title">AI 新闻聚合</div>
+                <div class="shot__desc">34 源聚合 + A/B/C/D 置信度分级 + 意图搜索（真实运行截图）</div>
+              </div>
+              <span class="shot__tag">/news</span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- S3 模块二：AI 模型性价比排行（真实 Top3 数据 + 帕累托算法） -->
+    <section class="section section--subtle" id="ranking">
+      <div class="container split split--57 split--reverse">
+        <div class="split__body">
+          <div class="card__num">MODULE 02 — PARETO FRONTIER</div>
+          <h2>模型性价比排行 — 用算法替你做选择</h2>
+
+          <!-- 真实 Top3 领奖台 -->
+          <div class="top3-podium">
+            <div class="top3-podium__item top3-podium__item--gold">
+              <span class="top3-podium__medal"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="currentColor" opacity="0.12"/><circle cx="12" cy="12" r="9.2" stroke="currentColor" stroke-width="1.4"/><text x="12" y="15.6" text-anchor="middle" font-size="10.5" font-weight="700" fill="currentColor" font-family="sans-serif">1</text></svg></span>
+              <span class="top3-podium__rank">#1 冠军</span>
+              <span class="top3-podium__model">MiniMax M3</span>
+              <span class="top3-podium__provider">MiniMax</span>
+              <span class="top3-podium__score">综合得分 100.0</span>
+              <span class="top3-podium__price">输入价 $0.30 /M · 能力分 92</span>
+            </div>
+            <div class="top3-podium__item top3-podium__item--silver">
+              <span class="top3-podium__medal"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="currentColor" opacity="0.12"/><circle cx="12" cy="12" r="9.2" stroke="currentColor" stroke-width="1.4"/><text x="12" y="15.6" text-anchor="middle" font-size="10.5" font-weight="700" fill="currentColor" font-family="sans-serif">2</text></svg></span>
+              <span class="top3-podium__rank">#2 亚军</span>
+              <span class="top3-podium__model">DEEPSEEK v4</span>
+              <span class="top3-podium__provider">DeepSeek</span>
+              <span class="top3-podium__score">综合得分 74.8</span>
+              <span class="top3-podium__price">输入价 $0.14 /M · 能力分 80</span>
+            </div>
+            <div class="top3-podium__item top3-podium__item--bronze">
+              <span class="top3-podium__medal"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="currentColor" opacity="0.12"/><circle cx="12" cy="12" r="9.2" stroke="currentColor" stroke-width="1.4"/><text x="12" y="15.6" text-anchor="middle" font-size="10.5" font-weight="700" fill="currentColor" font-family="sans-serif">3</text></svg></span>
+              <span class="top3-podium__rank">#3 季军</span>
+              <span class="top3-podium__model">Deepseek V3.1</span>
+              <span class="top3-podium__provider">DeepSeek</span>
+              <span class="top3-podium__score">综合得分 52.5</span>
+              <span class="top3-podium__price">输入价 $0.14 /M · 能力分 78</span>
+            </div>
+          </div>
+
+          <div class="split__list">
+            <div class="split__item">
+              <h3>314 个模型 · 15 家厂商 · 均价 $0.50/M</h3>
+              <p>帕累托前沿算法 = f(能力分, 速度, 混合价)，能力分 ≥ 25 参排，不够格自动排除。</p>
+            </div>
+            <div class="split__item">
+              <h3>价格走势 + 新闻关联</h3>
+              <p>每日快照记录价格历史；新闻实体自动关联相关模型，动态异动提醒。</p>
+            </div>
+          </div>
+
+          <!-- 算法说明卡 -->
+          <div class="algo-card">
+            <div class="algo-card__header">
+              <span class="algo-card__tag">算法公式</span>
+              <span class="algo-card__name">性价比分 = f(能力) × 速度<sup>0.8</sup> ÷ 混合价</span>
+            </div>
+            <div class="algo-card__body">
+              <div class="algo-card__formula">混合价 = 0.7 × 输入价 + 0.3 × 输出价</div>
+              <div class="algo-card__fn">f(x) = { (μ+(x−μ)²)² , x ≥ μ ; (μ−(μ−x)²)² , x &lt; μ }</div>
+              <div class="algo-card__note">其中 μ = 55.9（参排模型能力均分），能力分 &lt; 25 不参排，8 个单测覆盖 · <a href="#aa-ranking">第三方实时榜单（Artificial Analysis）见下方 ↓</a></div>
+            </div>
+          </div>
+        </div>
+        <div class="split__media">
+          <figure class="shot">
+            <div class="shot__frame">
+              <div class="shot__bar"><span></span><span></span><span></span><span class="shot__url">aihub.app/rankings</span></div>
+              <img class="shot__img" src="assets/screenshots/02-rankings.png" srcset="assets/screenshots/02-rankings-720.png 720w, assets/screenshots/02-rankings.png 2880w" sizes="(max-width: 768px) 92vw, 560px" alt="AI 模型性价比排行页真实截图：Top3 领奖台与能力-价格帕累托散点图" width="2880" height="1800" loading="lazy" />
+            </div>
+            <figcaption class="shot__body">
+              <div>
+                <div class="shot__title">AI 模型性价比排行</div>
+                <div class="shot__desc">帕累托前沿可视化 · Top3 领奖台 · 价格走势（真实运行截图）</div>
+              </div>
+              <span class="shot__tag">/rankings</span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- S3b Artificial Analysis 实时榜单（数据抓取自 AA 首页的公开结构化数据，图为本站自绘） -->
+    <!-- 为什么不放 MODULE 02 里：那一节讲的是 AIHub 自己的帕累托算法与自家数据，
+         两套口径并排会互相打架；单独一节并写明来源，才符合「可信」这条产品主张 -->
+    <section class="section" id="aa-ranking">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="section__eyebrow">实时榜单 · THIRD-PARTY DATA</span>
+          <h2 class="section__title">Artificial Analysis · 今日模型排行</h2>
+          <p class="section__lead">
+            数据抓取自 <a href="https://artificialanalysis.ai/zh" target="_blank" rel="noopener noreferrer">Artificial Analysis</a>
+            首页的公开结构化数据（schema.org Dataset）。下面三张图是**用同一份数据在本页现画的**，不是截图 ——
+            重跑一次抓取脚本，页面就会跟着更新。
+          </p>
+        </div>
+
+        <div class="aa-grid" data-aa-rankings>
+          <!-- 由 assets/js/aa-rankings.js 渲染；数据在 assets/js/aa-rankings-data.js -->
+        </div>
+
+        <p class="aa-meta" data-aa-meta></p>
+        <noscript>
+          <p class="aa-meta">此区块需要 JavaScript 渲染图表；静态数据见 <code>assets/data/aa-rankings.json</code>。</p>
+        </noscript>
+      </div>
+    </section>
+
+    <!-- S4 模块三：B 站 UP 主追踪 -->
+    <section class="section" id="bilibili">
+      <div class="container split">
+        <div class="split__body">
+          <div class="card__num">MODULE 03 — WBI SIGN</div>
+          <h2>B 站生态追踪 — 抗风控，不丢数据</h2>
+          <div class="split__list">
+            <div class="split__item">
+              <h3>wbi 官方签名 1:1 复刻</h3>
+              <p>mixin key 缓存，请求合规稳定，无需登录 Cookie。</p>
+            </div>
+            <div class="split__item">
+              <h3>风控指数退避 + 写保护合并</h3>
+              <p>命中风控自动退避；逐 UP 主合并，抓挂不丢旧数据。</p>
+            </div>
+            <div class="split__item">
+              <h3>字幕抓取</h3>
+              <p>字幕提取带 SSRF 域名白名单，安全拿到视频内容。</p>
+            </div>
+          </div>
+        </div>
+        <div class="split__media">
+          <figure class="shot">
+            <div class="shot__frame">
+              <div class="shot__bar"><span></span><span></span><span></span><span class="shot__url">aihub.app/news · B 站资讯</span></div>
+              <img class="shot__img" src="assets/screenshots/03-bilibili.png" srcset="assets/screenshots/03-bilibili-720.png 720w, assets/screenshots/03-bilibili.png 1440w" sizes="(max-width: 768px) 92vw, 560px" alt="B 站 UP 主追踪真实截图：7 位 UP 主的订阅列表与视频数统计" width="1440" height="900" loading="lazy" />
+            </div>
+            <figcaption class="shot__body">
+              <div>
+                <div class="shot__title">B 站 UP 主追踪</div>
+                <div class="shot__desc">7 位 UP 主 · 15 条视频 · 27 条资讯（真实运行截图）</div>
+              </div>
+              <span class="shot__tag">/news · B站资讯</span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- S5 模块四：AI 早报 PPT -->
+    <section class="section section--subtle" id="briefing">
+      <div class="container split split--57 split--reverse">
+        <div class="split__body">
+          <div class="card__num">MODULE 04 — SLIDE ENGINE</div>
+          <h2>AI 早报 — 每天自动产出 11 页研究报告</h2>
+          <div class="split__list">
+            <div class="split__item">
+              <h3>每天早 7 点自动生成（北京时间）</h3>
+              <p>Vercel Cron 定时触发，自动采集当日新闻成稿，无需人工。</p>
+            </div>
+            <div class="split__item">
+              <h3>自研 slide-engine 管线</h3>
+              <p>zod 契约 → 几何布局测量 → QA lint 门禁 → pptxgenjs 输出，编译器式可测试设计。</p>
+            </div>
+            <div class="split__item">
+              <h3>11 页三幕叙事 · 6 套主题</h3>
+              <p>研究报告风格排版，支持主题切换、历史回看与 PPTX 一键下载。</p>
+            </div>
+          </div>
+        </div>
+        <div class="split__media">
+          <figure class="shot">
+            <div class="shot__frame">
+              <div class="shot__bar"><span></span><span></span><span></span><span class="shot__url">aihub.app/news · AI 早报</span></div>
+              <img class="shot__img" src="assets/screenshots/04-briefing.png" srcset="assets/screenshots/04-briefing-720.png 720w, assets/screenshots/04-briefing.png 1440w" sizes="(max-width: 768px) 92vw, 560px" alt="AI 早报面板真实截图：生成今日早报按钮与历史早报列表" width="1440" height="900" loading="lazy" />
+            </div>
+            <figcaption class="shot__body">
+              <div>
+                <div class="shot__title">AI 早报 PPT</div>
+                <div class="shot__desc">每日 7:00 自动生成 · 历史回看 · 一键下载 PPTX（真实运行截图）</div>
+              </div>
+              <span class="shot__tag">/news · AI早报</span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- S5-A AI 对话（辅助模块 1） -->
+    <section class="section" id="chat">
+      <div class="container split">
+        <div class="split__body">
+          <span class="section__eyebrow">辅助模块 1</span>
+          <h2 class="section__title">AI 对话：多 Provider · Key 三级解析</h2>
+          <p class="section__lead">OpenAI / Anthropic / Gemini / DeepSeek 一套抽象，Key 解析优先级透明（租户自带 → 系统默认 → 一次性），不存明文、不静默失败。</p>
+
+          <!-- 能力清单 -->
+          <ul class="card__list card__list--spaced">
+            <li><strong>多 Provider 路由</strong>：4 家厂商 + 失败自动降级到可用 Provider</li>
+            <li><strong>Key 三级解析</strong>：租户自带 Key → 系统默认 Key → 一次性 Key</li>
+            <li><strong>会话侧栏</strong>：按「今天 / 昨天 / 本周 / 更早」自动分组 + 全文搜索</li>
+            <li><strong>流式输出</strong>：SSE 流式 + 取消请求 + 错误重试</li>
+          </ul>
+
+          <!-- 对话示例 -->
+          <div class="chat-example">
+            <div class="chat-example__header">
+              <div class="chat-example__provider">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v8M9.5 10a2 2 0 1 1 3 1.6c-.8.4-1.5.8-1.5 2.4"/></svg>
+                当前：DeepSeek V4.1 Flash
+              </div>
+              <span class="chat-example__badge">已连接</span>
+            </div>
+            <div class="chat-example__body">
+              <div class="chat-example__msg chat-example__msg--user">
+                <div class="chat-example__avatar chat-example__avatar--user">U</div>
+                <div class="chat-example__bubble">DeepSeek V4.1 Flash 和 Qwen3.8 Max，在代码生成任务上哪个更划算？</div>
+              </div>
+              <div class="chat-example__msg chat-example__msg--ai">
+                <div class="chat-example__avatar chat-example__avatar--ai">AI</div>
+                <div class="chat-example__bubble">按当前价格表（USD / 1M tokens，闲时价）：<br/><br/><strong>DeepSeek V4.1 Flash</strong> · <code>deepseek-flash</code><br/>• 输入 $0.15/M · 输出 $0.60/M（工作日高峰 ×2）<br/>• 1M 上下文 · 原生视觉 · DeepSWE v1.1 <code>74.2</code><br/>• 混合价 <code>$0.375/M</code><br/><br/><strong>Qwen3.8 Max</strong> · <code>qwen3.8-max</code><br/>• 输入 $2.00/M · 输出 $6.00/M（国内 ¥12 / ¥36）<br/>• 2.4T 参数 · 95B 激活 · 1M 上下文<br/>• 混合价 <code>$4.00/M</code><br/><br/>结论：单位成本相差约 <code>10.7×</code>。高频、成本敏感的代码生成用 DeepSeek V4.1 Flash；超长程复杂工程（多轮工具编排）再动用 Qwen3.8 Max。</div>
+              </div>
+            </div>
+            <p class="chat-example__note">价格与基准数据核对于 2026-09-12（各厂商定价页）。</p>
+          </div>
+        </div>
+        <div class="split__media">
+          <figure class="shot">
+            <div class="shot__frame">
+              <div class="shot__bar"><span></span><span></span><span></span><span class="shot__url">aihub.app/chat</span></div>
+              <img class="shot__img" src="assets/screenshots/05-chat.png" srcset="assets/screenshots/05-chat-720.png 720w, assets/screenshots/05-chat.png 2880w" sizes="(max-width: 768px) 92vw, 560px" alt="AI 对话面板：左侧会话时间分组列表、主区对话流与模型选择" width="2880" height="1800" loading="lazy" />
+            </div>
+            <figcaption class="shot__body">
+              <div>
+                <div class="shot__title">AI 对话面板</div>
+                <div class="shot__desc">左侧会话时间分组 · 主区对话流 · 右上模型选择 · 输入框多行可展开</div>
+              </div>
+              <span class="shot__tag">/chat</span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- S5-B 清理中心（辅助模块 2） -->
+    <section class="section section--subtle" id="cleanup">
+      <div class="container split split--57 split--reverse">
+        <div class="split__body">
+          <span class="section__eyebrow">辅助模块 2</span>
+          <h2 class="section__title">清理中心：扫描 → 处理 → 报告，三视图分离</h2>
+          <p class="section__lead">重复、空值、孤儿三类问题的统一治理入口，支持智能合并与一键回滚，避免误删造成数据丢失。</p>
+          <ul class="card__list card__list--spaced">
+            <li><strong>扫描视图</strong>：重复 / 空值 / 孤儿三类问题清单 + 风险分级</li>
+            <li><strong>处理视图</strong>：智能合并策略 + 人工确认 + 进度实时刷新</li>
+            <li><strong>报告视图</strong>：处理结果统计 + 回滚入口 + 清理历史归档</li>
+            <li><strong>可逆设计</strong>：所有清理操作均带 undoId，30 天内可一键回滚</li>
+          </ul>
+        </div>
+        <div class="split__media">
+          <figure class="shot">
+            <div class="shot__frame">
+              <div class="shot__bar"><span></span><span></span><span></span><span class="shot__url">aihub.app/cleanup</span></div>
+              <img class="shot__img" src="assets/screenshots/06-cleanup.png" srcset="assets/screenshots/06-cleanup-720.png 720w, assets/screenshots/06-cleanup.png 2880w" sizes="(max-width: 768px) 92vw, 560px" alt="清理中心：扫描 / 处理 / 报告三视图与回滚入口" width="2880" height="1800" loading="lazy" />
+            </div>
+            <figcaption class="shot__body">
+              <div>
+                <div class="shot__title">清理中心面板</div>
+                <div class="shot__desc">扫描 / 处理 / 报告三视图分离 · 风险分级 · 一键回滚</div>
+              </div>
+              <span class="shot__tag">/cleanup</span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- S6 模块协同 -->
+    <section class="section" id="synergy">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="section__eyebrow">模块协同</span>
+          <h2 class="section__title">不只是 4 个独立模块，它们会联动</h2>
+        </div>
+        <div class="grid grid--4" data-stagger="80">
+          <article class="card reveal">
+            <div class="card__num">新闻 → 早报</div>
+            <h3 class="card__title card__title--sm">素材自动供给</h3>
+            <p class="card__text">早报自动从当日聚合新闻成稿，无需手动编写。</p>
+          </article>
+          <article class="card reveal">
+            <div class="card__num">排行 → 对话</div>
+            <h3 class="card__title card__title--sm">共用模型库</h3>
+            <p class="card__text">对话与排行共享同一套模型白名单与实时价格表。</p>
+          </article>
+          <article class="card reveal">
+            <div class="card__num">UP 主 → 新闻流</div>
+            <h3 class="card__title card__title--sm">视频转资讯</h3>
+            <p class="card__text">B 站动态合并进新闻流，成为早报素材的一部分。</p>
+          </article>
+          <article class="card reveal">
+            <div class="card__num">跨模块检索</div>
+            <h3 class="card__title card__title--sm">意图搜索</h3>
+            <p class="card__text">「上周关于 Claude 的所有内容」一句话检索全部资讯。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- S5.5 应用场景 -->
+    <section class="section section--subtle" id="scenarios">
+      <div class="container">
+        <div class="section__head reveal section__head--center">
+          <span class="section__eyebrow">应用场景</span>
+          <h2 class="section__title">三种典型用法，一句话搞定</h2>
+          <p class="section__lead">三个典型场景：从一句提问到系统响应。以下为示意演示，实际结果随当日数据变化。</p>
+        </div>
+        <div class="scenarios" data-stagger="80">
+          <article class="scenario reveal">
+            <div class="scenario__num">SCENARIO 01</div>
+            <h3 class="scenario__title">晨间速览 — 8 分钟掌握今日 AI 重点</h3>
+            <div class="scenario__qa">
+              <div class="scenario__q">
+                <span class="scenario__avatar scenario__avatar--user">晨</span>
+                <p>今天 AI 行业最值得看的是什么？</p>
+              </div>
+              <div class="scenario__a">
+                <span class="scenario__avatar scenario__avatar--ai">AI</span>
+                <p>已自动聚合 <strong>34 个数据源</strong>，按 <strong>A/B/C/D 置信度</strong>分级；早 7 点已生成 11 页 PPT 早报；今日 Top3 主题：OpenAI 新模型 · Anthropic 工具调用 · 国产模型降价。</p>
+                <div class="scenario__meta">
+                  <span class="scenario__chip">47 条 A 级新闻</span>
+                  <span class="scenario__chip">11 页 PPT</span>
+                  <span class="scenario__chip">7:00 自动</span>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="scenario reveal">
+            <div class="scenario__num">SCENARIO 02</div>
+            <h3 class="scenario__title">选模型 — 一眼看出"更强且更便宜"</h3>
+            <div class="scenario__qa">
+              <div class="scenario__q">
+                <span class="scenario__avatar scenario__avatar--user">产</span>
+                <p>我要给对话选个又快又便宜的模型，有推荐吗？</p>
+              </div>
+              <div class="scenario__a">
+                <span class="scenario__avatar scenario__avatar--ai">AI</span>
+                <p>帕累托前沿已从 <strong>314 个模型</strong>中筛选出 <strong>不在被支配区</strong>的 12 个；Top3：模型 X（速度优先）/ 模型 Y（价格优先）/ 模型 Z（综合最优）。</p>
+                <div class="scenario__meta">
+                  <span class="scenario__chip">帕累托前沿 12 个</span>
+                  <span class="scenario__chip">均价 $0.50/M</span>
+                  <span class="scenario__chip">含价格走势</span>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="scenario reveal">
+            <div class="scenario__num">SCENARIO 03</div>
+            <h3 class="scenario__title">跨模块检索 — 一句话拉通所有数据</h3>
+            <div class="scenario__qa">
+              <div class="scenario__q">
+                <span class="scenario__avatar scenario__avatar--user">研</span>
+                <p>上周所有关于 Claude 的内容，包括视频</p>
+              </div>
+              <div class="scenario__a">
+                <span class="scenario__avatar scenario__avatar--ai">AI</span>
+                <p>跨新闻 / 排行 / B 站三库语义检索：命中 <strong>23 条新闻</strong>(A 级 6 条)、<strong>3 个模型</strong>(含 Claude 4 系列)、<strong>4 个 B 站 UP 主视频</strong>。</p>
+                <div class="scenario__meta">
+                  <span class="scenario__chip">23 条新闻</span>
+                  <span class="scenario__chip">3 个模型</span>
+                  <span class="scenario__chip">4 个视频</span>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- S6 平台基座 -->
+    <section class="section section--subtle" id="platform">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="section__eyebrow">平台基座</span>
+          <h2 class="section__title">支撑四大模块的三个底座</h2>
+        </div>
+        <div class="grid grid--3" data-stagger="80">
+          <article class="card reveal">
+            <div class="card__icon card__icon--primary"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/><circle cx="8" cy="7" r="2" fill="#fff"/><circle cx="15" cy="12" r="2" fill="#fff"/><circle cx="10" cy="17" r="2" fill="#fff"/></svg></div>
+            <h3 class="card__title">多租户平台</h3>
+            <p class="card__text"><code>createTenantPrisma</code> 查询层强制注入 <code>tenantId</code> + <code>deletedAt</code>；9 个模型软删除；邮箱密码 + GitHub OAuth；项目/文件挂 R2。</p>
+          </article>
+          <article class="card reveal">
+            <div class="card__icon card__icon--primary"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-9-9"/><path d="M8 12l3 3 5-6"/><circle cx="12" cy="12" r="9"/></svg></div>
+            <h3 class="card__title">AI 对话</h3>
+            <p class="card__text">多 Provider 路由（OpenAI/Anthropic/Gemini 三协议）；Key 三级解析（租户自配 AES-256-GCM 密文 → 平台 Key 兜底）；历史裁剪 + 风格注入 + 会话搜索。</p>
+          </article>
+          <article class="card reveal">
+            <div class="card__icon card__icon--primary"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M8 15h5"/></svg></div>
+            <h3 class="card__title">用量计费</h3>
+            <p class="card__text">当日聚合 upsert + P2002 并发重试；30 天用量/费用统计、按模型拆分、实时价格重算。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- S8 底部 CTA -->
+    <section class="section" id="cta">
+      <div class="container">
+        <div class="cta reveal">
+          <h2 class="cta__title">看底层怎么搭，比功能更有说服力</h2>
+          <p class="cta__text">多租户隔离、统一 AI 路由、可测试管线——都藏在架构里。</p>
+          <div class="cta__actions">
+            <a class="btn btn--light" href="architecture.html#diagram">查看技术架构</a>
+            <a class="btn btn--secondary" href="roadmap.html">看迭代路线图</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brandcol">
+          <div class="footer__brand">
+            <svg width="24" height="24" viewBox="0 0 28 28" aria-hidden="true">
+              <defs><linearGradient id="lgf" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#BE123C"/><stop offset="0.35" stop-color="#C2410C"/><stop offset="0.65" stop-color="#B45309"/><stop offset="1" stop-color="#047857"/></linearGradient></defs>
+              <rect width="28" height="28" rx="8" fill="url(#lgf)"/>
+              <text x="14" y="19" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#fff">AI</text>
+            </svg>
+            AIHub
+          </div>
+          <p class="footer__desc">AI 行业信息聚合与决策辅助平台，把分散的情报收拢成一个可操作的工作台。</p>
+        </div>
+        <div class="footer__col">
+          <h3>产品</h3>
+          <ul>
+            <li><a href="features.html#news">四大模块</a></li>
+            <li><a href="screenshots.html">真实截图</a></li>
+            <li><a href="architecture.html">技术架构</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h3>资源</h3>
+          <ul>
+            <li><span class="footer__soon">在线 Demo<em>即将开放</em></span></li>
+            <li><span class="footer__soon">GitHub 仓库<em>整理后公开</em></span></li>
+            <li><a href="roadmap.html">路线图</a></li>
+            <li><a href="faq.html">常见问题</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h3>关于</h3>
+          <ul>
+            <li><a href="faq.html#product">项目背景（毕业设计 MVP）</a></li>
+            <li><a href="security.html">安全合规</a></li>
+            <li><a href="roadmap.html#shipped">工程亮点</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>© 2026 AIHub · Built with Next.js &amp; Vercel · 浅色主题</span>
+        <span class="footer__clock" aria-hidden="true">UTC+8 <span data-clock>00:00:00</span></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js?v=20260913c"></script>
+  <script src="assets/js/aa-rankings-data.js"></script>
+  <script src="assets/js/aa-rankings.js?v=20260914a"></script>
+</body>
+</html>

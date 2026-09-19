@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light" />
+  <title>AIHub · AI 行业情报，一个工作台全部搞定</title>
+  <meta name="description" content="AIHub 聚合 34 个数据源的 AI 新闻、314 个模型性价比排行、B 站 UP 主追踪与每日自动生成的早报 PPT，把分散的 AI 信息流收拢成一个可操作的工作台。四大核心模块已上线。" />
+  <meta name="author" content="AIHub" />
+  <meta name="theme-color" content="#ffffff" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="zh_CN" />
+  <meta property="og:title" content="AIHub · AI 行业情报，一个工作台全部搞定" />
+  <meta property="og:description" content="聚合新闻、模型排行、UP 主追踪与每日早报 PPT 的统一工作台。34 个数据源 · 314 个模型 · 每天早 7 点自动早报。" />
+  <meta property="og:image" content="assets/og/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="AIHub · AI 行业情报，一个工作台全部搞定" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "AIHub",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Web",
+    "description": "AI 行业信息聚合与决策辅助平台：34 个数据源新闻聚合、314 个模型性价比排行（帕累托前沿）、B 站 UP 主追踪、每日自动生成 11 页早报 PPT。",
+    "featureList": "AI 新闻聚合, 模型性价比排行, B 站 UP 主追踪, AI 早报 PPT 自动生成, 多租户隔离, 用量计费",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "CNY" }
+  }
+  </script>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Crect width='28' height='28' rx='8' fill='%23BE123C'/%3E%3Ctext x='14' y='19' text-anchor='middle' font-family='Arial' font-size='13' font-weight='700' fill='white'%3EAI%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="assets/css/tokens.css?v=20260913c" />
+  <link rel="stylesheet" href="assets/css/base.css?v=20260913c" />
+  <link rel="stylesheet" href="assets/css/aurora.css?v=20260913c" />
+  <link rel="stylesheet" href="assets/css/components.css?v=20260913c" />
+  <link rel="stylesheet" href="assets/css/pages.css?v=20260913c" />
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主内容</a>
+
+  <header class="nav">
+    <div class="container nav__inner">
+      <a class="nav__brand" href="index.html" aria-label="AIHub 首页">
+        <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true">
+          <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#BE123C"/><stop offset="0.35" stop-color="#C2410C"/><stop offset="0.65" stop-color="#B45309"/><stop offset="1" stop-color="#047857"/>
+          </linearGradient></defs>
+          <rect width="28" height="28" rx="8" fill="url(#lg)"/>
+          <text x="14" y="19" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#fff">AI</text>
+        </svg>
+        AIHub
+      </a>
+      <nav class="nav__links" aria-label="主导航">
+        <a class="nav__link" href="index.html" aria-current="page">首页</a>
+        <a class="nav__link" href="features.html">功能</a>
+        <a class="nav__link" href="briefing.html">每日早报</a>
+        <a class="nav__link" href="screenshots.html">截图</a>
+        <a class="nav__link" href="architecture.html">架构</a>
+        <a class="nav__link" href="security.html">安全合规</a>
+        <a class="nav__link" href="roadmap.html">路线图</a>
+        <a class="nav__link" href="faq.html">常见问题</a>
+      </nav>
+      <div class="nav__actions">
+        <a class="btn btn--primary btn--sm" href="screenshots.html">看真实截图</a>
+      </div>
+      <button class="nav__toggle" aria-label="打开导航菜单" aria-expanded="false" aria-controls="nav-drawer">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="nav__drawer" id="nav-drawer">
+      <nav aria-label="移动端导航">
+        <a class="nav__link" href="index.html" aria-current="page">首页</a>
+        <a class="nav__link" href="features.html">功能</a>
+        <a class="nav__link" href="briefing.html">每日早报</a>
+        <a class="nav__link" href="screenshots.html">截图</a>
+        <a class="nav__link" href="architecture.html">架构</a>
+        <a class="nav__link" href="security.html">安全合规</a>
+        <a class="nav__link" href="roadmap.html">路线图</a>
+        <a class="nav__link" href="faq.html">常见问题</a>
+      </nav>
+      <div class="nav__drawer-actions">
+        <a class="btn btn--primary btn--block" href="screenshots.html">看真实截图</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- S1 Hero（7:5 非对称：原则列表 + 真实截图拼贴 + 浮动 Stat 卡 + 任务流面板） -->
+    <section class="hero" id="hero">
+      <div class="container hero__inner">
+        <div class="hero__copy">
+          <span class="tag">毕业设计 MVP · 四大核心模块已上线</span>
+          <h1 class="hero__title" data-typewriter="AI 行业情报，|一个工作台全部搞定。">AI 行业情报，一个工作台全部搞定。</h1>
+          <ul class="hero__principles">
+            <li><span class="hero__principle-text">聚合 <strong>34 个数据源</strong>的 AI 新闻，A/B/C/D 四档置信度自动分级</span><span class="hero__principle-meta">每小时更新</span></li>
+            <li><span class="hero__principle-text"><strong>314 个模型</strong>性价比排行，帕累托前沿一眼看清「更强且更便宜」</span><span class="hero__principle-meta">每 6 小时同步</span></li>
+            <li><span class="hero__principle-text"><strong>7 位 B 站 UP 主</strong>动态追踪，抗风控、不丢数据</span><span class="hero__principle-meta">每 4 小时抓取</span></li>
+            <li><span class="hero__principle-text">每天早 <strong>7 点</strong>自动产出 <strong>11 页</strong>早报 PPT，也能手动一键生成</span><span class="hero__principle-meta">自动 + 手动</span></li>
+          </ul>
+          <div class="hero__cta">
+            <a class="btn btn--primary" href="screenshots.html">看真实运行截图</a>
+            <a class="btn btn--secondary" href="architecture.html#diagram">查看技术架构</a>
+          </div>
+        </div>
+        <div class="hero__media">
+          <div class="window">
+            <div class="window__bar">
+              <span class="window__dot"></span><span class="window__dot"></span><span class="window__dot"></span>
+              <span class="window__addr">aihub.app/rankings</span>
+            </div>
+            <div class="window__body window__body--flush">
+              <img class="window__img" src="assets/screenshots/02-rankings.png" srcset="assets/screenshots/02-rankings-720.png 720w, assets/screenshots/02-rankings.png 2880w" sizes="(max-width: 768px) 92vw, 620px" alt="AIHub 模型性价比排行页运行截图：Top3 领奖台、能力-价格帕累托散点图与 314 个模型的统计指标" width="2880" height="1800" fetchpriority="high" />
+            </div>
+          </div>
+          <!-- 任务流小面板（参考 zcode 任务流设计） -->
+          <div class="task-flow">
+            <div class="task-flow__head">
+              <span class="task-flow__pulse"></span>
+              <span class="task-flow__title">今日自动发生的事</span>
+            </div>
+            <div class="task-flow__list">
+              <div class="task-flow__item">
+                <span class="task-flow__time">07:00</span>
+                <span class="task-flow__name">每日早报</span>
+                <span class="task-flow__status task-flow__status--done">已生成 11 页</span>
+              </div>
+              <div class="task-flow__item">
+                <span class="task-flow__time">10:00</span>
+                <span class="task-flow__name">价格异动扫描</span>
+                <span class="task-flow__status task-flow__status--alert">3 模型 / -12%</span>
+              </div>
+              <div class="task-flow__item">
+                <span class="task-flow__time">13:30</span>
+                <span class="task-flow__name">新模型发现</span>
+                <span class="task-flow__status task-flow__status--new">+4 待入库</span>
+              </div>
+            </div>
+          </div>
+          <div class="hero__float hero__float--tl">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+            今日早报已生成 · 11 页 PPT
+          </div>
+          <div class="hero__float hero__float--tr">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+            价格异动 · 3 模型
+          </div>
+          <div class="hero__float hero__float--br">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+            314 模型 · 15 厂商
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- S2 信任数字带（Stat · 超大 tabular-nums） -->
+    <section class="section section--lg" id="stats">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="section__eyebrow">项目规模</span>
+          <h2 class="section__title">用真实工程数据说话</h2>
+          <p class="section__lead">以下指标全部来自当前代码库与运行环境，可追溯、可复核。</p>
+        </div>
+        <div class="stats" data-stagger="80">
+          <div class="stat reveal">
+            <div class="stat__num"><span data-count-to="34">0</span></div>
+            <div class="stat__label">个启用数据源 · RSS / API / HTML 三型接入</div>
+          </div>
+          <div class="stat reveal">
+            <div class="stat__num"><span data-count-to="314">0</span></div>
+            <div class="stat__label">个模型入库 · 15 家厂商 · 均价 $0.50/M</div>
+          </div>
+          <div class="stat reveal">
+            <div class="stat__num"><span data-count-to="238">0</span></div>
+            <div class="stat__label">个 TypeScript 源文件 · 约 46,900 行</div>
+          </div>
+          <div class="stat reveal stat--accent">
+            <div class="stat__num"><span data-count-to="7">0</span></div>
+            <div class="stat__label">条 Vercel Cron · 8 个 Playwright e2e 用例</div>
+          </div>
+          <div class="stat reveal">
+            <div class="stat__num"><span data-count-to="169">0</span></div>
+            <div class="stat__label">份开发文档 · 全程可追溯</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- S2.5 数据源生态 -->
+    <section class="section section--subtle" id="sources">
+      <div class="container">
+        <div class="section__head reveal section__head--center">
+          <span class="section__eyebrow">数据源生态</span>
+          <h2 class="section__title">接入了行业内最值得读的 AI 资讯源</h2>
+          <p class="section__lead">34 个数据源覆盖 RSS / API / HTML 三型接入，从源头上保证信息质量与多源交叉验证。</p>
+        </div>
+        <div class="source-wall reveal" data-stagger="60">
+          <span class="source-wall__item">量子位</span>
+          <span class="source-wall__item">InfoQ</span>
+          <span class="source-wall__item">机器之心</span>
+          <span class="source-wall__item">36氪</span>
+          <span class="source-wall__item">Hacker News</span>
+          <span class="source-wall__item">The Verge</span>
+          <span class="source-wall__item">VentureBeat</span>
+          <span class="source-wall__item">TechCrunch</span>
+          <span class="source-wall__item">Reddit r/MachineLearning</span>
+          <span class="source-wall__item">ArXiv AI</span>
+          <span class="source-wall__item">Papers With Code</span>
+          <span class="source-wall__item">GitHub Trending</span>
+          <span class="source-wall__item">极客公园</span>
+          <span class="source-wall__item">硅星人</span>
+          <span class="source-wall__item">AI News</span>
+          <span class="source-wall__item">The Decoder</span>
+          <span class="source-wall__item">MIT Tech Review</span>
+          <span class="source-wall__item">OpenAI Blog</span>
+          <span class="source-wall__item">Google DeepMind</span>
+          <span class="source-wall__item">Anthropic News</span>
+        </div>
+        <div class="source-wall__meta">
+          <span class="source-wall__meta-item"><strong>34</strong> 个数据源</span>
+          <span class="source-wall__meta-divider"></span>
+          <span class="source-wall__meta-item"><strong>8</strong> 路解析器</span>
+          <span class="source-wall__meta-divider"></span>
+          <span class="source-wall__meta-item">A/B/C/D 四档置信度自动分级</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- S3 四大核心模块（5:7 非对称卡 · 编号 eyebrow + 真实截图缩略） -->
+    <section class="section section--subtle" id="modules">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="section__eyebrow">四大核心 + 两大辅助</span>
+          <h2 class="section__title">一个工作台，四件事一次办妥</h2>
+          <p class="section__lead">从情报聚合到决策辅助，模块之间天然联动——早报自动引用当日聚合新闻与排行结论。</p>
+        </div>
+        <div class="grid grid--bento" data-stagger="80">
+          <a class="card card--wide reveal" href="features.html#news">
+            <span class="card__arrow" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17L17 7"/><path d="M9 7h8v8"/></svg></span>
+            <div class="card__body">
+              <div class="card__num">MODULE 01</div>
+              <div class="card__icon card__icon--primary"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 5h13v14H4z"/><path d="M17 9h3v10h-3"/><line x1="7" y1="9" x2="14" y2="9"/><line x1="7" y1="13" x2="14" y2="13"/></svg></div>
+              <h3 class="card__title">AI 新闻聚合</h3>
+              <p class="card__text">34 个数据源统一接入，A/B/C/D 四档置信度分级，让真实信号浮出水面。</p>
+              <div class="card__meta"><span>34 源</span><span>四档评级</span><span>意图搜索</span></div>
+            </div>
+            <img class="card__thumb" src="assets/screenshots/01-news.png" srcset="assets/screenshots/01-news-720.png 720w, assets/screenshots/01-news.png 2880w" sizes="(max-width: 768px) 92vw, 280px" alt="AI 新闻聚合页界面缩略图" width="2880" height="1800" loading="lazy" />
+          </a>
+          <a class="card reveal" href="features.html#ranking">
+            <span class="card__arrow" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17L17 7"/><path d="M9 7h8v8"/></svg></span>
+            <div class="card__num">MODULE 02</div>
+            <div class="card__icon card__icon--primary"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5 19V9"/><path d="M12 19V5"/><path d="M19 19v-6"/></svg></div>
+            <h3 class="card__title">AI 模型性价比排行</h3>
+            <p class="card__text">帕累托前沿算法 + 价格走势，从 314 个模型里一眼找到「更强且更便宜」。</p>
+            <div class="card__meta"><span>314 模型</span><span>Pareto</span><span>价格走势</span></div>
+          </a>
+          <a class="card reveal" href="features.html#bilibili">
+            <span class="card__arrow" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17L17 7"/><path d="M9 7h8v8"/></svg></span>
+            <div class="card__num">MODULE 03</div>
+            <div class="card__icon card__icon--primary"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M10 9l5 3-5 3z" fill="currentColor" stroke="none"/></svg></div>
+            <h3 class="card__title">B 站 UP 主追踪</h3>
+            <p class="card__text">wbi 官方签名复刻、风控指数退避，字幕提取稳定追踪你关注的创作者。</p>
+            <div class="card__meta"><span>wbi 签名</span><span>字幕提取</span><span>写保护合并</span></div>
+          </a>
+          <a class="card card--wide reveal" href="features.html#briefing">
+            <span class="card__arrow" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17L17 7"/><path d="M9 7h8v8"/></svg></span>
+            <div class="card__body">
+              <div class="card__num">MODULE 04</div>
+              <div class="card__icon card__icon--primary"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="4" y="4" width="16" height="12" rx="2"/><line x1="12" y1="16" x2="12" y2="20"/><line x1="8" y1="20" x2="16" y2="20"/></svg></div>
+              <h3 class="card__title">AI 早报（PPT 自动生成）</h3>
+              <p class="card__text">每天早 7 点自动产出 11 页三幕研究报告风格早报，6 套主题，一键下载；不想等定时也可以在页面上手动触发生成。</p>
+              <div class="card__meta"><span>每日 7:00</span><span>可手动触发</span><span>11 页</span><span>6 套主题</span></div>
+            </div>
+            <img class="card__thumb" src="assets/screenshots/04-briefing.png" srcset="assets/screenshots/04-briefing-720.png 720w, assets/screenshots/04-briefing.png 1440w" sizes="(max-width: 768px) 92vw, 280px" alt="AI 早报面板界面缩略图" width="1440" height="900" loading="lazy" />
+          </a>
+          <a class="card card--half reveal" href="features.html#chat">
+            <span class="card__arrow" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17L17 7"/><path d="M9 7h8v8"/></svg></span>
+            <div class="card__num">MODULE 05 · 辅助</div>
+            <div class="card__icon card__icon--primary"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-8 8H7l-4 3 1.4-5A8 8 0 1 1 21 12z"/><line x1="9" y1="11" x2="15" y2="11"/><line x1="12" y1="8" x2="12" y2="14"/></svg></div>
+            <h3 class="card__title">AI 对话（多 Provider）</h3>
+            <p class="card__text">多 Provider 路由 + Key 三级解析（租户自带 → 系统默认 → 一次性），会话侧栏按时间分组。</p>
+            <div class="card__meta"><span>Key 三级解析</span><span>会话时间分组</span><span>流式输出</span></div>
+            <img class="card__thumb card__thumb--sm" src="assets/screenshots/05-chat.png" srcset="assets/screenshots/05-chat-720.png 720w, assets/screenshots/05-chat.png 2880w" sizes="(max-width: 768px) 92vw, 220px" alt="AI 对话面板界面缩略图：左侧会话列表，主区对话流与模型选择" width="2880" height="1800" loading="lazy" />
+          </a>
+          <a class="card card--half reveal" href="features.html#cleanup">
+            <span class="card__arrow" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17L17 7"/><path d="M9 7h8v8"/></svg></span>
+            <div class="card__num">MODULE 06 · 辅助</div>
+            <div class="card__icon card__icon--primary"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M5 6l1 14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-14"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg></div>
+            <h3 class="card__title">清理中心（数据治理）</h3>
+            <p class="card__text">重复 / 空值 / 孤儿扫描 → 智能合并与回滚，扫描 / 处理 / 报告三视图分离。</p>
+            <div class="card__meta"><span>三视图</span><span>回滚可逆</span><span>批量合并</span></div>
+            <img class="card__thumb card__thumb--sm" src="assets/screenshots/06-cleanup.png" srcset="assets/screenshots/06-cleanup-720.png 720w, assets/screenshots/06-cleanup.png 2880w" sizes="(max-width: 768px) 92vw, 220px" alt="清理中心界面缩略图：扫描 / 处理 / 报告三视图与回滚入口" width="2880" height="1800" loading="lazy" />
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- S4 平台基座 / 差异化（3 列 + 斜切强调条） -->
+    <section class="section section--lg" id="why">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="section__eyebrow">为什么是 AIHub</span>
+          <h2 class="section__title">平台基座，三件难而正确的事</h2>
+        </div>
+        <div class="grid grid--3" data-stagger="80">
+          <article class="card reveal">
+            <div class="card__num">01 — 隔离</div>
+            <div class="card__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4-3 7-7 9-4-2-7-5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
+            <h3 class="card__title">多租户强隔离</h3>
+            <p class="card__text">Prisma 中间件强制注入 <code>tenantId</code> + <code>deletedAt</code>，9 个模型软删保护，团队数据互不串台。</p>
+          </article>
+          <article class="card reveal">
+            <div class="card__num">02 — 路由</div>
+            <div class="card__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="6" cy="6" r="2.4"/><circle cx="18" cy="6" r="2.4"/><circle cx="12" cy="18" r="2.4"/><path d="M8 6h8M6 8.4l4.5 7M18 8.4l-4.5 7"/></svg></div>
+            <h3 class="card__title">多 Provider 统一路由</h3>
+            <p class="card__text">OpenAI / Anthropic / Gemini / DeepSeek 一套抽象，租户自带 Key（AES-256-GCM 密文托管），随时切换。</p>
+          </article>
+          <article class="card reveal">
+            <div class="card__num">03 — 计费</div>
+            <div class="card__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v8M9.5 10a2 2 0 1 1 3 1.6c-.8.4-1.5.8-1.5 2.4"/><circle cx="12" cy="7.4" r=".4" fill="currentColor"/></svg></div>
+            <h3 class="card__title">用量计费透明</h3>
+            <p class="card__text">当日聚合 + 实时价格重算，按模型拆分账单，15 个 tRPC router 全量类型安全。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- S5 真实界面证据墙（新增 · 大图陈列） -->
+    <section class="section section--subtle section--lg" id="evidence">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="section__eyebrow">界面证据墙</span>
+          <h2 class="section__title">真实运行截图，眼见为实</h2>
+          <p class="section__lead">六大模块的实际界面，全部来自本地 dev 与 Vercel 部署环境，不是设计稿。</p>
+        </div>
+        <div class="grid grid--2" data-stagger="90">
+          <figure class="shot reveal">
+            <div class="shot__frame">
+              <div class="shot__bar"><span></span><span></span><span></span><span class="shot__url">aihub.app/news</span></div>
+              <img class="shot__img" src="assets/screenshots/01-news.png" srcset="assets/screenshots/01-news-720.png 720w, assets/screenshots/01-news.png 2880w" sizes="(max-width: 768px) 92vw, 560px" alt="AI 新闻聚合页：今日快讯列表，每条新闻带来源标签与发布时间" width="2880" height="1800" loading="lazy" />
+            </div>
+            <figcaption class="shot__body">
+              <div><div class="shot__title">01 · AI 新闻聚合</div><div class="shot__desc">34 个数据源统一聚合 + A/B/C/D 置信度分级。</div></div>
+              <span class="shot__tag">/news</span>
+            </figcaption>
+          </figure>
+          <figure class="shot reveal">
+            <div class="shot__frame">
+              <div class="shot__bar"><span></span><span></span><span></span><span class="shot__url">aihub.app/rankings</span></div>
+              <img class="shot__img" src="assets/screenshots/02-rankings.png" srcset="assets/screenshots/02-rankings-720.png 720w, assets/screenshots/02-rankings.png 2880w" sizes="(max-width: 768px) 92vw, 560px" alt="AI 模型性价比排行页：Top3 领奖台与能力-价格帕累托散点图" width="2880" height="1800" loading="lazy" />
+            </div>
+            <figcaption class="shot__body">
+              <div><div class="shot__title">02 · AI 模型性价比排行</div><div class="shot__desc">314 个模型 · 15 家厂商 · 已验证 35 个 · 均价 $0.50/M。</div></div>
+              <span class="shot__tag">/rankings</span>
+            </figcaption>
+          </figure>
+          <figure class="shot reveal">
+            <div class="shot__frame">
+              <div class="shot__bar"><span></span><span></span><span></span><span class="shot__url">aihub.app/bilibili</span></div>
+              <img class="shot__img" src="assets/screenshots/03-bilibili.png" srcset="assets/screenshots/03-bilibili-720.png 720w, assets/screenshots/03-bilibili.png 1440w" sizes="(max-width: 768px) 92vw, 560px" alt="B 站 UP 主追踪：7 位 UP 主的订阅列表与视频资讯统计" width="1440" height="900" loading="lazy" />
+            </div>
+            <figcaption class="shot__body">
+              <div><div class="shot__title">03 · B 站 UP 主追踪</div><div class="shot__desc">7 位 UP 主 · 15 条视频 · 27 条资讯，抗风控稳定抓取。</div></div>
+              <span class="shot__tag">/news · B站资讯</span>
+            </figcaption>
+          </figure>
+          <figure class="shot reveal">
+            <div class="shot__frame">
+              <div class="shot__bar"><span></span><span></span><span></span><span class="shot__url">aihub.app/briefing</span></div>
+              <img class="shot__img" src="assets/screenshots/04-briefing.png" srcset="assets/screenshots/04-briefing-720.png 720w, assets/screenshots/04-briefing.png 1440w" sizes="(max-width: 768px) 92vw, 560px" alt="AI 早报面板：生成今日早报按钮与最近历史早报列表" width="1440" height="900" loading="lazy" />
+            </div>
+            <figcaption class="shot__body">
+              <div><div class="shot__title">04 · AI 早报 PPT</div><div class="shot__desc">每天早 7 点（北京时间）自动生成 11 页研究报告。</div></div>
+              <span class="shot__tag">/news · AI早报</span>
+            </figcaption>
+          </figure>
+          <figure class="shot reveal">
+            <div class="shot__frame">
+              <div class="shot__bar"><span></span><span></span><span></span><span class="shot__url">aihub.app/chat</span></div>
+              <img class="shot__img" src="assets/screenshots/05-chat.png" srcset="assets/screenshots/05-chat-720.png 720w, assets/screenshots/05-chat.png 2880w" sizes="(max-width: 768px) 92vw, 560px" alt="AI 对话面板：左侧会话时间分组列表、主区对话流与模型选择下拉框" width="2880" height="1800" loading="lazy" />
+            </div>
+            <figcaption class="shot__body">
+              <div><div class="shot__title">05 · AI 对话</div><div class="shot__desc">多 Provider 路由 · Key 三级解析 · 会话侧栏按时间分组。</div></div>
+              <span class="shot__tag">/chat</span>
+            </figcaption>
+          </figure>
+          <figure class="shot reveal">
+            <div class="shot__frame">
+              <div class="shot__bar"><span></span><span></span><span></span><span class="shot__url">aihub.app/cleanup</span></div>
+              <img class="shot__img" src="assets/screenshots/06-cleanup.png" srcset="assets/screenshots/06-cleanup-720.png 720w, assets/screenshots/06-cleanup.png 2880w" sizes="(max-width: 768px) 92vw, 560px" alt="清理中心：扫描 / 处理 / 报告三视图与回滚入口" width="2880" height="1800" loading="lazy" />
+            </div>
+            <figcaption class="shot__body">
+              <div><div class="shot__title">06 · 清理中心</div><div class="shot__desc">重复 / 空值 / 孤儿扫描，智能合并可回滚，三视图分离。</div></div>
+              <span class="shot__tag">/cleanup</span>
+            </figcaption>
+          </figure>
+        </div>
+        <div class="section__head--center mt-5">
+          <a class="btn btn--secondary" href="screenshots.html">查看完整截图画廊</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- S6 工程可信度（代码/架构 teaser） -->
+    <section class="section" id="stack">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="section__eyebrow">工程可信度</span>
+          <h2 class="section__title">硬指标，可验证</h2>
+          <p class="section__lead">现代全栈，端到端类型安全；每一个数字都对应可复核的代码与文档。</p>
+        </div>
+        <div class="stack reveal">
+          <div class="stack__group">
+            <div class="stack__label">接口 / 数据</div>
+            <div class="tags"><span class="chip">tRPC 11 × 15 router</span><span class="chip">Prisma 6</span><span class="chip">NextAuth 4</span><span class="chip">zod</span><span class="chip">superjson</span></div>
+          </div>
+          <div class="stack__group">
+            <div class="stack__label">质量门禁</div>
+            <div class="tags"><span class="chip">8 个测试文件</span><span class="chip">130+ 断言</span><span class="chip">7 条 Cron</span><span class="chip">Playwright e2e × 8</span><span class="chip">ci:check</span></div>
+          </div>
+          <div class="stack__group">
+            <div class="stack__label">存储 / 部署</div>
+            <div class="tags"><span class="chip">PostgreSQL（生产）</span><span class="chip">SQLite（开发）</span><span class="chip">Cloudflare R2</span><span class="chip">Upstash Redis</span><span class="chip">Vercel + 7 条 Cron</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- S7 痛点 → 解法（左右对照列表） -->
+    <section class="section section--subtle section--lg" id="painpoints">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="section__eyebrow">解决的痛点</span>
+          <h2 class="section__title">把混乱，收拢成一个系统</h2>
+          <p class="section__lead">不靠「智能推荐」，靠把所有信号聚合起来，让你自己判断。</p>
+        </div>
+        <div class="rows" data-stagger="60">
+          <div class="row reveal">
+            <div class="row__problem">信息源分散</div>
+            <div class="row__arrow"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></div>
+            <div class="row__fix">34 个数据源四合一工作台，新闻 / 排行 / UP 主 / 早报一处看。</div>
+          </div>
+          <div class="row reveal">
+            <div class="row__problem">模型太多不会选、价格不透明</div>
+            <div class="row__arrow"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></div>
+            <div class="row__fix">性价比算法 + 帕累托前沿 + 价格走势，314 个模型量化对比。</div>
+          </div>
+          <div class="row reveal">
+            <div class="row__problem">每天人工翻情报费时</div>
+            <div class="row__arrow"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></div>
+            <div class="row__fix">7 条 Cron 全自动 + 每天早 7 点早报 PPT，打开即读。</div>
+          </div>
+          <div class="row reveal">
+            <div class="row__problem">多平台 Key 管理乱、账单黑盒</div>
+            <div class="row__arrow"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></div>
+            <div class="row__fix">租户自带 Key 密文托管 + 用量计费按模型拆分。</div>
+          </div>
+          <div class="row reveal">
+            <div class="row__problem">团队共用 AI 数据互窜</div>
+            <div class="row__arrow"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></div>
+            <div class="row__fix">多租户中间件强制隔离，9 个模型软删保护。</div>
+          </div>
+          <div class="row reveal">
+            <div class="row__problem">爬虫易被风控、抓挂丢数据</div>
+            <div class="row__arrow"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></div>
+            <div class="row__fix">wbi 签名 + 指数退避 + 写保护合并，失败不覆盖旧数据。</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- S8 最终 CTA（渐变氛围 + 品牌阴影） -->
+    <section class="section section--lg" id="cta">
+      <div class="container">
+        <div class="cta reveal">
+          <h2 class="cta__title">把 AI 情报工作，交给一个工作台</h2>
+          <p class="cta__text">四大核心模块已上线，169 份文档可追溯开发全过程。先看它真实跑起来的样子。</p>
+          <div class="cta__actions">
+            <a class="btn btn--light" href="screenshots.html">看真实运行截图</a>
+            <a class="btn btn--secondary" href="features.html">深入功能详解</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brandcol">
+          <div class="footer__brand">
+            <svg width="24" height="24" viewBox="0 0 28 28" aria-hidden="true">
+              <defs><linearGradient id="lgf" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#BE123C"/><stop offset="0.35" stop-color="#C2410C"/><stop offset="0.65" stop-color="#B45309"/><stop offset="1" stop-color="#047857"/></linearGradient></defs>
+              <rect width="28" height="28" rx="8" fill="url(#lgf)"/>
+              <text x="14" y="19" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#fff">AI</text>
+            </svg>
+            AIHub
+          </div>
+          <p class="footer__desc">AI 行业信息聚合与决策辅助平台，把分散的情报收拢成一个可操作的工作台。</p>
+        </div>
+        <div class="footer__col">
+          <h3>产品</h3>
+          <ul>
+            <li><a href="#modules">四大模块</a></li>
+            <li><a href="features.html">功能详解</a></li>
+            <li><a href="screenshots.html">真实截图</a></li>
+            <li><a href="architecture.html">技术架构</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h3>资源</h3>
+          <ul>
+            <li><span class="footer__soon">在线 Demo<em>即将开放</em></span></li>
+            <li><span class="footer__soon">GitHub 仓库<em>整理后公开</em></span></li>
+            <li><a href="roadmap.html">路线图</a></li>
+            <li><a href="faq.html">常见问题</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h3>关于</h3>
+          <ul>
+            <li><a href="faq.html#product">项目背景（毕业设计 MVP）</a></li>
+            <li><a href="security.html">安全合规</a></li>
+            <li><a href="roadmap.html#shipped">工程亮点</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>© 2026 AIHub · Built with Next.js &amp; Vercel · 浅色主题</span>
+        <span class="footer__clock" aria-hidden="true">UTC+8 <span data-clock>00:00:00</span></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js?v=20260913c"></script>
+</body>
+</html>

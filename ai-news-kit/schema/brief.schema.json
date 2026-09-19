@@ -1,0 +1,336 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://ai-news-kit.local/schema/brief.schema.json",
+  "title": "AI 日报选稿（brief.json）",
+  "description": "每日 AI 新闻日报的唯一真相源。渲染脚本只读它、不产生任何判断。",
+  "type": "object",
+  "required": [
+    "date",
+    "focus",
+    "headline",
+    "rawStats",
+    "confidenceScale",
+    "picks"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "date": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+      "description": "日报日期，本地时区（GMT+8）。绝不用 toISOString 生成。"
+    },
+    "windowNote": {
+      "type": "string",
+      "description": "抓取窗口说明。解释为什么这批数据代表「今天」。"
+    },
+    "focus": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      },
+      "description": "侧重方向，如 [\"AI Coding\", \"具身智能\"]"
+    },
+    "headline": {
+      "type": "string",
+      "minLength": 20,
+      "description": "今日一句话总览。要有观点，不是流水账。"
+    },
+    "rawStats": {
+      "type": "object",
+      "required": [
+        "sourcesAlive",
+        "sourcesTotal",
+        "rawItems",
+        "multiSourceItems"
+      ],
+      "properties": {
+        "sourcesAlive": {
+          "type": "number"
+        },
+        "sourcesTotal": {
+          "type": "number"
+        },
+        "rawItems": {
+          "type": "number"
+        },
+        "dedupedItems": {
+          "type": "number"
+        },
+        "multiSourceItems": {
+          "type": "number"
+        },
+        "crossSourceThreshold": {
+          "type": "number"
+        },
+        "byCategory": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number"
+          }
+        },
+        "note": {
+          "type": "string",
+          "description": "方法论说明 + 阈值实测依据"
+        }
+      }
+    },
+    "confidenceScale": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "required": [
+          "lv",
+          "name",
+          "rule"
+        ],
+        "properties": {
+          "lv": {
+            "type": "string",
+            "enum": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "name": {
+            "type": "string"
+          },
+          "rule": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "picks": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 5,
+      "description": "要闻。少于 3 条时不凑数，并在 dedupeNote 里说明。",
+      "items": {
+        "$ref": "#/definitions/pick"
+      }
+    },
+    "alsoWorthAScan": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "title"
+        ],
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "sources": {
+            "type": "string",
+            "description": "如「量子位 / AITNT（2 源）」"
+          }
+        }
+      }
+    },
+    "dedupeNote": {
+      "type": "string",
+      "description": "查重说明：比对了哪几轮历史推送，哪些事件因重复被降级到扫读清单。"
+    },
+    "charts": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "图表数据。由 scripts/analyze.mjs 纯统计产出并写回本文件；渲染器只读不算。缺了不报错，但 PPT 会少两页图表页。",
+      "properties": {
+        "generatedBy": {
+          "type": "string"
+        },
+        "generatedAt": {
+          "type": "string"
+        },
+        "corpus": {
+          "type": "object",
+          "description": "语料元信息（条目数 / 起止日期 / 跨度 / 口径说明）"
+        },
+        "confidence": {
+          "type": "object",
+          "description": "本期置信度分布，键为 A/B/C/D，值必须与 picks 实际数量一致（validate-brief 会校验）"
+        },
+        "category": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "count"
+            ],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "count": {
+                "type": "number"
+              }
+            }
+          }
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "label",
+              "count"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              },
+              "count": {
+                "type": "number"
+              }
+            }
+          }
+        },
+        "models": {
+          "type": "object",
+          "properties": {
+            "top": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "label",
+                  "count"
+                ]
+              }
+            },
+            "topByKind": {
+              "type": "object",
+              "description": "按 model/agent/robot 分组的榜单——总榜会被大模型刷屏，具身智能公司需要独立一张"
+            },
+            "byKind": {
+              "type": "object"
+            },
+            "trend": {
+              "type": "object",
+              "properties": {
+                "days": {
+                  "type": "array"
+                },
+                "dates": {
+                  "type": "array"
+                },
+                "series": {
+                  "type": "array"
+                },
+                "dailyTotals": {
+                  "type": "array"
+                },
+                "windowDays": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "pick": {
+      "type": "object",
+      "required": [
+        "no",
+        "topic",
+        "title",
+        "lv",
+        "publishedAt",
+        "event",
+        "keyFacts",
+        "why",
+        "sources"
+      ],
+      "properties": {
+        "no": {
+          "type": "number",
+          "minimum": 1
+        },
+        "topic": {
+          "type": "string",
+          "enum": [
+            "AI Coding",
+            "具身智能",
+            "AI 政策",
+            "其他"
+          ],
+          "description": "决定 PPT 配色。只应使用 config/sources.json 中配置的分类。"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 8
+        },
+        "lv": {
+          "type": "string",
+          "enum": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "description": "置信度。严格按 docs/03-置信度评级规则.md 判定，转载不算独立信源。"
+        },
+        "publishedAt": {
+          "type": "string",
+          "description": "真实发布时间（YYYY-MM-DD 或 ISO）。绝不用抓取时间冒充。"
+        },
+        "event": {
+          "type": "string",
+          "minLength": 30,
+          "description": "3-5 句，只写事实，不写评价。"
+        },
+        "keyFacts": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "string",
+            "minLength": 4
+          }
+        },
+        "why": {
+          "type": "string",
+          "minLength": 40,
+          "description": "必须回答「所以呢」——对读者决策的影响。不许复述事件。"
+        },
+        "sources": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "url"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "一手来源要标注「（一手）」并排在第一位"
+              },
+              "url": {
+                "type": "string",
+                "format": "uri"
+              }
+            }
+          }
+        },
+        "conflicts": {
+          "type": "string",
+          "description": "各源数字/说法不一致时必须写；一致就写「无实质冲突」。"
+        }
+      }
+    }
+  }
+}

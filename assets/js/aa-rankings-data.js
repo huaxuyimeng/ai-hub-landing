@@ -1,0 +1,199 @@
+/* ⚠️ 本文件由 tools/fetch-aa-rankings.mjs 生成，勿手改。数据来源 Artificial Analysis（artificialanalysis.ai） · 抓取 2026-09-14T11:52:16.663Z */
+window.AA_RANKINGS = {
+  "source": "Artificial Analysis（artificialanalysis.ai）",
+  "sourceUrl": "https://artificialanalysis.ai/zh",
+  "methodology": "https://artificialanalysis.ai/methodology",
+  "fetchedAt": "2026-09-14T11:52:16.663Z",
+  "note": "智能指数 = AA 自家评测聚合（0-100）；输出速度 = 中位输出 tokens/s；每任务成本 = 智能指数单任务成本（美元）。首页图表口径，约前 11 名，不是全量模型。",
+  "charts": [
+    {
+      "key": "artificialAnalysisIntelligenceIndex",
+      "label": "智能指数",
+      "unit": "分",
+      "order": "desc",
+      "items": [
+        {
+          "label": "Claude Fable 5.1 (max with fallback)",
+          "value": 53.3737509623252,
+          "url": "https://artificialanalysis.ai/models/claude-fable-5-1"
+        },
+        {
+          "label": "GPT-6 Astra (max)",
+          "value": 52.814069395513,
+          "url": "https://artificialanalysis.ai/models/gpt-6-astra"
+        },
+        {
+          "label": "Claude Opus 5 (max)",
+          "value": 50.7001865797629,
+          "url": "https://artificialanalysis.ai/models/claude-opus-5"
+        },
+        {
+          "label": "Muse Spark 1.3 (max)",
+          "value": 48.1690107719685,
+          "url": "https://artificialanalysis.ai/models/muse-spark-1-3"
+        },
+        {
+          "label": "GLM-5.3 (max)",
+          "value": 44.855717385614,
+          "url": "https://artificialanalysis.ai/models/glm-5-3"
+        },
+        {
+          "label": "Grok 4.6 (high)",
+          "value": 44.4050073012592,
+          "url": "https://artificialanalysis.ai/models/grok-4-6"
+        },
+        {
+          "label": "Kimi K3 (max)",
+          "value": 43.7841729518782,
+          "url": "https://artificialanalysis.ai/models/kimi-k3"
+        },
+        {
+          "label": "Gemini 3.8 Flash (high)",
+          "value": 41.1863571765904,
+          "url": "https://artificialanalysis.ai/models/gemini-3-8-flash"
+        },
+        {
+          "label": "DeepSeek V4.1 Flash (max)",
+          "value": 39.545442472527,
+          "url": "https://artificialanalysis.ai/models/deepseek-v4-1-flash"
+        },
+        {
+          "label": "GPT-5.6 Luna (max)",
+          "value": 37.5048489690841,
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-luna"
+        },
+        {
+          "label": "DeepSeek V4 Pro 0813 (max)",
+          "value": 36.2828791278402,
+          "url": "https://artificialanalysis.ai/models/deepseek-v4-pro"
+        }
+      ]
+    },
+    {
+      "key": "medianOutputSpeed",
+      "label": "输出速度",
+      "unit": "tokens/s",
+      "order": "desc",
+      "items": [
+        {
+          "label": "Gemini 3.8 Flash (high)",
+          "value": 277.52044180913,
+          "url": "https://artificialanalysis.ai/models/gemini-3-8-flash"
+        },
+        {
+          "label": "Muse Spark 1.3 (max)",
+          "value": 227.596858582481,
+          "url": "https://artificialanalysis.ai/models/muse-spark-1-3"
+        },
+        {
+          "label": "DeepSeek V4.1 Flash (max)",
+          "value": 214.390636341402,
+          "url": "https://artificialanalysis.ai/models/deepseek-v4-1-flash"
+        },
+        {
+          "label": "GPT-5.6 Luna (max)",
+          "value": 117.256234572115,
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-luna"
+        },
+        {
+          "label": "DeepSeek V4 Pro 0813 (max)",
+          "value": 78.1498958238296,
+          "url": "https://artificialanalysis.ai/models/deepseek-v4-pro"
+        },
+        {
+          "label": "GLM-5.3 (max)",
+          "value": 72.0139111728563,
+          "url": "https://artificialanalysis.ai/models/glm-5-3"
+        },
+        {
+          "label": "Claude Fable 5.1 (max with fallback)",
+          "value": 65.0884428260935,
+          "url": "https://artificialanalysis.ai/models/claude-fable-5-1"
+        },
+        {
+          "label": "GPT-6 Astra (max)",
+          "value": 59.8005776416736,
+          "url": "https://artificialanalysis.ai/models/gpt-6-astra"
+        },
+        {
+          "label": "Grok 4.6 (high)",
+          "value": 58.5035284934629,
+          "url": "https://artificialanalysis.ai/models/grok-4-6"
+        },
+        {
+          "label": "Claude Opus 5 (max)",
+          "value": 52.1193333493458,
+          "url": "https://artificialanalysis.ai/models/claude-opus-5"
+        },
+        {
+          "label": "Kimi K3 (max)",
+          "value": 36.675545882511,
+          "url": "https://artificialanalysis.ai/models/kimi-k3"
+        }
+      ]
+    },
+    {
+      "key": "costPerIntelligenceIndexTask",
+      "label": "每任务成本",
+      "unit": "$/任务",
+      "order": "asc",
+      "items": [
+        {
+          "label": "GPT-5.6 Luna (max)",
+          "value": 0.17829726152289094,
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-luna"
+        },
+        {
+          "label": "DeepSeek V4.1 Flash (max)",
+          "value": 0.26522527009606844,
+          "url": "https://artificialanalysis.ai/models/deepseek-v4-1-flash"
+        },
+        {
+          "label": "DeepSeek V4 Pro 0813 (max)",
+          "value": 0.6740219040435134,
+          "url": "https://artificialanalysis.ai/models/deepseek-v4-pro"
+        },
+        {
+          "label": "Gemini 3.8 Flash (high)",
+          "value": 1.2427947606950427,
+          "url": "https://artificialanalysis.ai/models/gemini-3-8-flash"
+        },
+        {
+          "label": "Muse Spark 1.3 (max)",
+          "value": 1.6048932100125866,
+          "url": "https://artificialanalysis.ai/models/muse-spark-1-3"
+        },
+        {
+          "label": "Grok 4.6 (high)",
+          "value": 1.8589423352127492,
+          "url": "https://artificialanalysis.ai/models/grok-4-6"
+        },
+        {
+          "label": "Kimi K3 (max)",
+          "value": 2.0001323004425493,
+          "url": "https://artificialanalysis.ai/models/kimi-k3"
+        },
+        {
+          "label": "GLM-5.3 (max)",
+          "value": 2.0056375150449584,
+          "url": "https://artificialanalysis.ai/models/glm-5-3"
+        },
+        {
+          "label": "GPT-6 Astra (max)",
+          "value": 3.2575003134834164,
+          "url": "https://artificialanalysis.ai/models/gpt-6-astra"
+        },
+        {
+          "label": "Claude Opus 5 (max)",
+          "value": 5.858396237036018,
+          "url": "https://artificialanalysis.ai/models/claude-opus-5"
+        },
+        {
+          "label": "Claude Fable 5.1 (max with fallback)",
+          "value": 7.629706364004841,
+          "url": "https://artificialanalysis.ai/models/claude-fable-5-1"
+        }
+      ]
+    }
+  ]
+};

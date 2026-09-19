@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light" />
+  <title>AIHub · 常见问题：产品、技术、安全、部署、开源</title>
+  <meta name="description" content="AIHub 常见问题：产品定位、支持的 AI Provider、模型排行算法、数据安全与密钥管理、部署方式、B 站防风控、代码与文档开放情况。" />
+  <meta name="author" content="AIHub" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="zh_CN" />
+  <meta property="og:title" content="AIHub · 常见问题" />
+  <meta property="og:description" content="产品、技术、安全、部署、开源——一次说清。" />
+  <meta property="og:image" content="assets/og/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="AIHub · AI 行业情报，一个工作台全部搞定" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Crect width='28' height='28' rx='8' fill='%23BE123C'/%3E%3Ctext x='14' y='19' text-anchor='middle' font-family='Arial' font-size='13' font-weight='700' fill='white'%3EAI%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="assets/css/tokens.css?v=20260913c" />
+  <link rel="stylesheet" href="assets/css/base.css?v=20260913c" />
+  <link rel="stylesheet" href="assets/css/aurora.css?v=20260913c" />
+  <link rel="stylesheet" href="assets/css/components.css?v=20260913c" />
+  <link rel="stylesheet" href="assets/css/pages.css?v=20260913c" />
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主内容</a>
+
+  <header class="nav">
+    <div class="container nav__inner">
+      <a class="nav__brand" href="index.html" aria-label="AIHub 首页">
+        <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true">
+          <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#BE123C"/><stop offset="0.35" stop-color="#C2410C"/><stop offset="0.65" stop-color="#B45309"/><stop offset="1" stop-color="#047857"/></linearGradient></defs>
+          <rect width="28" height="28" rx="8" fill="url(#lg)"/>
+          <text x="14" y="19" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#fff">AI</text>
+        </svg>
+        AIHub
+      </a>
+      <nav class="nav__links" aria-label="主导航">
+        <a class="nav__link" href="index.html">首页</a>
+        <a class="nav__link" href="features.html">功能</a>
+        <a class="nav__link" href="briefing.html">每日早报</a>
+        <a class="nav__link" href="screenshots.html">截图</a>
+        <a class="nav__link" href="architecture.html">架构</a>
+        <a class="nav__link" href="security.html">安全合规</a>
+        <a class="nav__link" href="roadmap.html">路线图</a>
+        <a class="nav__link" href="faq.html" aria-current="page">常见问题</a>
+      </nav>
+      <div class="nav__actions">
+        <a class="btn btn--primary btn--sm" href="screenshots.html">看真实截图</a>
+      </div>
+      <button class="nav__toggle" aria-label="打开导航菜单" aria-expanded="false" aria-controls="nav-drawer">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="nav__drawer" id="nav-drawer">
+      <nav aria-label="移动端导航">
+        <a class="nav__link" href="index.html">首页</a>
+        <a class="nav__link" href="features.html">功能</a>
+        <a class="nav__link" href="briefing.html">每日早报</a>
+        <a class="nav__link" href="screenshots.html">截图</a>
+        <a class="nav__link" href="architecture.html">架构</a>
+        <a class="nav__link" href="security.html">安全合规</a>
+        <a class="nav__link" href="roadmap.html">路线图</a>
+        <a class="nav__link" href="faq.html" aria-current="page">常见问题</a>
+      </nav>
+      <div class="nav__drawer-actions">
+        <a class="btn btn--primary btn--block" href="screenshots.html">看真实截图</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- S1 Hero -->
+    <section class="hero" id="hero">
+      <div class="container hero__inner">
+        <div class="hero__copy">
+          <span class="tag">常见问题</span>
+          <h1 class="hero__title">常见问题</h1>
+          <p class="hero__lead">产品、技术、安全、部署、开源——一次说清。</p>
+          <div class="hero__cta">
+            <a class="btn btn--primary" href="#product">看产品答疑</a>
+            <a class="btn btn--secondary" href="#security">看安全答疑</a>
+          </div>
+        </div>
+        <div class="hero__media">
+          <div class="window">
+            <div class="window__bar">
+              <span class="window__dot"></span><span class="window__dot"></span><span class="window__dot"></span>
+              <span class="window__addr">aihub.app/chat</span>
+            </div>
+            <div class="window__body window__body--flush">
+              <img class="window__img" src="assets/screenshots/05-chat.png" srcset="assets/screenshots/05-chat-720.png 720w, assets/screenshots/05-chat.png 2880w" sizes="(max-width: 768px) 92vw, 620px" alt="AIHub 对话面板：展示真实应用界面，左侧会话侧栏与主区对话流" width="2880" height="1800" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- S2 分类手风琴 -->
+    <section class="section" id="faq">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="section__eyebrow">分类答疑</span>
+          <h2 class="section__title">按主题找答案</h2>
+        </div>
+
+        <!-- 产品定位 -->
+        <div class="faq-group reveal" id="product">
+          <h3 class="faq-group__title">产品定位</h3>
+          <div class="accordion">
+            <div class="acc">
+              <button class="acc__btn" aria-expanded="false" aria-controls="faq-p1" id="faq-p1-btn">
+                <span>AIHub 是什么？</span>
+                <svg class="acc__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+              <div class="acc__panel" id="faq-p1" role="region" aria-labelledby="faq-p1-btn">
+                <div><p class="acc__answer">毕业设计 MVP，「AI 行业信息聚合与决策辅助」平台；四大核心模块 = AI 新闻聚合 / AI 模型排行 / B 站 UP 主追踪 / AI 早报（PPT 自动生成）。</p></div>
+              </div>
+            </div>
+            <div class="acc">
+              <button class="acc__btn" aria-expanded="false" aria-controls="faq-p2" id="faq-p2-btn">
+                <span>四大模块能单独用吗？</span>
+                <svg class="acc__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+              <div class="acc__panel" id="faq-p2" role="region" aria-labelledby="faq-p2-btn">
+                <div><p class="acc__answer">统一工作台内联动，例如早报会自动引用当日聚合新闻与排行结论，单一模块的结论会沉淀为其他模块的输入。</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 技术 -->
+        <div class="faq-group reveal" id="tech">
+          <h3 class="faq-group__title">技术</h3>
+          <div class="accordion">
+            <div class="acc">
+              <button class="acc__btn" aria-expanded="false" aria-controls="faq-t1" id="faq-t1-btn">
+                <span>支持哪些 AI Provider？</span>
+                <svg class="acc__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+              <div class="acc__panel" id="faq-t1" role="region" aria-labelledby="faq-t1-btn">
+                <div><p class="acc__answer">OpenAI / Anthropic / Gemini / DeepSeek，统一抽象路由，可热切换。</p></div>
+              </div>
+            </div>
+            <div class="acc">
+              <button class="acc__btn" aria-expanded="false" aria-controls="faq-t2" id="faq-t2-btn">
+                <span>模型排行算法可靠吗？</span>
+                <svg class="acc__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+              <div class="acc__panel" id="faq-t2" role="region" aria-labelledby="faq-t2-btn">
+                <div><p class="acc__answer">帕累托前沿 + 混合价 + 能力变换，核心算法由单测覆盖（全站 8 个测试文件 130+ 断言）；价格走势来自混合爬虫（内置表 → 官网 → 手动兜底）。</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 安全 -->
+        <div class="faq-group reveal" id="security">
+          <h3 class="faq-group__title">安全</h3>
+          <div class="accordion">
+            <div class="acc">
+              <button class="acc__btn" aria-expanded="false" aria-controls="faq-s1" id="faq-s1-btn">
+                <span>我的数据安全吗？</span>
+                <svg class="acc__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+              <div class="acc__panel" id="faq-s1" role="region" aria-labelledby="faq-s1-btn">
+                <div><p class="acc__answer">多租户隔离由 Prisma 中间件强制注入 <code>tenantId</code> + <code>deletedAt</code>；密钥 AES-256-GCM 密文双存；越权返回 NOT_FOUND。</p></div>
+              </div>
+            </div>
+            <div class="acc">
+              <button class="acc__btn" aria-expanded="false" aria-controls="faq-s2" id="faq-s2-btn">
+                <span>Key 怎么管理？</span>
+                <svg class="acc__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+              <div class="acc__panel" id="faq-s2" role="region" aria-labelledby="faq-s2-btn">
+                <div><p class="acc__answer">租户可自配 Key（AES-256-GCM 密文），平台 Key 兜底；明文仅创建时返回一次。</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 部署 -->
+        <div class="faq-group reveal" id="deploy">
+          <h3 class="faq-group__title">部署</h3>
+          <div class="accordion">
+            <div class="acc">
+              <button class="acc__btn" aria-expanded="false" aria-controls="faq-d1" id="faq-d1-btn">
+                <span>怎么跑起来？</span>
+                <svg class="acc__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+              <div class="acc__panel" id="faq-d1" role="region" aria-labelledby="faq-d1-btn">
+                <div><p class="acc__answer">Vercel 托管 + 7 条 Cron；生产 PostgreSQL、开发 SQLite；R2 + Upstash Redis。</p></div>
+              </div>
+            </div>
+            <div class="acc">
+              <button class="acc__btn" aria-expanded="false" aria-controls="faq-d2" id="faq-d2-btn">
+                <span>B 站追踪防风控吗？</span>
+                <svg class="acc__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+              <div class="acc__panel" id="faq-d2" role="region" aria-labelledby="faq-d2-btn">
+                <div><p class="acc__answer">wbi 官方签名 1:1 复刻 + 风控指数退避 + 写保护合并（抓挂不丢旧数据）。</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 开源 / 贡献 -->
+        <div class="faq-group reveal" id="oss">
+          <h3 class="faq-group__title">开源 / 贡献</h3>
+          <div class="accordion">
+            <div class="acc">
+              <button class="acc__btn" aria-expanded="false" aria-controls="faq-o1" id="faq-o1-btn">
+                <span>代码与文档开放吗？</span>
+                <svg class="acc__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+              <div class="acc__panel" id="faq-o1" role="region" aria-labelledby="faq-o1-btn">
+                <div><p class="acc__answer">169 份文档可追溯开发全过程；已规划 pnpm Monorepo（apps/web + apps/cron + 11 packages），当前单仓、方案已定。</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- S3 底部 CTA -->
+    <section class="section" id="cta">
+      <div class="container">
+        <div class="cta reveal">
+          <h2 class="cta__title">开始了解 AIHub</h2>
+          <p class="cta__text">四大核心模块已上线，文档全程可追溯。有问题，欢迎到 GitHub 提 Issue。</p>
+          <div class="cta__actions">
+            <a class="btn btn--light" href="index.html">回首页了解</a>
+            <a class="btn btn--secondary" href="roadmap.html#planned">看规划与边界</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brandcol">
+          <div class="footer__brand">
+            <svg width="24" height="24" viewBox="0 0 28 28" aria-hidden="true">
+              <defs><linearGradient id="lgf" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#BE123C"/><stop offset="0.35" stop-color="#C2410C"/><stop offset="0.65" stop-color="#B45309"/><stop offset="1" stop-color="#047857"/></linearGradient></defs>
+              <rect width="28" height="28" rx="8" fill="url(#lgf)"/>
+              <text x="14" y="19" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#fff">AI</text>
+            </svg>
+            AIHub
+          </div>
+          <p class="footer__desc">AI 行业信息聚合与决策辅助平台，把分散的情报收拢成一个可操作的工作台。</p>
+        </div>
+        <div class="footer__col">
+          <h3>产品</h3>
+          <ul>
+            <li><a href="features.html#news">四大模块</a></li>
+            <li><a href="screenshots.html">真实截图</a></li>
+            <li><a href="architecture.html">技术架构</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h3>资源</h3>
+          <ul>
+            <li><span class="footer__soon">在线 Demo<em>即将开放</em></span></li>
+            <li><span class="footer__soon">GitHub 仓库<em>整理后公开</em></span></li>
+            <li><a href="roadmap.html">路线图</a></li>
+            <li><a href="faq.html">常见问题</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h3>关于</h3>
+          <ul>
+            <li><a href="faq.html#product">项目背景（毕业设计 MVP）</a></li>
+            <li><a href="security.html">安全合规</a></li>
+            <li><a href="roadmap.html#shipped">工程亮点</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>© 2026 AIHub · Built with Next.js &amp; Vercel · 浅色主题</span>
+        <span class="footer__clock" aria-hidden="true">UTC+8 <span data-clock>00:00:00</span></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js?v=20260913c"></script>
+</body>
+</html>

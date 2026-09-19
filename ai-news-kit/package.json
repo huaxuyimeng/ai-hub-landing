@@ -1,0 +1,26 @@
+{
+  "name": "ai-news-kit",
+  "version": "0.6.1",
+  "description": "可插拔的「每日 AI 新闻 → 选稿 → 图表 → PPT」流水线：10 源抓取 + 跨源聚簇去重 + 置信度评级 + 多色渐变底/图标/原生图表的 pptx 渲染，支持定时与手动触发。零框架依赖，一条命令插进任意 Node 项目。",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "fetch": "node scripts/aggregate.mjs",
+    "draft": "node scripts/draft-brief.mjs",
+    "validate": "node scripts/validate-brief.mjs",
+    "pptx": "node scripts/build-pptx.mjs",
+    "md": "node scripts/brief-to-md.mjs",
+    "preview": "node scripts/export-preview.mjs",
+    "serve": "node scripts/serve.mjs",
+    "test": "node scripts/test-render.mjs",
+    "analyze": "node scripts/analyze.mjs",
+    "install-into": "node scripts/install-into.mjs"
+  },
+  "dependencies": {
+    "pptxgenjs": "^3.12.0"
+  },
+  "engines": {
+    "node": ">=22.6"
+  },
+  "license": "MIT"
+}

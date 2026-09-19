@@ -1,0 +1,84 @@
+{
+  "date": "YYYY-MM-DD",
+  "windowNote": "运行时间 YYYY-MM-DD HH:mm（GMT+8），RSS/Feed 池返回的是 …… 成规模的新增条目，故以最近一个完整新闻窗口为主体。",
+  "focus": [
+    "AI Coding",
+    "具身智能"
+  ],
+  "headline": "今日一句话总览。要有观点——指出几条新闻之间的关联，不是流水账。",
+  "rawStats": {
+    "sourcesAlive": 0,
+    "sourcesTotal": 10,
+    "rawItems": 0,
+    "dedupedItems": 0,
+    "multiSourceItems": 0,
+    "byCategory": {
+      "AI Coding": 0,
+      "其他": 0,
+      "具身智能": 0,
+      "AI 政策": 0
+    },
+    "crossSourceThreshold": 3,
+    "note": "多源关联阈值沿用项目实测值 3（共享实体 token 数 ≥3 才判为同一事件）；阈值 2 时虚高 47.2%，4 时偏严 10.6%。"
+  },
+  "confidenceScale": [
+    {
+      "lv": "A",
+      "name": "极高",
+      "rule": "≥3 个独立信源，且可追溯到一手官方材料（官网/论文/公告/官方报告）"
+    },
+    {
+      "lv": "B",
+      "name": "高",
+      "rule": "2 个独立信源，或 1 个信源 + 一手官方材料"
+    },
+    {
+      "lv": "C",
+      "name": "中",
+      "rule": "单一信源报道，细节自洽但无第二方独立印证（含「多家转载同一家独家」）"
+    },
+    {
+      "lv": "D",
+      "name": "存疑",
+      "rule": "关键数字互相矛盾，或全部报道可溯源到同一原始信源且无官方确认"
+    }
+  ],
+  "picks": [
+    {
+      "no": 1,
+      "topic": "AI Coding",
+      "title": "一句话说清事件，尽量含关键数字",
+      "lv": "A",
+      "publishedAt": "YYYY-MM-DD",
+      "event": "3–5 句，只写事实（谁、什么时候、做了什么、关键数字）。不写评价，不写「这是重大突破」。",
+      "keyFacts": [
+        "关键事实 1 —— 尽量带可验证数字",
+        "关键事实 2",
+        "关键事实 3",
+        "关键事实 4"
+      ],
+      "why": "★ 必须回答「所以呢」——对读者决策有什么影响。给出「下一步该做什么」的暗示。禁止复述 event。",
+      "sources": [
+        {
+          "name": "一手来源（官网/论文/公告），标注「（一手）」并排第一",
+          "url": "https://"
+        },
+        {
+          "name": "独立第二方报道",
+          "url": "https://"
+        }
+      ],
+      "conflicts": "各源数字/说法不一致时写清楚；一致就写「无实质冲突」。"
+    }
+  ],
+  "alsoWorthAScan": [
+    {
+      "title": "信源不足 / 主题重复 / 已推送过的条目",
+      "sources": "量子位 / AITNT（2 源）"
+    }
+  ],
+  "dedupeNote": "已对 X 月 X 日 / X 月 X 日两轮推送做全量查重。上一轮涉及的「……」本周有新进展，但事件主体已推送过，本期只在扫读清单中带过。",
+  "charts": {
+    "_note": "本块不要手写 —— 跑 node scripts/analyze.mjs --date <日期> 自动统计并写回。手写容易与 picks 对不上（validate-brief 会比对 confidence 与 picks 数量，不一致直接报错）。"
+  }
+}

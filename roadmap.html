@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light" />
+  <title>AIHub · 路线图：已交付与进行中</title>
+  <meta name="description" content="AIHub 路线图：10 大功能已上线，Monorepo 拆分、OpenTelemetry 接线、价格解析器与 SQLite→PostgreSQL 迁移在推进。诚实呈现边界与未执行项。" />
+  <meta name="author" content="AIHub" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="zh_CN" />
+  <meta property="og:title" content="AIHub · 路线图" />
+  <meta property="og:description" content="已交付与进行中：10 大功能已上线，诚实标注边界与未执行项。" />
+  <meta property="og:image" content="assets/og/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="AIHub · AI 行业情报，一个工作台全部搞定" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Crect width='28' height='28' rx='8' fill='%23BE123C'/%3E%3Ctext x='14' y='19' text-anchor='middle' font-family='Arial' font-size='13' font-weight='700' fill='white'%3EAI%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="assets/css/tokens.css?v=20260913c" />
+  <link rel="stylesheet" href="assets/css/base.css?v=20260913c" />
+  <link rel="stylesheet" href="assets/css/aurora.css?v=20260913c" />
+  <link rel="stylesheet" href="assets/css/components.css?v=20260913c" />
+  <link rel="stylesheet" href="assets/css/pages.css?v=20260913c" />
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主内容</a>
+
+  <header class="nav">
+    <div class="container nav__inner">
+      <a class="nav__brand" href="index.html" aria-label="AIHub 首页">
+        <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true">
+          <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#BE123C"/><stop offset="0.35" stop-color="#C2410C"/><stop offset="0.65" stop-color="#B45309"/><stop offset="1" stop-color="#047857"/></linearGradient></defs>
+          <rect width="28" height="28" rx="8" fill="url(#lg)"/>
+          <text x="14" y="19" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#fff">AI</text>
+        </svg>
+        AIHub
+      </a>
+      <nav class="nav__links" aria-label="主导航">
+        <a class="nav__link" href="index.html">首页</a>
+        <a class="nav__link" href="features.html">功能</a>
+        <a class="nav__link" href="briefing.html">每日早报</a>
+        <a class="nav__link" href="screenshots.html">截图</a>
+        <a class="nav__link" href="architecture.html">架构</a>
+        <a class="nav__link" href="security.html">安全合规</a>
+        <a class="nav__link" href="roadmap.html" aria-current="page">路线图</a>
+        <a class="nav__link" href="faq.html">常见问题</a>
+      </nav>
+      <div class="nav__actions">
+        <a class="btn btn--primary btn--sm" href="screenshots.html">看真实截图</a>
+      </div>
+      <button class="nav__toggle" aria-label="打开导航菜单" aria-expanded="false" aria-controls="nav-drawer">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="nav__drawer" id="nav-drawer">
+      <nav aria-label="移动端导航">
+        <a class="nav__link" href="index.html">首页</a>
+        <a class="nav__link" href="features.html">功能</a>
+        <a class="nav__link" href="briefing.html">每日早报</a>
+        <a class="nav__link" href="screenshots.html">截图</a>
+        <a class="nav__link" href="architecture.html">架构</a>
+        <a class="nav__link" href="security.html">安全合规</a>
+        <a class="nav__link" href="roadmap.html" aria-current="page">路线图</a>
+        <a class="nav__link" href="faq.html">常见问题</a>
+      </nav>
+      <div class="nav__drawer-actions">
+        <a class="btn btn--primary btn--block" href="screenshots.html">看真实截图</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- S1 Hero -->
+    <section class="hero" id="hero">
+      <div class="container hero__inner">
+        <div class="hero__copy">
+          <span class="tag">路线图</span>
+          <h1 class="hero__title">路线图：已交付与进行中</h1>
+          <p class="hero__lead">10 大功能已上线，Monorepo 拆分与可观测接线在推进。</p>
+          <div class="hero__cta">
+            <a class="btn btn--primary" href="#shipped">看已交付</a>
+            <a class="btn btn--secondary" href="#boundaries">看诚实边界</a>
+          </div>
+        </div>
+        <div class="hero__media">
+          <div class="window">
+            <div class="window__bar">
+              <span class="window__dot"></span><span class="window__dot"></span><span class="window__dot"></span>
+              <span class="window__addr">aihub.app/news</span>
+            </div>
+            <div class="window__body window__body--flush">
+              <img class="window__img" src="assets/screenshots/01-news.png" srcset="assets/screenshots/01-news-720.png 720w, assets/screenshots/01-news.png 2880w" sizes="(max-width: 768px) 92vw, 620px" alt="AIHub 新闻聚合页：展示真实应用界面，包含快讯列表与来源标签" width="2880" height="1800" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- S2 已交付里程碑 -->
+    <section class="section" id="shipped">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="section__eyebrow">已交付</span>
+          <h2 class="section__title">10 大功能已上线</h2>
+          <p class="section__lead">每个里程碑都对应可验证的代码与文档记录。</p>
+        </div>
+        <div class="timeline">
+          <div class="timeline__item reveal" data-delay="0">
+            <div class="timeline__rail"><span class="timeline__dot timeline__dot--success"></span></div>
+            <div class="timeline__card"><div class="timeline__meta"><span class="timeline__date">已交付</span><span class="badge badge--success">平台基座</span></div><h3 class="timeline__title">多租户平台</h3><p class="timeline__text">tenantId + 软删除 + OAuth，团队数据强制隔离。</p></div>
+          </div>
+          <div class="timeline__item reveal" data-delay="40">
+            <div class="timeline__rail"><span class="timeline__dot timeline__dot--success"></span></div>
+            <div class="timeline__card"><div class="timeline__meta"><span class="timeline__date">已交付</span><span class="badge badge--success">AI</span></div><h3 class="timeline__title">AI 对话</h3><p class="timeline__text">多 Provider 路由 + Key 三级解析，随时热切换。</p></div>
+          </div>
+          <div class="timeline__item reveal" data-delay="80">
+            <div class="timeline__rail"><span class="timeline__dot timeline__dot--success"></span></div>
+            <div class="timeline__card"><div class="timeline__meta"><span class="timeline__date">已交付</span><span class="badge badge--success">计费</span></div><h3 class="timeline__title">用量计费</h3><p class="timeline__text">P2002 并发重试 + 实时重算，账单可见可控。</p></div>
+          </div>
+          <div class="timeline__item reveal" data-delay="0">
+            <div class="timeline__rail"><span class="timeline__dot timeline__dot--success"></span></div>
+            <div class="timeline__card"><div class="timeline__meta"><span class="timeline__date">已交付</span><span class="badge badge--success">工程</span></div><h3 class="timeline__title">代码审查</h3><p class="timeline__text">结构化 JSON → 事务批量写，审查结果可追溯。</p></div>
+          </div>
+          <div class="timeline__item reveal" data-delay="40">
+            <div class="timeline__rail"><span class="timeline__dot timeline__dot--success"></span></div>
+            <div class="timeline__card"><div class="timeline__meta"><span class="timeline__date">已交付</span><span class="badge badge--success">模块一</span></div><h3 class="timeline__title">新闻聚合</h3><p class="timeline__text">8 parser + 日期诚信回退，去重分流稳定。</p></div>
+          </div>
+          <div class="timeline__item reveal" data-delay="80">
+            <div class="timeline__rail"><span class="timeline__dot timeline__dot--success"></span></div>
+            <div class="timeline__card"><div class="timeline__meta"><span class="timeline__date">已交付</span><span class="badge badge--success">模块二</span></div><h3 class="timeline__title">模型性价比排行</h3><p class="timeline__text">帕累托前沿算法 + 单测覆盖，挑出不被支配的模型。</p></div>
+          </div>
+          <div class="timeline__item reveal" data-delay="0">
+            <div class="timeline__rail"><span class="timeline__dot timeline__dot--success"></span></div>
+            <div class="timeline__card"><div class="timeline__meta"><span class="timeline__date">已交付</span><span class="badge badge--success">模块三</span></div><h3 class="timeline__title">B 站生态</h3><p class="timeline__text">wbi 签名 + 写保护合并，抗风控不丢数据。</p></div>
+          </div>
+          <div class="timeline__item reveal" data-delay="40">
+            <div class="timeline__rail"><span class="timeline__dot timeline__dot--success"></span></div>
+            <div class="timeline__card"><div class="timeline__meta"><span class="timeline__date">已交付</span><span class="badge badge--success">模块四</span></div><h3 class="timeline__title">AI 早报</h3><p class="timeline__text">slide-engine 11 页三幕结构，每日自动产出。</p></div>
+          </div>
+          <div class="timeline__item reveal" data-delay="80">
+            <div class="timeline__rail"><span class="timeline__dot timeline__dot--success"></span></div>
+            <div class="timeline__card"><div class="timeline__meta"><span class="timeline__date">已交付</span><span class="badge badge--success">前端</span></div><h3 class="timeline__title">前端工作台</h3><p class="timeline__text">9 页 + 命令面板 + 6 套主题，体验连贯。</p></div>
+          </div>
+          <div class="timeline__item reveal" data-delay="0">
+            <div class="timeline__rail"><span class="timeline__dot timeline__dot--success"></span></div>
+            <div class="timeline__card"><div class="timeline__meta"><span class="timeline__date">已交付</span><span class="badge badge--success">工程</span></div><h3 class="timeline__title">工程化</h3><p class="timeline__text">JSON 日志 + 2 轮审计 + tsc 0 error，质量可验证。</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- S3 近期规划 -->
+    <section class="section section--subtle" id="planned">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="section__eyebrow">进行中 / 规划</span>
+          <h2 class="section__title">下一步要啃的硬骨头</h2>
+        </div>
+        <div class="timeline">
+          <div class="timeline__item reveal" data-delay="0">
+            <div class="timeline__rail"><span class="timeline__dot timeline__dot--warning"></span></div>
+            <div class="timeline__card"><div class="timeline__meta"><span class="timeline__date">规划中</span><span class="badge badge--warning">架构</span></div><h3 class="timeline__title">Monorepo 拆分</h3><p class="timeline__text">apps/web + apps/cron + 11 packages——方案已定，待执行。</p></div>
+          </div>
+          <div class="timeline__item reveal" data-delay="40">
+            <div class="timeline__rail"><span class="timeline__dot timeline__dot--warning"></span></div>
+            <div class="timeline__card"><div class="timeline__meta"><span class="timeline__date">规划中</span><span class="badge badge--warning">可观测</span></div><h3 class="timeline__title">OpenTelemetry 正式接线</h3><p class="timeline__text">已装未接，计划产出真实调用链路与指标。</p></div>
+          </div>
+          <div class="timeline__item reveal" data-delay="80">
+            <div class="timeline__rail"><span class="timeline__dot timeline__dot--warning"></span></div>
+            <div class="timeline__card"><div class="timeline__meta"><span class="timeline__date">规划中</span><span class="badge badge--warning">数据</span></div><h3 class="timeline__title">厂商专用价格解析器落地</h3><p class="timeline__text">当前为占位实现，需对接各厂商计费口径。</p></div>
+          </div>
+          <div class="timeline__item reveal" data-delay="120">
+            <div class="timeline__rail"><span class="timeline__dot timeline__dot--warning"></span></div>
+            <div class="timeline__card"><div class="timeline__meta"><span class="timeline__date">规划中</span><span class="badge badge--warning">存储</span></div><h3 class="timeline__title">生产库 SQLite → PostgreSQL 迁移</h3><p class="timeline__text">生产环境从 SQLite 平滑迁移至 PostgreSQL。</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- S4 工程节奏（Sprint） -->
+    <section class="section" id="sprints">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="section__eyebrow">工程节奏</span>
+          <h2 class="section__title">5 个 Sprint，清晰节奏</h2>
+          <p class="section__lead">从「能用」到「能放心用」，再到「平台化」——每个 Sprint 只解决一类问题。</p>
+        </div>
+        <div class="timeline">
+          <div class="timeline__item reveal" data-delay="0">
+            <div class="timeline__rail"><span class="timeline__dot timeline__dot--success"></span></div>
+            <div class="timeline__card"><div class="timeline__meta"><span class="timeline__date">SPRINT 01 · 已完成</span><span class="badge badge--success">安全加固</span></div><h3 class="timeline__title">安全加固</h3><p class="timeline__text">2 轮全面回扫与深层漏洞修复：28 项审计 + CRITICAL 级修复 + sanitize 统一，详情见 docs/实施记录 45 / 46。</p></div>
+          </div>
+          <div class="timeline__item reveal" data-delay="40">
+            <div class="timeline__rail"><span class="timeline__dot timeline__dot--primary"></span></div>
+            <div class="timeline__card"><div class="timeline__meta"><span class="timeline__date">SPRINT 02 · 进行中</span><span class="badge badge--warning">工程能力</span></div><h3 class="timeline__title">软指标全清</h3><p class="timeline__text">补齐 router 集成测试、清理静默吞错、P2002 重试加退避——从「能用」到「能放心用」。</p></div>
+          </div>
+          <div class="timeline__item reveal" data-delay="80">
+            <div class="timeline__rail"><span class="timeline__dot timeline__dot--warning"></span></div>
+            <div class="timeline__card"><div class="timeline__meta"><span class="timeline__date">SPRINT 03 · 规划</span><span class="badge badge--warning">可观测</span></div><h3 class="timeline__title">从查日志到查链路</h3><p class="timeline__text">OpenTelemetry 接入 + 慢查询告警 + 锁失败原因暴露。</p></div>
+          </div>
+          <div class="timeline__item reveal" data-delay="120">
+            <div class="timeline__rail"><span class="timeline__dot timeline__dot--warning"></span></div>
+            <div class="timeline__card"><div class="timeline__meta"><span class="timeline__date">SPRINT 04 · 规划</span><span class="badge badge--warning">AI 路由 v2</span></div><h3 class="timeline__title">聊得便宜 + 聊得准</h3><p class="timeline__text">提示词复杂度分级、多 Provider 自动切换、成本仪表盘。</p></div>
+          </div>
+          <div class="timeline__item reveal" data-delay="160">
+            <div class="timeline__rail"><span class="timeline__dot timeline__dot--warning"></span></div>
+            <div class="timeline__card"><div class="timeline__meta"><span class="timeline__date">SPRINT 05 · 规划</span><span class="badge badge--warning">平台化</span></div><h3 class="timeline__title">从产品到平台</h3><p class="timeline__text">插件市场 MVP、Webhook v1、公开 API + Rate Limit + API Key 鉴权。</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- S5 商业化路径（假设性目标） -->
+    <section class="section section--subtle" id="commercial">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="section__eyebrow">商业化路径 · 可选</span>
+          <h2 class="section__title">如果要产品化，路径已经想好</h2>
+          <p class="section__lead">AIHub 当前定位是毕业设计 MVP——以下为假设性规划，非承诺。</p>
+        </div>
+        <div class="grid grid--4" data-stagger="80">
+          <article class="card reveal">
+            <div class="card__num">PHASE 1</div>
+            <h3 class="card__title card__title--sm">免费 + 自部署</h3>
+            <p class="card__text">单租户免费，完善自部署文档。目标：积累 100 个月活用户。</p>
+          </article>
+          <article class="card reveal">
+            <div class="card__num">PHASE 2</div>
+            <h3 class="card__title card__title--sm">SaaS 化</h3>
+            <p class="card__text">Free / Pro / Team 阶梯配额，多 Provider 自动路由。</p>
+          </article>
+          <article class="card reveal">
+            <div class="card__num">PHASE 3</div>
+            <h3 class="card__title card__title--sm">增值服务</h3>
+            <p class="card__text">本地 LLM 代理 + 行业定制早报（金融 / 医疗）+ 白标 OEM。</p>
+          </article>
+          <article class="card reveal">
+            <div class="card__num">KPI</div>
+            <h3 class="card__title card__title--sm">v1.0 公测目标</h3>
+            <p class="card__text">注册 &gt; 500 · MAU &gt; 100 · cron 失败率 &lt; 1% · 测试覆盖 &gt; 60%。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- S6 边界与诚实清单 -->
+    <section class="section" id="boundaries">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="section__eyebrow">诚实边界清单</span>
+          <h2 class="section__title">我们如实标注的地方</h2>
+          <p class="section__lead">不美化成已上线——以下项当前未达生产就绪状态。</p>
+        </div>
+        <div class="rows">
+          <div class="row reveal" data-delay="0">
+            <div class="row__problem"><span class="badge badge--danger">未执行</span> Monorepo 拆分</div>
+            <div class="row__arrow"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></div>
+            <div class="row__fix">方案已定（apps/web + apps/cron + 11 packages），尚未落地。</div>
+          </div>
+          <div class="row reveal" data-delay="60">
+            <div class="row__problem"><span class="badge badge--warning">已装未接</span> OpenTelemetry</div>
+            <div class="row__arrow"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></div>
+            <div class="row__fix">依赖已引入，正式接线与链路采样仍在规划。</div>
+          </div>
+          <div class="row reveal" data-delay="120">
+            <div class="row__problem"><span class="badge badge--warning">占位</span> 厂商专用价格解析器</div>
+            <div class="row__arrow"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></div>
+            <div class="row__fix">当前为通用占位实现，待对接各厂商计费口径。</div>
+          </div>
+          <div class="row reveal" data-delay="180">
+            <div class="row__problem"><span class="badge badge--warning">待迁移</span> 生产库 SQLite → PostgreSQL</div>
+            <div class="row__arrow"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></div>
+            <div class="row__fix">生产环境仍跑在 SQLite，迁移计划已列入 Roadmap。</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- S7 底部 CTA -->
+    <section class="section" id="cta">
+      <div class="container">
+        <div class="cta reveal">
+          <h2 class="cta__title">还有疑问？先看 FAQ</h2>
+          <p class="cta__text">产品、技术、安全、部署、开源——一次说清。</p>
+          <div class="cta__actions">
+            <a class="btn btn--light" href="faq.html">看常见问题</a>
+            <a class="btn btn--secondary" href="index.html">回首页</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brandcol">
+          <div class="footer__brand">
+            <svg width="24" height="24" viewBox="0 0 28 28" aria-hidden="true">
+              <defs><linearGradient id="lgf" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#BE123C"/><stop offset="0.35" stop-color="#C2410C"/><stop offset="0.65" stop-color="#B45309"/><stop offset="1" stop-color="#047857"/></linearGradient></defs>
+              <rect width="28" height="28" rx="8" fill="url(#lgf)"/>
+              <text x="14" y="19" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#fff">AI</text>
+            </svg>
+            AIHub
+          </div>
+          <p class="footer__desc">AI 行业信息聚合与决策辅助平台，把分散的情报收拢成一个可操作的工作台。</p>
+        </div>
+        <div class="footer__col">
+          <h3>产品</h3>
+          <ul>
+            <li><a href="features.html#news">四大模块</a></li>
+            <li><a href="screenshots.html">真实截图</a></li>
+            <li><a href="architecture.html">技术架构</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h3>资源</h3>
+          <ul>
+            <li><span class="footer__soon">在线 Demo<em>即将开放</em></span></li>
+            <li><span class="footer__soon">GitHub 仓库<em>整理后公开</em></span></li>
+            <li><a href="roadmap.html">路线图</a></li>
+            <li><a href="faq.html">常见问题</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h3>关于</h3>
+          <ul>
+            <li><a href="faq.html#product">项目背景（毕业设计 MVP）</a></li>
+            <li><a href="security.html">安全合规</a></li>
+            <li><a href="roadmap.html#shipped">工程亮点</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>© 2026 AIHub · Built with Next.js &amp; Vercel · 浅色主题</span>
+        <span class="footer__clock" aria-hidden="true">UTC+8 <span data-clock>00:00:00</span></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js?v=20260913c"></script>
+</body>
+</html>

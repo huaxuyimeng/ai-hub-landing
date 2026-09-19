@@ -1,0 +1,21 @@
+{
+  "functions": {
+    "api/health.js": { "maxDuration": 10, "memory": 1024 },
+    "api/history.js": { "maxDuration": 10, "memory": 1024 },
+    "api/brief.js": { "maxDuration": 10, "memory": 1024 },
+    "api/download.js": { "maxDuration": 10, "memory": 1024 },
+    "api/generate.js": { "maxDuration": 300, "memory": 1024 },
+    "api/jobs/[id].js": { "maxDuration": 10, "memory": 1024 }
+  },
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-store" },
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Access-Control-Allow-Methods", "value": "GET, POST, OPTIONS" },
+        { "key": "Access-Control-Allow-Headers", "value": "Content-Type" }
+      ]
+    }
+  ]
+}

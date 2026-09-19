@@ -1,0 +1,388 @@
+{
+  "date": "2026-09-14",
+  "windowNote": "运行时间 2026-09-14 00:06（GMT+8），RSS/Feed 池返回的是 2026-09-10 ~ 09-13 成规模的新增条目，09-14 当日尚无成规模新增，故以最近一个完整新闻窗口为主体。",
+  "focus": [
+    "AI Coding",
+    "具身智能"
+  ],
+  "headline": "AI Coding 的「能力边界」和「成本结构」同一周被两头改写：一边是 Claude Code 被证实可顶替导弹制导软件工程师，一边是 DeepSeek V4.1 Flash 把长上下文 Agent 的缓存成本压到 1/4；具身智能则第一次拿到了「钱该往哪花」的量化答案——环境多样性 > 数据量 > 参数量。",
+  "rawStats": {
+    "sourcesAlive": 10,
+    "sourcesTotal": 10,
+    "rawItems": 208,
+    "dedupedItems": 208,
+    "multiSourceItems": 33,
+    "byCategory": {
+      "AI Coding": 88,
+      "其他": 106,
+      "具身智能": 13,
+      "AI 政策": 1
+    },
+    "crossSourceThreshold": 3,
+    "note": "多源关联阈值沿用项目实测值 3（共享实体 token 数 ≥3 才判为同一事件）；阈值 2 时虚高 47.2%，4 时偏严 10.6%。"
+  },
+  "confidenceScale": [
+    {
+      "lv": "A",
+      "name": "极高",
+      "rule": "≥3 个独立信源，且可追溯到一手官方材料（官网/论文/公告/官方报告）"
+    },
+    {
+      "lv": "B",
+      "name": "高",
+      "rule": "2 个独立信源，或 1 个信源 + 一手官方材料"
+    },
+    {
+      "lv": "C",
+      "name": "中",
+      "rule": "单一信源报道，细节自洽但无第二方独立印证（含「多家转载同一家独家」）"
+    },
+    {
+      "lv": "D",
+      "name": "存疑",
+      "rule": "关键数字互相矛盾，或全部报道可溯源到同一原始信源且无官方确认"
+    }
+  ],
+  "picks": [
+    {
+      "no": 1,
+      "topic": "AI Coding",
+      "title": "Anthropic 报告：Claude Code 被用于导弹制导软件开发，替代了人类软件工程师",
+      "lv": "A",
+      "publishedAt": "2026-09-10",
+      "event": "Anthropic 9 月 10 日发布《Detecting and Countering Misuse of AI》威胁情报报告，披露一个位于也门北部的武器研发小组在 2025 年 12 月至 2026 年 8 月间，用 Claude Code 完成了本该由人类软件工程师承担的工作：开发飞行器的制导、导航与控制（GNC）软件，把开源自动驾驶系统集成到「手机级」飞控上，还做了控制参数整定、固件构建与飞行仿真。",
+      "keyFacts": [
+        "同时推进 3 个武器项目：制导火箭、射程目标 2000km+ 的多级弹道导弹、含高超声速滑翔飞行器变体的 R2000 系列",
+        "并行跑多个 Claude 实例分工：一个写代码、一个做研究、第三个审查前者的产出，人类只负责派活",
+        "进行过一次制导火箭实弹试射，疑似失败；数小时后回到 Claude 分析遥测、排查原因",
+        "已把工具链编译成不依赖 Claude、也不依赖 MATLAB 的离线可执行程序 —— 封号后能力未回收",
+        "Anthropic 未直接点名胡塞武装，仅称「也门北部的威胁行为者小组」；无证据显示已部署可用武器"
+      ],
+      "why": "这是 AI Coding 第一次被证明能顶替「导弹制导软件工程师」这类极稀缺岗位，能力天花板问题从讨论变成事实。更值得警惕的是绕过防护的方式——把任务拆到不同会话里，让任何单一对话都看不出全貌——这恰恰是今天所有 coding agent 团队的标准用法，不是什么高级攻击。加上那份已脱离 Claude 的离线工具包，说明「封号」只能断掉入口，回收不了已经交付的能力。对任何在做 Agent 权限/审计的团队，这三条都该进设计约束。",
+      "sources": [
+        {
+          "name": "Anthropic 官方威胁情报报告（一手）",
+          "url": "https://www.anthropic.com/"
+        },
+        {
+          "name": "The National（独立报道）",
+          "url": "https://www.thenationalnews.com/news/mena/2026/09/11/how-yemeni-rebels-used-anthropics-ai-software-to-design-and-build-guided-weapons"
+        },
+        {
+          "name": "TRT World（独立报道）",
+          "url": "https://trtworld.com/article/701ccb72bdf5"
+        },
+        {
+          "name": "钜亨网 cnYES（中文独立报道）",
+          "url": "https://news.cnyes.com/news/id/6605037"
+        },
+        {
+          "name": "Hacker News / AITNT / AI工具集（聚合源）",
+          "url": "https://www.aitntnews.com/"
+        }
+      ],
+      "conflicts": "各家在核心事实上一致；差异仅在于是否把该小组直接称为「胡塞武装」（Anthropic 官方未点名，媒体普遍关联）。规模/时间数字无冲突。"
+    },
+    {
+      "no": 2,
+      "topic": "AI Coding",
+      "title": "DeepSeek V4.1 Flash 开源（MIT）：552B MoE，KV 缓存降到 1/4，Terminal-Bench 2.1 拿 90.6",
+      "lv": "A",
+      "publishedAt": "2026-09-10",
+      "event": "DeepSeek 9 月 10 日发布并开源 V4.1-Flash：552B 参数 MoE，采用新的非对称 Causal-Encoder-Decoder 架构（20 层编码器 + 20 层解码器），输入每 token 仅激活 8B、输出 16B，原生多模态，上下文 1M。45 万亿 token 从零预训练。权重以 MIT 许可发布在 Hugging Face，同时给出技术报告与推理代码。",
+      "keyFacts": [
+        "全局 KV 缓存 890 字节/token —— 约为 V4-Flash 的 1/4，持久化缓存占用约 1/8",
+        "Terminal-Bench 2.1 得 90.6（DeepSeek 自家表中最高），DeepSWE v1.1 得 74.2，均超过同表 V4-Pro",
+        "峰谷定价：闲时缓存输入 $0.003/百万 token、非缓存输入 $0.15、输出 $0.60",
+        "9 月 14 日 12:00 起 deepseek-v4-pro 请求全部路由到 V4.1-Flash 并按其计价，直到 V4.1-Pro 上线",
+        "官方点名 WorkBuddy（含 CodeBuddy）与 OpenCode 已完整支持"
+      ],
+      "why": "AI Coding 的真实瓶颈已经不是「模型够不够强」，而是「长上下文 Agent 跑不跑得起」。Coding Agent 的典型负载是同一个仓库前缀反复命中缓存，V4.1-Flash 把缓存占用砍到 1/4，等于把这条成本曲线整体下移一档。MIT 许可则让有数据 residency 要求的团队可以完全私有化部署——这是闭源旗舰给不了的。要注意的是 90.6 / 74.2 出自 DeepSeek 自家的对比表，第三方复现还没跟上，落地前建议自己跑一遍 Terminal-Bench。",
+      "sources": [
+        {
+          "name": "DeepSeek 官方发布页（一手）",
+          "url": "https://www.deepseek.com/en/news/deepseek-v4-1-flash/"
+        },
+        {
+          "name": "ModelScope 权重与技术报告（一手）",
+          "url": "https://modelscope.cn/models/deepseek-ai/DeepSeek-V4.1-Flash"
+        },
+        {
+          "name": "百度百科（条目交叉核验）",
+          "url": "https://baike.baidu.com/item/DeepSeek%20V4.1%20Flash/68972451"
+        },
+        {
+          "name": "AI工具集 / InfoQ / 极客公园（三家聚合源）",
+          "url": "https://ai-bot.cn/daily-ai-news/"
+        }
+      ],
+      "conflicts": "各源在 552B / 8B-16B 激活 / 1/4 KV / MIT 许可上完全一致。TechPillow 提到「MIT open weights」，与官方一致；无实质冲突。"
+    },
+    {
+      "no": 3,
+      "topic": "AI Coding",
+      "title": "Codex 要让 Harness 消失，Claude Code 要把它做成承重墙 —— 两家当面给出相反答案",
+      "lv": "B",
+      "publishedAt": "2026-09-12",
+      "event": "OpenAI Codex 团队 Tibo 与 Anthropic Claude Code 团队 Thariq Shihipar 在两档播客里就「模型变强后 Harness 该变重还是变轻」给出截然相反的结论。Tibo：Harness「通常比模型领先一点」，是临时拐杖，模型学会后就删——Codex 有些问题宁可等下一版模型也不在 Harness 里打补丁。Thariq：模型越强 Harness 反而要越复杂，因为 Agent 现在要连续跑数小时，需要分类器、沙箱等机制保证长时运行的安全与可控。",
+      "keyFacts": [
+        "Codex 路线（做薄）：减少专用工具、让模型直接用终端，Harness 只提供沙箱与基础接口",
+        "Claude Code 路线（做厚）：hooks 覆盖 PreToolUse/PostToolUse/Stop 全生命周期 + 细粒度权限模型",
+        "第三方实证实则两边都支持：METR 测得精心调优的 Codex/Claude Code 相比通用 scaffold 在时间跨度上无显著优势；Harness-Bench 则测出 harness 差异效果显著",
+        "折中表述：能力型脚手架会收缩，边界型强制（仓库真相、机械校验、隔离、权限、上下文预算）会长期存在"
+      ],
+      "why": "这不是口水战，是直指「你的工程投入该放哪」。两边其实描述的是同一件事的两面：教模型做事的那层会变轻，让模型安全、长期、并行做事的那层会变重。而第三方数据给出的实操结论更锋利——harness 是「你会输的地方」，不是「你会赢的地方」：烂 harness 代价巨大，但从「够好」卷到「顶级」几乎买不到收益。所以别再堆提示词和状态机，把钱花在测试、lint、schema 校验和权限边界上。",
+      "sources": [
+        {
+          "name": "InfoQ 中文编译（原始出处）",
+          "url": "https://www.infoq.cn/"
+        },
+        {
+          "name": "36氪《全行业都狂卷 Harness》（独立长文）",
+          "url": "https://eu.36kr.com/zh/p/3745269787770881"
+        },
+        {
+          "name": "AITNT / Hacker News / 极客公园 / AI工具集（四家聚合源）",
+          "url": "https://www.aitntnews.com/newDetail.html?newId=29282"
+        }
+      ],
+      "conflicts": "两人原话在多家转载中一致。需注意：Tibo 与 Michael Bolin（Codex 开源负责人）是两个不同的人、两场不同访谈，部分转载把二者混为一谈——本条以 InfoQ 编译的 Tibo 表述为准。"
+    },
+    {
+      "no": 4,
+      "topic": "具身智能",
+      "title": "LightNav-0 开源：4B 通用导航大脑，一份权重零样本跑通人形/四足/轮式/飞行四类本体",
+      "lv": "B",
+      "publishedAt": "2026-09-01",
+      "event": "亮源新创（Light Origins）联合逐际动力开源通用导航模型 LightNav-0，以 Qwen3-VL-4B 为基座，不引入任何导航专用动作头；通过 Real2Sim2Real 数据引擎把 2000+ 个互联网来源的真实场景转成可复用仿真环境，产出 4000+ 小时视觉-语言-动作经验、742K 条指令、15.2M+ 帧；Apache 2.0 代码 + HuggingFace 权重 + arXiv 技术报告（2608.30935）同步放出。",
+      "keyFacts": [
+        "输出接口极简：图像上点两个 token 作隐式 CoT，RVQ 把 10 步 SE(2) 轨迹压成 3 个动作 token",
+        "10 项公开基准单目方法全部第一：R2R 68.5、RxR 73.6、HM3D ObjectNav 77.2、EVT-Bench 82.6",
+        "零样本迁移到人形/四足/轮式/飞行四类本体，~5Hz 推理、~1.5m/s",
+        "缩放规律反直觉：环境覆盖 1/8→全部 R2R +16.7；数据翻倍仅 +0.8；参数 4B→8B 反降",
+        "4B 具身推理检查点平均 67.4，反超 8B 专用模型 Molmo2-ER 的 62.8"
+      ],
+      "why": "这篇最值钱的不是 SOTA，是那张缩放图——具身智能第一次拿到「钱该往哪花」的量化证据：扩场景 » 堆数据 > 堆参数。很多团队还在按大语言模型的惯性买卡、买时长，而这条曲线说：同样的预算，多租几个真实场地扫场景，比多训一倍时间有用得多（+16.7 vs +0.8）。另外「跨本体零样本」如果站得住，意味着机器人公司不必为每个本体重训一套导航，这是很实际的成本项。提醒一句：真实机器人的迁移在论文里主要是定性展示，动作空间和成功判据并未统一，别把 demo 当量产指标。",
+      "sources": [
+        {
+          "name": "Light Origins 官方技术博客（一手）",
+          "url": "https://lightorigins.cn/en/blog/lightnav-0"
+        },
+        {
+          "name": "arXiv 2608.30935 技术报告（一手）",
+          "url": "https://arxiv.org/html/2608.30935"
+        },
+        {
+          "name": "新华网（独立报道）",
+          "url": "https://www.xinhuanet.com/tech/20260904/6400d2880dd847c7b48a325db1f384b2/c.html"
+        },
+        {
+          "name": "量子位（独立报道）",
+          "url": "https://www.qbitai.com/"
+        }
+      ],
+      "conflicts": "官方博客/论文/新华网在 2000+ 场景、4000+ 小时、跨四类本体上一致。基准分数出自团队自评表，暂无第三方独立复现，故定 B 而非 A。"
+    },
+    {
+      "no": 5,
+      "topic": "具身智能",
+      "title": "机器人训练数据成新战场：Mecka AI 三个月估值从 6000 万冲到近 5 亿美元（红杉领投）",
+      "lv": "C",
+      "publishedAt": "2026-09-12",
+      "event": "TechCrunch 报道，做人形机器人训练数据的 Mecka AI 正在接近一轮由红杉资本领投、估值约 5 亿美元的新融资，距上一轮 6000 万美元（Framework Ventures 领投）仅三个月。Mecka 的商业模式是付钱让人用身体传感器和手机录制自己完成日常任务（煮咖啡、修车等）的第一人称（egocentric）数据，再卖给机器人公司与 AI 实验室。",
+      "keyFacts": [
+        "2024 年成立，四位创始人来自餐饮 fintech 与加密交易所，无人有机器人背景",
+        "6 月预计 2026 年底年化收入达 1 亿美元 —— 对应约 5x 收入倍数",
+        "竞品同步升温：XDOF 据称接近 12 亿美元估值，Scale AI 与 Micro1 正从 LLM 数据扩到物理世界数据",
+        "交易条款尚未最终敲定，具体金额未披露；Mecka 与红杉均未回应置评"
+      ],
+      "why": "具身智能的瓶颈已经明确从「模型不够强」转移到「没有足够的真实物理交互数据」，Mecka 是这个判断最直白的价格标签——不赌哪家人形机器人会赢，只卖所有玩家都要买的训练数据，典型的卖铲子。三个月的估值跳涨说明供给侧压力有多急。但两点要打折看：一是估值/ARR 约 5x，几乎没给收入不及格留余地；二是需求方（人形机器人实验室）自己也在烧钱，赛道融资一旦减速，数据采购会先被砍。另外本条本质是单一独家信源，多家转述不构成交叉验证，所以定 C。",
+      "sources": [
+        {
+          "name": "TechCrunch 原始报道（唯一一手来源）",
+          "url": "https://techcrunch.com/"
+        },
+        {
+          "name": "Superintelligence News / AI Startups Daily / The AI Beat（均为转载）",
+          "url": "https://superintelligencenews.com/companies/robot-training-data-mecka-ai-valuation-surge"
+        }
+      ],
+      "conflicts": "⚠️ 所有报道可溯源到 TechCrunch 同一篇独家（引述「两位知情人士」），属「多家转载 ≠ 多方验证」，按评级规则降为 C。且条款未最终确定，估值数字仍可能变动。"
+    }
+  ],
+  "alsoWorthAScan": [
+    {
+      "title": "Dario Amodei 发长文呼吁给 AI 限速，同时称 OpenAI 今年不 IPO；Sam Altman 回应「2026 年上市是不明智的」",
+      "sources": "The Verge / TechCrunch / MIT TR / HN / AITNT（5 源）"
+    },
+    {
+      "title": "Anthropic 发布报告，点名阿里巴巴、月之暗面、DeepSeek 对其模型进行蒸馏攻击",
+      "sources": "TechCrunch / The Verge（2 源）"
+    },
+    {
+      "title": "谷歌推出 Gemini 3.8：Flash 通用版强化软件工程与 Agent，Flash Cyber 专做漏洞发现与自动补丁",
+      "sources": "AI工具集 / AITNT（2 源）"
+    },
+    {
+      "title": "Kimi API 同时原生支持 OpenAI Responses 与 Anthropic Messages 双协议，Codex / Claude Code 可直连 kimi-k3",
+      "sources": "AI工具集 / HN / AITNT / 极客公园（4 源）"
+    },
+    {
+      "title": "《判断用不用你的软件，Agent 只需 500 个 Token》：Agent 友好度正在成为新的 SEO",
+      "sources": "极客公园 / AITNT / AI工具集（3 源）"
+    },
+    {
+      "title": "梅卡曼德 9 月 1 日港交所上市，市值约 127 亿港元，「具身智能眼脑手第一股」",
+      "sources": "极客公园 / 雷递 / 人民网（3 源）"
+    },
+    {
+      "title": "梅卡曼德之外：宇树科技登陆科创板，港交所排队机器人企业已超 40 家",
+      "sources": "人民网河北（1 源）"
+    }
+  ],
+  "dedupeNote": "已对 2026-08-28 / 08-29 两轮推送做全量查重。上一轮涉及的「OpenAI Agent 集群入侵 Hugging Face」本周有新进展（新增 Ruby 生态攻击、MIT TR 复盘报道），但事件主体已推送过，本期只在扫读清单中带过，不占正条目。",
+  "charts": {
+    "generatedBy": "analyze.mjs",
+    "generatedAt": "2026-09-14T00:10:00.000Z",
+    "corpus": {
+      "items": 208,
+      "from": "2026-08-26",
+      "to": "2026-09-14",
+      "spanDays": 16,
+      "fetchedAt": 1789315679907,
+      "note": "（fixture 手写，仅用于回归）趋势与热度统计的是**本期抓取语料**里的提及次数，不是全网声量。"
+    },
+    "confidence": {
+      "A": 2,
+      "B": 2,
+      "C": 1,
+      "D": 0
+    },
+    "category": [
+      {
+        "name": "其他",
+        "count": 106
+      },
+      {
+        "name": "AI Coding",
+        "count": 88
+      },
+      {
+        "name": "具身智能",
+        "count": 13
+      },
+      {
+        "name": "AI 政策",
+        "count": 1
+      }
+    ],
+    "sources": [
+      {
+        "id": "ai-bot",
+        "label": "AI Bot 每日资讯",
+        "count": 40
+      },
+      {
+        "id": "geekpark",
+        "label": "极客公园",
+        "count": 30
+      },
+      {
+        "id": "hn",
+        "label": "Hacker News",
+        "count": 30
+      }
+    ],
+    "models": {
+      "top": [
+        {
+          "id": "openai",
+          "label": "GPT / OpenAI",
+          "kind": "model",
+          "count": 33
+        },
+        {
+          "id": "claude",
+          "label": "Claude / Anthropic",
+          "kind": "model",
+          "count": 21
+        },
+        {
+          "id": "deepseek",
+          "label": "DeepSeek",
+          "kind": "model",
+          "count": 8
+        }
+      ],
+      "topByKind": {
+        "model": [
+          {
+            "id": "openai",
+            "label": "GPT / OpenAI",
+            "kind": "model",
+            "count": 33
+          }
+        ],
+        "agent": [
+          {
+            "id": "codex",
+            "label": "Codex",
+            "kind": "agent",
+            "count": 3
+          }
+        ],
+        "robot": [
+          {
+            "id": "unitree",
+            "label": "宇树 Unitree",
+            "kind": "robot",
+            "count": 2
+          }
+        ]
+      },
+      "byKind": {
+        "model": 62,
+        "agent": 3,
+        "robot": 2
+      },
+      "trend": {
+        "days": [
+          "09-12",
+          "09-13",
+          "09-14"
+        ],
+        "dates": [
+          "2026-09-12",
+          "2026-09-13",
+          "2026-09-14"
+        ],
+        "series": [
+          {
+            "id": "openai",
+            "label": "GPT / OpenAI",
+            "values": [
+              3,
+              6,
+              7
+            ]
+          },
+          {
+            "id": "claude",
+            "label": "Claude / Anthropic",
+            "values": [
+              4,
+              4,
+              5
+            ]
+          }
+        ],
+        "dailyTotals": [
+          40,
+          24,
+          62
+        ],
+        "windowDays": 3
+      }
+    }
+  }
+}

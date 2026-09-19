@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light" />
+  <title>AIHub · 每日 AI 早报：自动生成、11 页 PPT、置信度评级</title>
+  <meta name="description" content="AIHub 每天早 7:00（北京时间）自动采集 34 个 AI 数据源，经 A/B/C/D 四档置信度评级后生成 11 页 PPT 早报；支持手动一键触发生成，可下载 PPTX、Markdown 降级版与历史回溯。" />
+  <meta name="author" content="AIHub" />
+  <meta name="theme-color" content="#ffffff" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="zh_CN" />
+  <meta property="og:title" content="AIHub · 每日 AI 早报 PPT 自动生成" />
+  <meta property="og:description" content="11 页研究报告式 PPT · 多源交叉验证 · A/B/C/D 置信度评级 · 每天 7:00 自动产出 · 支持 PPTX / Markdown 下载与历史回溯。" />
+  <meta property="og:image" content="assets/og/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="AIHub 每日 AI 早报 PPT 自动生成专题页" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Crect width='28' height='28' rx='8' fill='%23BE123C'/%3E%3Ctext x='14' y='19' text-anchor='middle' font-family='Arial' font-size='13' font-weight='700' fill='white'%3EAI%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="assets/css/tokens.css?v=20260913c" />
+  <link rel="stylesheet" href="assets/css/base.css?v=20260913c" />
+  <link rel="stylesheet" href="assets/css/aurora.css?v=20260913c" />
+  <link rel="stylesheet" href="assets/css/components.css?v=20260913c" />
+  <link rel="stylesheet" href="assets/css/pages.css?v=20260913c" />
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主内容</a>
+
+  <header class="nav">
+    <div class="container nav__inner">
+      <a class="nav__brand" href="index.html" aria-label="AIHub 首页">
+        <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true">
+          <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#BE123C"/><stop offset="0.35" stop-color="#C2410C"/><stop offset="0.65" stop-color="#B45309"/><stop offset="1" stop-color="#047857"/></linearGradient></defs>
+          <rect width="28" height="28" rx="8" fill="url(#lg)"/>
+          <text x="14" y="19" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#fff">AI</text>
+        </svg>
+        AIHub
+      </a>
+      <nav class="nav__links" aria-label="主导航">
+        <a class="nav__link" href="index.html">首页</a>
+        <a class="nav__link" href="features.html">功能</a>
+        <a class="nav__link" href="briefing.html" aria-current="page">每日早报</a>
+        <a class="nav__link" href="screenshots.html">截图</a>
+        <a class="nav__link" href="architecture.html">架构</a>
+        <a class="nav__link" href="security.html">安全合规</a>
+        <a class="nav__link" href="roadmap.html">路线图</a>
+        <a class="nav__link" href="faq.html">常见问题</a>
+      </nav>
+      <div class="nav__actions">
+        <a class="btn btn--primary btn--sm" href="screenshots.html">看真实截图</a>
+      </div>
+      <button class="nav__toggle" aria-label="打开导航菜单" aria-expanded="false" aria-controls="nav-drawer">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="nav__drawer" id="nav-drawer">
+      <nav aria-label="移动端导航">
+        <a class="nav__link" href="index.html">首页</a>
+        <a class="nav__link" href="features.html">功能</a>
+        <a class="nav__link" href="briefing.html" aria-current="page">每日早报</a>
+        <a class="nav__link" href="screenshots.html">截图</a>
+        <a class="nav__link" href="architecture.html">架构</a>
+        <a class="nav__link" href="security.html">安全合规</a>
+        <a class="nav__link" href="roadmap.html">路线图</a>
+        <a class="nav__link" href="faq.html">常见问题</a>
+      </nav>
+      <div class="nav__drawer-actions">
+        <a class="btn btn--primary btn--block" href="screenshots.html">看真实截图</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- S1 Hero -->
+    <section class="hero" id="hero">
+      <div class="container hero__inner">
+        <div class="hero__copy">
+          <span class="tag">AI 早报 · 每天 7:00 自动产出</span>
+          <h1 class="hero__title">每天 11 页 PPT，把当日 AI 重点讲清楚。</h1>
+          <p class="hero__lead">每天北京早 7:00，自动从 34 个数据源采集 → 多源交叉验证 → A/B/C/D 置信度评级 → LLM 成稿 → slide-engine 排版 → 生成 11 页 PPTX。开箱即读，可下载、可分享。</p>
+          <ul class="hero__principles">
+            <li><span class="hero__principle-text">每天 <strong>07:00</strong>（北京时间）自动生成，也可随时手动触发一次</span><span class="hero__principle-meta">Cron + 手动</span></li>
+            <li><span class="hero__principle-text"><strong>34 个数据源</strong>采集 · 多源交叉验证 · A/B/C/D 四档置信度评级</span><span class="hero__principle-meta">独立信源</span></li>
+            <li><span class="hero__principle-text"><strong>11 页研究报告式 PPT</strong>：封面 / 概览 / 两方向索引 / 要闻详页 / 验证表 / 趋势 / 信源</span><span class="hero__principle-meta">三幕叙事</span></li>
+            <li><span class="hero__principle-text"><strong>下载 + 历史回溯</strong>：PPTX 一键下载，降级版 Markdown，历史 60 天随时翻</span><span class="hero__principle-meta">60 天归档</span></li>
+          </ul>
+          <div class="hero__cta">
+            <a class="btn btn--primary" href="#generate">立即生成今日早报</a>
+            <a class="btn btn--secondary" href="screenshots.html#gallery">看真实运行截图</a>
+          </div>
+        </div>
+        <div class="hero__media">
+          <div class="window">
+            <div class="window__bar">
+              <span class="window__dot"></span><span class="window__dot"></span><span class="window__dot"></span>
+              <span class="window__addr">aihub.app/news</span>
+            </div>
+            <div class="window__body window__body--flush">
+              <img class="window__img" src="assets/screenshots/04-briefing.png" srcset="assets/screenshots/04-briefing-720.png 720w, assets/screenshots/04-briefing.png 1440w" sizes="(max-width: 768px) 92vw, 620px" alt="AIHub 早报面板运行截图：生成今日早报按钮、最近 5 天历史早报列表与下载入口" width="1440" height="900" fetchpriority="high" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- S2 核心能力 · 三大模块 -->
+    <section class="section" id="capabilities">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="section__eyebrow">核心能力</span>
+          <h2 class="section__title">三件确定的事：可信、可读、可用</h2>
+          <p class="section__lead">让 AI 早报从「每日推送一条标题」升级为「可验证的研究报告」。</p>
+        </div>
+        <div class="grid grid--3" data-stagger="80">
+          <article class="card reveal">
+            <div class="card__icon card__icon--blue" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <h3 class="card__title">A/B/C/D 置信度评级</h3>
+            <p class="card__text">每条新闻按独立信源数自动判定：A ≥3 源（确证）/ B =2 源（高）/ C =1 源（中）/ D 矛盾（存疑）。评级口径透明，刻意区分「转载数量」与「独立信源数量」。</p>
+            <ul class="card__list">
+              <li>独立信源计数 · 不重复计算转载</li>
+              <li>评级口径全页可见 · 不「装权威」</li>
+              <li>降级版自动标注 · 不静默产出低质内容</li>
+            </ul>
+          </article>
+          <article class="card reveal">
+            <div class="card__icon card__icon--cyan" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h7"/></svg>
+            </div>
+            <h3 class="card__title">11 页三幕叙事 PPT</h3>
+            <p class="card__text">研究报告式版式：封面 + 概览与方法论 → 两方向索引与详页（AI Coding × 具身智能）→ 验证表 + 趋势 + 信源清单。LLM 失败时自动降级为 Markdown 不静默。</p>
+            <ul class="card__list">
+              <li>三幕叙事 · 固定骨架 · 页数随条目浮动（10–11 页）</li>
+              <li>LLM 失败 → Markdown 降级 · 不静默</li>
+              <li>视觉锚点（巨型数字） · 投影友好</li>
+            </ul>
+          </article>
+          <article class="card reveal">
+            <div class="card__icon card__icon--amber" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 8v4l3 3M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <h3 class="card__title">07:00 自动 + 手动随时触发</h3>
+            <p class="card__text">北京早 7:00 由 Vercel Cron 触发，分布式锁防并发；也可以在页面上点一下「立即生成」当场跑一遍，不必等定时。60 天历史归档可随时翻阅，PPTX 与 Markdown 一键下载。</p>
+            <ul class="card__list">
+              <li>每日 07:00 自动 · 节假日不漏</li>
+              <li>手动一键触发 · 空闲时也能出</li>
+              <li>60 天历史回溯 · 检索与对比</li>
+              <li>下载：PPTX（完整版）/ .md（降级版）</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- S3 生成链路 -->
+    <section class="section section--subtle" id="how-it-works">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="section__eyebrow">生成链路</span>
+          <h2 class="section__title">从触发到 PPT 落盘，6 步可观测</h2>
+          <p class="section__lead">触发方式有两种：每天 07:00 的定时任务，或在页面上手动点一次。两种走的是同一条链路，每一步都有 phase 状态与日志输出，断点续跑由分布式锁 + 幂等性保证。</p>
+        </div>
+
+        <div class="diagram-box reveal" tabindex="0" role="img" aria-label="每日早报生成链路：Cron 触发，经分布式锁、采集新闻、LLM 成稿、slide-engine 排版，最终持久化并写入 R2">
+          <svg viewBox="0 0 940 220" preserveAspectRatio="xMidYMid meet">
+            <defs><marker id="flow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#F43F5E"/></marker></defs>
+            <g font-family="sans-serif" font-size="14" fill="#292524" text-anchor="middle">
+              <rect x="10" y="80" width="130" height="60" rx="12" fill="#FFF1F2" stroke="#F43F5E"/>
+              <text x="75" y="106">Cron</text><text x="75" y="126" font-size="11" fill="#57534E">北京 7:00</text>
+              <rect x="185" y="80" width="130" height="60" rx="12" fill="#FFFFFF" stroke="#E7E2DF"/>
+              <text x="250" y="106">分布式锁</text><text x="250" y="126" font-size="11" fill="#57534E">防并发重复</text>
+              <rect x="360" y="80" width="130" height="60" rx="12" fill="#FFFFFF" stroke="#E7E2DF"/>
+              <text x="425" y="106">采集新闻</text><text x="425" y="126" font-size="11" fill="#57534E">34 源聚合</text>
+              <rect x="535" y="80" width="130" height="60" rx="12" fill="#ECFDF5" stroke="#10B981"/>
+              <text x="600" y="106">LLM 成稿</text><text x="600" y="126" font-size="11" fill="#57534E">DeepSeek V4.1 Flash</text>
+              <rect x="710" y="80" width="150" height="60" rx="12" fill="#FFFFFF" stroke="#E7E2DF"/>
+              <text x="785" y="106">slide-engine</text><text x="785" y="126" font-size="11" fill="#57534E">排版 / QA</text>
+            </g>
+            <g stroke="#F43F5E" stroke-width="2.5" marker-end="url(#flow)">
+              <line x1="140" y1="110" x2="183" y2="110"/>
+              <line x1="315" y1="110" x2="358" y2="110"/>
+              <line x1="490" y1="110" x2="533" y2="110"/>
+              <line x1="665" y1="110" x2="708" y2="110"/>
+            </g>
+            <path d="M860 110 C 905 110 905 180 700 180 L 175 180 L 75 180 C 20 180 20 150 20 150" fill="none" stroke="#A8A29E" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#flow)"/>
+            <text x="470" y="200" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#57534E">持久化（PostgreSQL）+ 产物写入 Cloudflare R2 · 失败自动降级 Markdown</text>
+          </svg>
+          <p class="diagram-note">图注：每个节点都有 phase 状态（collect / select / 2a / 2b / 2c / persist），前端细粒度展示进度。</p>
+        </div>
+
+        <ol class="steps reveal" data-stagger="60">
+          <li class="step">
+            <div class="step__num">01</div>
+            <div class="step__body">
+              <h3>触发（定时 / 手动）</h3>
+              <p>定时：每天北京时间 7:00 由 Vercel Cron 调起（表达式按 UTC 配置），鉴权 Bearer <code>CRON_SECRET</code>，fail-closed 防止裸奔。手动：页面上点一次「立即生成」，走同一入口与同一条链路。</p>
+            </div>
+          </li>
+          <li class="step">
+            <div class="step__num">02</div>
+            <div class="step__body">
+              <h3>分布式锁</h3>
+              <p><code>withLock('cron:daily-report', 600s)</code> 跨实例互斥，避免多副本同时跑当日报。</p>
+            </div>
+          </li>
+          <li class="step">
+            <div class="step__num">03</div>
+            <div class="step__body">
+              <h3>采集候选</h3>
+              <p>从今日新闻库取最近窗口（默认 8h），按交叉验证规则计算独立信源数；不足 3 条自动放宽到 24h。</p>
+            </div>
+          </li>
+          <li class="step">
+            <div class="step__num">04</div>
+            <div class="step__body">
+              <h3>LLM 成稿（v5：3 段并行）</h3>
+              <p>2a 骨架（封面 / 趋势 / 总览）→ 2b 每条新闻独立并发 → 2c 信源透明块。任一子调用失败 → 局部降级；最多重试 1 次；仍失败 → 纯原文摘要兜底。</p>
+            </div>
+          </li>
+          <li class="step">
+            <div class="step__num">05</div>
+            <div class="step__body">
+              <h3>slide-engine 排版 + QA</h3>
+              <p>11 页三幕叙事：封面 + 概览 → AI Coding 索引与详页 → 具身智能索引与详页 → 验证表 + 趋势 + 信源清单。布局层产出诊断（溢出/缩字号/截断）。</p>
+            </div>
+          </li>
+          <li class="step">
+            <div class="step__num">06</div>
+            <div class="step__body">
+              <h3>持久化 + 缓存</h3>
+              <p>写入 <code>DailyReport</code> 表（content / phase / degraded / pptxBase64 缓存），同时把 PPTX 写 R2。下载时缓存命中即返，未命中即时构建。</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- S4 真实页序结构（源自 planBriefingDeck） -->
+    <section class="section" id="structure">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="section__eyebrow">页序结构</span>
+          <h2 class="section__title">固定骨架 + 条件页，10–11 页封顶</h2>
+          <p class="section__lead">骨架 6 页恒定，方向页按当日内容出现，传闻页仅在存在待存疑条目时插入——所以页数会浮动，但每页位置可预期。</p>
+        </div>
+
+        <div class="table-wrap reveal" role="region" aria-label="早报真实页序结构" tabindex="0">
+          <table class="data">
+            <thead>
+              <tr><th>页</th><th>页型</th><th>内容</th><th>出现条件</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>P01</td><td>cover</td><td>封面：日期 · 主题 · 三条统计 · 置信度分布</td><td><span class="badge badge--success">固定</span></td></tr>
+              <tr><td>P02</td><td>overview</td><td>本期概览 TL;DR + 置信度评级方法 + 信源家族</td><td><span class="badge badge--success">固定</span></td></tr>
+              <tr><td>P03</td><td>direction-index</td><td>AI Coding 方向索引（议题一览 + 置信度角标）</td><td><span class="badge badge--info">有该方向</span></td></tr>
+              <tr><td>P04</td><td>direction-detail</td><td>AI Coding Hero 议题：巨型数据 + 摘要 + 点评 + 一手链接</td><td><span class="badge badge--info">有 Hero 议题</span></td></tr>
+              <tr><td>P05</td><td>direction-index</td><td>具身智能方向索引</td><td><span class="badge badge--info">有该方向</span></td></tr>
+              <tr><td>P06</td><td>direction-detail</td><td>具身智能 Hero 议题</td><td><span class="badge badge--info">有 Hero 议题</span></td></tr>
+              <tr><td>P07</td><td>rumor</td><td>传闻页：独立信源 vs 转载数对比 + 逐条存疑理由</td><td><span class="badge badge--warning">条件插入</span></td></tr>
+              <tr><td>P08</td><td>authors</td><td>B 站视频作者状态与一手视频</td><td><span class="badge badge--success">固定</span></td></tr>
+              <tr><td>P09</td><td>verification</td><td>交叉验证汇总表（议题 / 方向 / 独立信源 / 一手链接 / 置信度）</td><td><span class="badge badge--success">固定</span></td></tr>
+              <tr><td>P10</td><td>trends</td><td>三条趋势判断（未来一年主线）</td><td><span class="badge badge--success">固定</span></td></tr>
+              <tr><td>P11</td><td>sources</td><td>信源清单与说明（聚合源 / 视频作者 / 第三方交叉 / 一手官方）</td><td><span class="badge badge--success">固定</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="deck-meta">骨架 6 页（cover / overview / authors / verification / trends / sources）+ 每方向最多 2 页 + 传闻页（条件）= <strong>10–11 页</strong>。2026-09-02 的真实产物为 11 页。</p>
+      </div>
+    </section>
+
+    <!-- S5 真实样张预览（2026-09-02 产物还原） -->
+    <section class="section section--subtle" id="deck">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="section__eyebrow">真实样张</span>
+          <h2 class="section__title">PPT 长这样：6 页实录</h2>
+          <p class="section__lead">以下 6 页按 <strong>2026-09-02 的真实产物</strong>还原排版与文案，内容未经改写；完整 11 页可下载 PPTX 查看。</p>
+        </div>
+
+        <!-- 手动生成控制台（可真实触发一次生成；行为见 assets/js/generate.js） -->
+        <!-- 刻意不加 .reveal：交互件不能依赖滚动入场，否则入场动画一旦没触发，按钮就点不了 -->
+        <div class="genx" id="generate" data-gen>
+          <div class="genx__head">
+            <div>
+              <span class="genx__eyebrow">手动触发</span>
+              <h3 class="genx__title">不想等定时？现在就跑一次</h3>
+              <p class="genx__lead">定时任务负责「不漏」，这个按钮负责「现在就要」。点一下会真实执行抓取 → 选稿 → 渲染 → 打包四步，产出可下载的 PPTX 与 Markdown，不是演示动画。</p>
+            </div>
+            <span class="genx__status" data-gen-status="idle" role="status" aria-live="polite">
+              <span class="genx__dot" aria-hidden="true"></span>
+              <span class="genx__status-text" data-gen-status-text>正在检查生成服务…</span>
+            </span>
+          </div>
+
+          <div class="genx__form">
+            <label class="genx__field">
+              <span class="genx__label">报告日期</span>
+              <select class="genx__select" data-gen-date aria-label="选择要生成的报告日期"></select>
+            </label>
+            <label class="genx__field">
+              <span class="genx__label">选稿方式</span>
+              <select class="genx__select" data-gen-mode aria-label="选择选稿方式">
+                <option value="auto">自动（有 Agent 选稿就用它）</option>
+                <option value="agent">只用 Agent 选稿</option>
+                <option value="draft">强制机器草稿</option>
+              </select>
+            </label>
+            <label class="genx-check">
+              <input type="checkbox" data-gen-nofetch />
+              <span>跳过抓取，复用已有数据（更快）</span>
+            </label>
+            <button class="btn btn--primary genx__go" type="button" data-gen-go>
+              <span data-gen-go-label>立即生成今日早报</span>
+            </button>
+          </div>
+
+          <p class="genx__hint" data-gen-hint role="status" aria-live="polite">正在连接本机生成服务…</p>
+
+          <div class="genx__panel" data-gen-panel hidden>
+            <ol class="genx__steps" data-gen-steps></ol>
+            <div class="genx__result" data-gen-result></div>
+          </div>
+        </div>
+
+        <div class="deck" data-stagger="80">
+
+          <!-- P01 封面 -->
+          <figure class="slide slide--cover reveal" aria-label="早报 P01 封面样张">
+            <div class="slide__inner">
+              <div>
+                <div class="slide__eyebrow">AIHub · 每日 AI 新闻精选</div>
+                <h3 class="slide__title" >AI 日报</h3>
+                <p class="slide__sub">2026-09-02 · 周三 · 侧重 AI Coding × 具身智能</p>
+              </div>
+              <div class="slide__stats">
+                <div class="slide__stat"><b>8</b><span>条精选新闻</span></div>
+                <div class="slide__stat"><b>4</b><span>类信源家族</span></div>
+                <div class="slide__stat slide__stat--accent"><b>B4·C3·D1</b><span>置信度分布</span></div>
+              </div>
+              <div class="slide__foot"><span>2026-09-02</span><span>01 / 11</span></div>
+            </div>
+          </figure>
+
+          <!-- P02 概览 -->
+          <figure class="slide reveal" aria-label="早报 P02 本期概览样张">
+            <div class="slide__inner">
+              <div class="slide__eyebrow">P02 · OVERVIEW</div>
+              <h3 class="slide__title slide__title--sm">本期概览与置信度评级方法</h3>
+              <ul class="slide__list">
+                <li><i>01</i><div><strong>LLM 在长代码生成任务上首次跑通形式化验证回路</strong><em>错误率从 12% 降至 1.4%</em></div></li>
+                <li><i>02</i><div><strong>Anthropic 发布 Claude 4.5</strong><em>多模态 Agent 在长程规划任务上超过人类基线</em></div></li>
+                <li><i>03</i><div><strong>具身智能赛道单周 3 起融资</strong><em>累计金额 2.4 亿美元</em></div></li>
+              </ul>
+              <p class="slide__note">刻意区分「转载数量」与「独立信源数量」：A ≥3 独立信源 + 一手链接 · B 2 独立信源 · C 单一信源 · D 多转载同源或数字矛盾</p>
+              <div class="slide__foot"><span>置信度分布 B4 / C3 / D1</span><span>02 / 11</span></div>
+            </div>
+          </figure>
+
+          <!-- P04 Hero 议题 -->
+          <figure class="slide reveal" aria-label="早报 P04 Hero 议题样张">
+            <div class="slide__inner">
+              <div class="slide__eyebrow">P04 · AI CODING 方向 · 智能编程</div>
+              <h3 class="slide__title slide__title--sm">形式化验证回路在长代码生成上跑通</h3>
+              <div class="slide__metric"><b>1.4%</b><span>错误率 · 较 12% 大幅下降</span></div>
+              <p class="slide__sub">麻省理工团队发表论文，提出将形式化验证嵌入 LLM 代码生成回路，在 5 万行级代码库上将错误率从 12% 降至 1.4%。</p>
+              <p class="slide__note">形式化验证是 AI Coding 落地的关键拐点。</p>
+              <div class="slide__foot"><span>一手来源 · MIT</span><span>04 / 11</span></div>
+            </div>
+          </figure>
+
+          <!-- P07 传闻存疑页 -->
+          <figure class="slide slide--rumor reveal" aria-label="早报 P07 传闻存疑页样张">
+            <div class="slide__inner">
+              <div class="slide__eyebrow">P07 · RUMOR</div>
+              <div><span class="slide__chip slide__chip--warn">置信度 D · 存疑</span></div>
+              <h3 class="slide__title slide__title--sm">传闻：GPT-6 训练完成</h3>
+              <div class="slide__metric"><b>1 → 25+</b><span>独立信源 1 · 转载 25+</span></div>
+              <p class="slide__note">转载 ≠ 独立信源。存疑理由：无独立信源印证 · 官方未确认 · 数字无第三方报告。</p>
+              <div class="slide__foot"><span>仍值得关注：若属实将是行业重大事件</span><span>07 / 11</span></div>
+            </div>
+          </figure>
+
+          <!-- P09 交叉验证表 -->
+          <figure class="slide reveal" aria-label="早报 P09 交叉验证汇总表样张">
+            <div class="slide__inner">
+              <div class="slide__eyebrow">P09 · VERIFICATION</div>
+              <h3 class="slide__title slide__title--sm">交叉验证汇总 · 置信度</h3>
+              <table class="slide__table">
+                <thead><tr><th>#</th><th>议题</th><th>方向</th><th>独立信源</th><th>一手</th><th>置信</th></tr></thead>
+                <tbody>
+                  <tr><td>1</td><td><b>形式化验证回路</b></td><td>Coding</td><td>2</td><td>MIT</td><td>B</td></tr>
+                  <tr><td>2</td><td><b>Claude 4.5 发布</b></td><td>Coding</td><td>3</td><td>Anthropic</td><td>A</td></tr>
+                  <tr><td>3</td><td><b>GPT-5 编程更新</b></td><td>Coding</td><td>2</td><td>—</td><td>B</td></tr>
+                  <tr><td>4</td><td><b>Cursor 0.45</b></td><td>Coding</td><td>1</td><td>Cursor</td><td>C</td></tr>
+                  <tr><td>5</td><td><b>Figure 02</b></td><td>具身</td><td>1</td><td>—</td><td>C</td></tr>
+                  <tr><td>6</td><td><b>PI 融资</b></td><td>具身</td><td>2</td><td>TechCrunch</td><td>B</td></tr>
+                  <tr><td>7</td><td><b>1X Neo</b></td><td>具身</td><td>2</td><td>1X</td><td>B</td></tr>
+                  <tr><td>8</td><td><b>GPT-6 传闻</b></td><td>传闻</td><td>1（25+ 转载）</td><td>—</td><td>D</td></tr>
+                </tbody>
+              </table>
+              <div class="slide__foot"><span>分布：B 级 4 条 / C 级 3 条 / D 级 1 条</span><span>09 / 11</span></div>
+            </div>
+          </figure>
+
+          <!-- P10 趋势 -->
+          <figure class="slide reveal" aria-label="早报 P10 三条趋势判断样张">
+            <div class="slide__inner">
+              <div class="slide__eyebrow">P10 · TRENDS</div>
+              <h3 class="slide__title slide__title--sm">三条趋势判断</h3>
+              <div class="slide__grid3">
+                <div class="slide__card"><b>形式化验证成为 Coding 标配</b><p>从「能用」到「可证明正确」是新阶段拐点，预计一年内 60% 的 Coding Agent 集成验证回路。</p></div>
+                <div class="slide__card"><b>具身智能进入家庭场景</b><p>通用 Agent 能力溢出到物理世界，Figure 02、1X Neo 表明硬件本体接近实用化。</p></div>
+                <div class="slide__card"><b>AI 治理成为基础设施</b><p>Agent 介入关键决策后，安全评估、可解释性与追责机制从可选项变为必选项。</p></div>
+              </div>
+              <div class="slide__foot"><span>未来一年主线 · AI Coding × 具身智能 × 治理</span><span>10 / 11</span></div>
+            </div>
+          </figure>
+
+        </div>
+
+        <div class="deck-meta reveal">
+          <a class="btn btn--primary" href="assets/downloads/aihub-briefing-2026-09-02-sample.pptx" download>下载完整样张 PPTX（11 页 · 298 KB）</a>
+          <span>文件为 2026-09-02 的真实产物，未经二次编辑。</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- S6 质量链 · 失败模式与降级 -->
+    <section class="section section--subtle" id="quality">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="section__eyebrow">质量链</span>
+          <h2 class="section__title">失败有降级，成功有验证</h2>
+          <p class="section__lead">任何一步出错都不会「产出一半 PPT」。</p>
+        </div>
+        <div class="grid grid--2">
+          <article class="card reveal">
+            <span class="badge badge--warning">失败 → 降级</span>
+            <h3 class="card__title card__title--sm">LLM 失败时</h3>
+            <p class="card__text">2 次重试都失败 → 自动降级为「无 AI 文案版」，仍展示原文摘要 + 置信度表 + 链接。绝不产出空早报。</p>
+          </article>
+          <article class="card reveal">
+            <span class="badge badge--warning">失败 → 降级</span>
+            <h3 class="card__title card__title--sm">采集为空时</h3>
+            <p class="card__text">当日候选为 0 → 直接进入降级版，避免「为生成而捏造」。</p>
+          </article>
+          <article class="card reveal">
+            <span class="badge badge--success">成功 → 验证</span>
+            <h3 class="card__title card__title--sm">slide-engine QA</h3>
+            <p class="card__text">排版阶段输出诊断：溢出 / 自动缩字号 / 文本截断。CI 卡口可拒绝明显崩版的页面。</p>
+          </article>
+          <article class="card reveal">
+            <span class="badge badge--success">成功 → 验证</span>
+            <h3 class="card__title card__title--sm">缓存校验</h3>
+            <p class="card__text">PPTX 缓存写入 base64 前会校验 magic number <code>PK\x03\x04</code>，损坏自动重新构建。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- S7 真实截图 -->
+    <section class="section" id="screenshots">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="section__eyebrow">真实运行截图</span>
+          <h2 class="section__title">前端面板、下载、历史回溯</h2>
+        </div>
+        <div class="grid">
+          <figure class="shot reveal">
+            <div class="shot__frame">
+              <div class="shot__bar"><span></span><span></span><span></span><span class="shot__url">aihub.app/news</span></div>
+              <img class="shot__img" src="assets/screenshots/04-briefing.png" srcset="assets/screenshots/04-briefing-720.png 720w, assets/screenshots/04-briefing.png 1440w" sizes="(max-width: 768px) 92vw, 720px" alt="AIHub 早报面板：生成今日早报按钮、最近 5 天历史早报列表与下载入口" width="1440" height="900" loading="lazy" />
+            </div>
+            <figcaption class="shot__body">
+              <div>
+                <div class="shot__title">早报面板</div>
+                <div class="shot__desc">右上角浮窗 + 完整管理面板：当前状态、生成进度、历史回溯、下载 PPTX / Markdown。</div>
+              </div>
+              <span class="shot__tag">/news · AI早报</span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- S8 FAQ 简表 -->
+    <section class="section section--subtle" id="faq">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="section__eyebrow">常见问题</span>
+          <h2 class="section__title">关于早报的 6 个高频问题</h2>
+        </div>
+        <div class="accordion">
+          <div class="acc">
+            <button class="acc__btn" aria-expanded="false" aria-controls="bfaq-1" id="bfaq-1-btn">
+              <span>为什么是 11 页固定？</span>
+              <svg class="acc__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="acc__panel" id="bfaq-1" role="region" aria-labelledby="bfaq-1-btn">
+              <div><p class="acc__answer">三幕叙事结构（概览 + AI Coding 方向 + 具身智能方向 + 验证信源），与条目数量解耦。条目数为 0 时仍能产出骨架页，仅 Hero 页内容相应为空。</p></div>
+            </div>
+          </div>
+          <div class="acc">
+            <button class="acc__btn" aria-expanded="false" aria-controls="bfaq-2" id="bfaq-2-btn">
+              <span>置信度是怎么算的？</span>
+              <svg class="acc__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="acc__panel" id="bfaq-2" role="region" aria-labelledby="bfaq-2-btn"><div><p class="acc__answer">每条新闻以「独立信源数」自动判定：A ≥3 源 / B =2 源 / C =1 源 / D 多转载同源或数字互相矛盾。刻意区分「转载数量」与「独立信源数量」，不「装权威」。</p></div></div>
+          </div>
+          <div class="acc">
+            <button class="acc__btn" aria-expanded="false" aria-controls="bfaq-3" id="bfaq-3-btn">
+              <span>LLM 失败会发生什么？</span>
+              <svg class="acc__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="acc__panel" id="bfaq-3" role="region" aria-labelledby="bfaq-3-btn"><div><p class="acc__answer">每个子调用 2 次重试 → 仍失败自动降级为「无 AI 文案版」（基于原文摘要 + 置信度表 + 链接）。绝不静默产出空早报，也绝不「为生成而捏造」。</p></div></div>
+          </div>
+          <div class="acc">
+            <button class="acc__btn" aria-expanded="false" aria-controls="bfaq-4" id="bfaq-4-btn">
+              <span>历史早报能看多久？</span>
+              <svg class="acc__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="acc__panel" id="bfaq-4" role="region" aria-labelledby="bfaq-4-btn"><div><p class="acc__answer">默认保留 60 天，可在管理面板的历史列表里点开任意一天下载 PPTX 或 Markdown；手动锁定后永不自动清理。</p></div></div>
+          </div>
+          <div class="acc">
+            <button class="acc__btn" aria-expanded="false" aria-controls="bfaq-5" id="bfaq-5-btn">
+              <span>下载的是真实 PPTX 吗？</span>
+              <svg class="acc__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="acc__panel" id="bfaq-5" role="region" aria-labelledby="bfaq-5-btn"><div><p class="acc__answer">是。用 <code>pptxgenjs</code> 在服务端即时构建，缓存到 <code>DailyReport.pptxBase64</code>；下载时会校验 magic number <code>PK\x03\x04</code> 确保不是损坏文件。</p></div></div>
+          </div>
+          <div class="acc">
+            <button class="acc__btn" aria-expanded="false" aria-controls="bfaq-6" id="bfaq-6-btn">
+              <span>能改主题色吗？</span>
+              <svg class="acc__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="acc__panel" id="bfaq-6" role="region" aria-labelledby="bfaq-6-btn"><div><p class="acc__answer">v4 视觉固定白底单主题（参考 D:\1Money\AI新闻\AI日报_2026-08-29），历史 6 主题（paper / ink / mint / lavender / amber / ocean）保留类型用于兼容 DB 旧字段。换主题会自动清 PPT 缓存、下次下载时重建。</p></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- S9 CTA -->
+    <section class="section" id="cta">
+      <div class="container container--narrow">
+        <div class="cta reveal">
+          <h2 class="cta__title">想看今天的早报长什么样？</h2>
+          <p class="cta__text">登录后到 <code>/news</code> 的「AI 早报」面板看今日 PPT，或翻历史回溯任意一天。</p>
+          <div class="cta__actions">
+            <a class="btn btn--primary" href="screenshots.html#gallery">看真实截图</a>
+            <a class="btn btn--secondary" href="architecture.html">看技术架构</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div>
+        <p class="footer__brand">AIHub · AI 行业情报，一个工作台全部搞定</p>
+        <p class="footer__desc">34 个数据源 · 314 个模型 · 每天早 7:00 自动早报</p>
+      </div>
+      <nav class="footer__links" aria-label="次级导航">
+        <a href="features.html">功能</a>
+        <a href="architecture.html">架构</a>
+        <a href="security.html">安全合规</a>
+        <a href="roadmap.html">路线图</a>
+        <a href="faq.html">FAQ</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js?v=20260913c" defer></script>
+  <!-- 早报生成控制台：只在本页加载，依赖本机 ai-news-kit 生成服务（见 docs/09） -->
+  <script src="assets/js/generate.js?v=20260919a" defer></script>
+</body>
+</html>

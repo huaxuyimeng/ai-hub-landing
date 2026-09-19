@@ -1,0 +1,30 @@
+{
+  "_comment": "数据源清单。实测记录见 docs/数据源实测.md。改源前先跑 node scripts/aggregate.mjs 观察单源条数，别凭感觉增删。",
+  "crossSourceTokenThreshold": 3,
+  "_thresholdNote": "共享实体 token 数 ≥3 才判为同一事件的多源报道。实测：阈值 2 → 47.2% 条目被判多源（虚高）；3 → 18.5%（合理）；4 → 10.6%（偏严）。",
+  "sources": [
+    { "id": "aitntnews", "label": "AI TNT News", "url": "https://www.aitntnews.com/ainews/rss.xml", "kind": "rss", "tier": 1, "enabled": true },
+    { "id": "ai-bot", "label": "AI Bot 每日资讯", "url": "https://ai-bot.cn/daily-ai-news/", "kind": "aibot", "tier": 1, "enabled": true, "fragile": true },
+    { "id": "qbitai", "label": "量子位", "url": "https://www.qbitai.com/feed", "kind": "generic", "tier": 1, "enabled": true },
+    { "id": "infoq", "label": "InfoQ 中文", "url": "https://www.infoq.cn/feed", "kind": "generic", "tier": 2, "enabled": true },
+    { "id": "geekpark", "label": "极客公园", "url": "https://www.geekpark.net/rss", "kind": "generic", "tier": 2, "enabled": true },
+    { "id": "leiphone", "label": "雷峰网", "url": "https://www.leiphone.com/feed", "kind": "generic", "tier": 2, "enabled": true },
+    { "id": "tc-ai", "label": "TechCrunch AI", "url": "https://techcrunch.com/category/artificial-intelligence/feed/", "kind": "generic", "tier": 3, "enabled": true },
+    { "id": "mit-ai", "label": "MIT TR AI", "url": "https://www.technologyreview.com/topic/artificial-intelligence/feed", "kind": "generic", "tier": 3, "enabled": true },
+    { "id": "verge-ai", "label": "The Verge AI", "url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml", "kind": "atom", "tier": 3, "enabled": true },
+    { "id": "hn", "label": "Hacker News", "url": "https://hn.algolia.com/api/v1/search_by_date?tags=story&numericFilters=points%3E50&hitsPerPage=30", "kind": "hn", "tier": 3, "enabled": true }
+  ],
+  "deadSources": [
+    { "id": "jiqizhixin", "reason": "/rss、/rss/all 均返回 text/html SPA 页" },
+    { "id": "36kr", "reason": "/feed、/motif/feed 返回 WAF 挑战页" },
+    { "id": "huggingface-blog", "reason": "fetch failed" },
+    { "id": "arxiv", "reason": "fetch failed" },
+    { "id": "bing-news", "reason": "重定向 HTML / HTTP 000" },
+    { "id": "maomu", "reason": "正则爬虫，仅 9 条且 AI 浓度低，性价比最低" }
+  ],
+  "categoryKeywords": {
+    "AI Coding": ["coding", "copilot", "codex", "claude code", "cursor", "qoder", "zcode", "harness", "编程", "智能体", "开发", "agent", "token", "代码", "ide", "插件"],
+    "具身智能": ["具身", "机器人", "人形", "embodied", "robot", "humanoid", "机械臂", "vla", "遥操"],
+    "AI 政策": ["policy", "regulation", "监管", "政策", "法案", "合规", "反垄断", "安全标准", "治理"]
+  }
+}

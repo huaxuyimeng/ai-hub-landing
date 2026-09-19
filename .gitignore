@@ -1,0 +1,7 @@
+node_modules/
+ai-news-kit/data/
+ai-news-kit/node_modules/
+.workbuddy/
+_spec/
+*.dup-backup
+.DS_Store

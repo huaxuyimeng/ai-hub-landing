@@ -1,0 +1,36 @@
+{
+  "_comment": "图表用的「主体（模型 / 编码助手 / 具身智能公司）」关键词表。analyze.mjs 只做子串计数，不做语义判断 —— 它是统计，不是选稿。",
+  "_note": "keywords 一律小写、做子串匹配（标题 + 摘要）。中英文都放进来，因为聚合源里两种标题混着出现。改完请跑 node scripts/analyze.mjs --date <日期> 看 Top 榜是否符合直觉。",
+  "groups": [
+    { "id": "claude", "label": "Claude / Anthropic", "kind": "model", "keywords": ["claude", "anthropic"] },
+    { "id": "openai", "label": "GPT / OpenAI", "kind": "model", "keywords": ["openai", "chatgpt", "gpt-5", "gpt5", "gpt-6", "gpt6", "gpt-4", "gpt4"] },
+    { "id": "codex", "label": "Codex", "kind": "agent", "keywords": ["codex"] },
+    { "id": "gemini", "label": "Gemini / DeepMind", "kind": "model", "keywords": ["gemini", "deepmind", "谷歌"] },
+    { "id": "deepseek", "label": "DeepSeek", "kind": "model", "keywords": ["deepseek"] },
+    { "id": "qwen", "label": "Qwen / 通义", "kind": "model", "keywords": ["qwen", "通义", "阿里"] },
+    { "id": "kimi", "label": "Kimi / 月之暗面", "kind": "model", "keywords": ["kimi", "月之暗面", "moonshot"] },
+    { "id": "glm", "label": "GLM / 智谱", "kind": "model", "keywords": ["glm", "智谱", "zhipu"] },
+    { "id": "minimax", "label": "MiniMax", "kind": "model", "keywords": ["minimax"] },
+    { "id": "llama", "label": "Llama / Meta", "kind": "model", "keywords": ["llama", "meta "] },
+    { "id": "grok", "label": "Grok / xAI", "kind": "model", "keywords": ["grok", "xai", "马斯克"] },
+    { "id": "mistral", "label": "Mistral", "kind": "model", "keywords": ["mistral"] },
+    { "id": "cursor", "label": "Cursor", "kind": "agent", "keywords": ["cursor"] },
+    { "id": "copilot", "label": "Copilot / GitHub", "kind": "agent", "keywords": ["copilot", "github"] },
+    { "id": "bytedance", "label": "豆包 / 字节", "kind": "model", "keywords": ["豆包", "doubao", "字节跳动"] },
+    { "id": "stepfun", "label": "阶跃星辰", "kind": "model", "keywords": ["阶跃", "stepfun"] },
+
+    { "id": "unitree", "label": "宇树 Unitree", "kind": "robot", "keywords": ["unitree", "宇树"] },
+    { "id": "agibot", "label": "智元 AgiBot", "kind": "robot", "keywords": ["智元", "agibot"] },
+    { "id": "figure", "label": "Figure", "kind": "robot", "keywords": ["figure 0", "figure ai", "figure 机器人"] },
+    { "id": "1x", "label": "1X", "kind": "robot", "keywords": ["1x neo", "1x technolog", "1x 机器人"] },
+    { "id": "ubtech", "label": "优必选 UBTech", "kind": "robot", "keywords": ["优必选", "ubtech"] },
+    { "id": "lightorigins", "label": "亮源新创 / LightNav", "kind": "robot", "keywords": ["lightnav", "亮源", "light origins"] },
+    { "id": "mekka", "label": "Mecka AI（训练数据）", "kind": "robot", "keywords": ["mecka"] }
+  ],
+  "trend": {
+    "_comment": "趋势图的窗口与取几条系列",
+    "days": 10,
+    "series": 5,
+    "topN": 12
+  }
+}

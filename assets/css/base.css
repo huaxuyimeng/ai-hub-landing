@@ -1,0 +1,374 @@
+/* ============================================================
+   AIHub 落地站 · ③ 基础层（Reset / 排版 / 布局原语 / 工具类）
+   ------------------------------------------------------------
+   只放「与具体组件无关」的东西。所有颜色、间距、圆角一律引用 tokens.css。
+   ============================================================ */
+
+/* ---------- Reset ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  color-scheme: light;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: 1.7;
+  color: var(--ink-2);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+a,
+button {
+  touch-action: manipulation;
+}
+
+/* ---------- 标题 ---------- */
+h1,
+h2,
+h3,
+h4 {
+  color: var(--ink-1);
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: var(--fs-display);
+  line-height: 1.05;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+h2 {
+  font-size: var(--fs-h2);
+  line-height: 1.1;
+}
+
+h3 {
+  font-size: var(--fs-h3);
+  line-height: 1.3;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+h4 {
+  font-size: var(--fs-h4);
+  line-height: 1.4;
+  font-weight: 600;
+}
+
+/* ---------- 文本与媒体 ---------- */
+p {
+  margin: 0 0 var(--space-2);
+  text-wrap: pretty;
+  max-width: 65ch;
+}
+
+figure {
+  margin: 0;
+}
+
+code,
+pre {
+  font-family: var(--font-mono);
+}
+
+img,
+svg {
+  max-width: 100%;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: color var(--t-fast);
+}
+
+a:hover {
+  color: var(--primary-hover);
+}
+
+strong {
+  color: var(--ink-1);
+  font-weight: 700;
+}
+
+code {
+  font-size: 0.92em;
+  color: var(--primary);
+}
+
+/* ---------- 跳转链接（无障碍） ---------- */
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  z-index: 9999;
+  background: var(--primary);
+  color: var(--ink-invert);
+  padding: var(--space-1) var(--space-3);
+  border-radius: 0 0 var(--radius-md) 0;
+  font-weight: 600;
+}
+
+.skip-link:focus {
+  left: 0;
+  color: var(--ink-invert);
+}
+
+/* ---------- 焦点与选择 ---------- */
+::selection {
+  background: var(--primary-ring);
+  color: var(--ink-1);
+}
+
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ---------- 滚动条 ---------- */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #C9C9D6 transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #C9C9D6;
+  border-radius: var(--radius-pill);
+  border: 3px solid var(--canvas);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #A8A8BC;
+}
+
+/* ============================================================
+   布局原语
+   ============================================================ */
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: clamp(20px, 5vw, 40px);
+}
+
+.container--narrow {
+  max-width: var(--reading);
+}
+
+.container--reading {
+  max-width: var(--reading);
+}
+
+.section {
+  padding-block: var(--space-section-md);
+  scroll-margin-top: calc(var(--nav-h) + var(--space-3));
+}
+
+.section--lg {
+  padding-block: var(--space-section-lg);
+}
+
+/* ---------- 区块头 ---------- */
+.section__head {
+  max-width: var(--reading);
+  margin-bottom: var(--gap-block);
+}
+
+.section__head--center {
+  margin-inline: auto;
+  text-align: center;
+}
+
+.section__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-eyebrow);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: var(--space-2);
+}
+
+/* 眉标前的短斜条：改为纯色，避免小尺寸渐变导致的锯齿 */
+.section__eyebrow::before {
+  content: "";
+  width: 24px;
+  height: 2px;
+  background: var(--grad-spectrum);
+  transform: skewX(-12deg);
+  border-radius: 2px;
+}
+
+.section__title {
+  margin-bottom: var(--space-2);
+}
+
+.section__lead {
+  color: var(--ink-3);
+  font-size: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* ---------- 栅格 ---------- */
+.grid {
+  display: grid;
+  gap: var(--gap-grid);
+}
+
+.grid--2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.grid--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.grid--4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* Bento：6 列非对称，每行填满，不留空列（子项分配规则见 components.css） */
+.grid--bento {
+  grid-template-columns: repeat(6, 1fr);
+}
+
+/* ============================================================
+   渐变文字工具类（公开 API）
+   ------------------------------------------------------------
+   与旧版的关键差异：
+     · background-repeat: no-repeat —— 不平铺，从根上避免接缝竖线
+     · background-size 走 --grad-band-text 令牌（135%）+ 位移动画 ——
+       可视区只落在色带内部，两端永远在可视区外；且任何时刻约 3~4 个
+       色相同时可见。带宽与时长都可在 tokens.css 一处调
+     · 深色谱 —— 每一档都 ≥4.5:1，小字也安全
+   ============================================================ */
+.grad-text {
+  background-image: var(--grad-text);
+  background-size: var(--grad-band-text) 100%;
+  background-repeat: no-repeat;
+  background-position: 0% 50%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: grad-pan var(--grad-pan-dur) var(--ease-breath) infinite alternate;
+}
+
+@keyframes grad-pan {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+/* ============================================================
+   滚动入场
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity var(--t-slow) var(--ease-out-expo),
+    transform var(--t-slow) var(--ease-out-expo);
+  will-change: opacity, transform;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* 脚本未执行时不能把内容藏起来 */
+html:not(.js) .reveal {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* ============================================================
+   打字机光标（main.js 注入 .tw-cursor）
+   —— 旧样式表从未定义过它，光标一直是不可见的，此处补齐
+   ============================================================ */
+.tw-cursor {
+  display: inline-block;
+  width: 0.06em;
+  min-width: 2px;
+  height: 1em;
+  margin-left: 0.04em;
+  vertical-align: -0.1em;
+  background: var(--hue-violet);
+  border-radius: 1px;
+  animation: tw-blink 1.05s steps(2, start) infinite;
+}
+
+@keyframes tw-blink {
+  0%, 50%   { opacity: 1; }
+  50.01%, 100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tw-cursor { animation: none; opacity: 0.7; }
+}
+
+/* ============================================================
+   间距工具类（只保留页面在用的）
+   ============================================================ */
+.mt-2 { margin-top: var(--space-2); }
+.mt-3 { margin-top: var(--space-3); }
+.mt-5 { margin-top: var(--space-5); }
+
+/* ============================================================
+   减少动效总开关
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .grad-text {
+    animation: none !important;
+    background-position: 30% 50%;
+  }
+}

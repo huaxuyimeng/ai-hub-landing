@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light" />
+  <title>AIHub · 技术架构：可隔离、可观测、可演进</title>
+  <meta name="description" content="AIHub 技术架构：Next.js 14 + tRPC + Prisma 现代全栈，多租户隔离与工程化底座，目标态 pnpm Monorepo 与可观测接线。含整体架构图与早报数据流。" />
+  <meta name="author" content="AIHub" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="zh_CN" />
+  <meta property="og:title" content="AIHub · 技术架构" />
+  <meta property="og:description" content="可隔离、可观测、可演进的现代全栈架构，含 Monorepo 目标架构与每日早报数据流。" />
+  <meta property="og:image" content="assets/og/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="AIHub · AI 行业情报，一个工作台全部搞定" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Crect width='28' height='28' rx='8' fill='%23BE123C'/%3E%3Ctext x='14' y='19' text-anchor='middle' font-family='Arial' font-size='13' font-weight='700' fill='white'%3EAI%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="assets/css/tokens.css?v=20260913c" />
+  <link rel="stylesheet" href="assets/css/base.css?v=20260913c" />
+  <link rel="stylesheet" href="assets/css/aurora.css?v=20260913c" />
+  <link rel="stylesheet" href="assets/css/components.css?v=20260913c" />
+  <link rel="stylesheet" href="assets/css/pages.css?v=20260913c" />
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主内容</a>
+
+  <header class="nav">
+    <div class="container nav__inner">
+      <a class="nav__brand" href="index.html" aria-label="AIHub 首页">
+        <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true">
+          <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#BE123C"/><stop offset="0.35" stop-color="#C2410C"/><stop offset="0.65" stop-color="#B45309"/><stop offset="1" stop-color="#047857"/></linearGradient></defs>
+          <rect width="28" height="28" rx="8" fill="url(#lg)"/>
+          <text x="14" y="19" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#fff">AI</text>
+        </svg>
+        AIHub
+      </a>
+      <nav class="nav__links" aria-label="主导航">
+        <a class="nav__link" href="index.html">首页</a>
+        <a class="nav__link" href="features.html">功能</a>
+        <a class="nav__link" href="briefing.html">每日早报</a>
+        <a class="nav__link" href="screenshots.html">截图</a>
+        <a class="nav__link" href="architecture.html" aria-current="page">架构</a>
+        <a class="nav__link" href="security.html">安全合规</a>
+        <a class="nav__link" href="roadmap.html">路线图</a>
+        <a class="nav__link" href="faq.html">常见问题</a>
+      </nav>
+      <div class="nav__actions">
+        <a class="btn btn--primary btn--sm" href="screenshots.html">看真实截图</a>
+      </div>
+      <button class="nav__toggle" aria-label="打开导航菜单" aria-expanded="false" aria-controls="nav-drawer">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="nav__drawer" id="nav-drawer">
+      <nav aria-label="移动端导航">
+        <a class="nav__link" href="index.html">首页</a>
+        <a class="nav__link" href="features.html">功能</a>
+        <a class="nav__link" href="briefing.html">每日早报</a>
+        <a class="nav__link" href="screenshots.html">截图</a>
+        <a class="nav__link" href="architecture.html" aria-current="page">架构</a>
+        <a class="nav__link" href="security.html">安全合规</a>
+        <a class="nav__link" href="roadmap.html">路线图</a>
+        <a class="nav__link" href="faq.html">常见问题</a>
+      </nav>
+      <div class="nav__drawer-actions">
+        <a class="btn btn--primary btn--block" href="screenshots.html">看真实截图</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- S1 Hero -->
+    <section class="hero" id="hero">
+      <div class="container hero__inner">
+        <div class="hero__copy">
+          <span class="tag">技术架构</span>
+          <h1 class="hero__title">技术架构：可隔离、可观测、可演进</h1>
+          <p class="hero__lead">Next.js 14 + tRPC + Prisma 的现代全栈，多租户隔离与工程化是底座。</p>
+          <div class="hero__cta">
+            <a class="btn btn--primary" href="#diagram">看整体架构图</a>
+            <a class="btn btn--secondary" href="security.html#isolation">看隔离安全设计</a>
+          </div>
+        </div>
+        <div class="hero__media">
+          <div class="window">
+            <div class="window__bar">
+              <span class="window__dot"></span><span class="window__dot"></span><span class="window__dot"></span>
+              <span class="window__addr">aihub.app/rankings</span>
+            </div>
+            <div class="window__body window__body--flush">
+              <img class="window__img" src="assets/screenshots/02-rankings.png" srcset="assets/screenshots/02-rankings-720.png 720w, assets/screenshots/02-rankings.png 2880w" sizes="(max-width: 768px) 92vw, 620px" alt="AIHub 模型性价比排行页：Top3 领奖台与能力-价格帕累托散点图，展示完整应用界面" width="2880" height="1800" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- S2 整体架构图（Monorepo 目标架构） -->
+    <section class="section" id="diagram">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="section__eyebrow">整体架构图</span>
+          <h2 class="section__title">目标态：pnpm Monorepo 分层</h2>
+          <p class="section__lead">11 个 <code>@aihub/*</code> 包分作三层：基础设施 → 领域能力 → 编排。依赖方向由 <code>package.json#exports</code>、ESLint <code>no-restricted-imports</code> 与 <code>dependency-cruiser</code> 三重强制约束——当前仍是单仓，方案已定、尚未执行。</p>
+        </div>
+        <div class="diagram-box reveal" tabindex="0" role="img" aria-label="Monorepo 目标架构图：上层是 apps/web 与 apps/cron；中层 packages 分三层——基础设施（db、observability、config）、领域能力（ai-core、news、rankings、bilibili、multimodal）、编排与共享（daily-briefing、slide-engine、ui）；下层是数据库、对象存储、缓存与各家大模型。依赖只允许自上而下">
+          <svg viewBox="0 0 940 600" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <linearGradient id="appGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#BE123C"/><stop offset="0.35" stop-color="#C2410C"/><stop offset="0.65" stop-color="#B45309"/><stop offset="1" stop-color="#047857"/></linearGradient>
+              <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#A8A29E"/></marker>
+            </defs>
+
+            <!-- apps -->
+            <text x="40" y="24" font-family="sans-serif" font-size="15" font-weight="700" fill="#1C1917">apps（应用层 · 可独立部署）</text>
+            <rect x="40" y="36" width="420" height="58" rx="12" fill="url(#appGrad)"/>
+            <text x="250" y="59" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="700" fill="#fff">apps/web</text>
+            <text x="250" y="79" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#fff" fill-opacity="0.92">Next.js 14 主站 · 全部 UI 页面 · tRPC mount</text>
+            <rect x="480" y="36" width="420" height="58" rx="12" fill="url(#appGrad)"/>
+            <text x="690" y="59" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="700" fill="#fff">apps/cron</text>
+            <text x="690" y="79" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#fff" fill-opacity="0.92">定时任务 · 抓取 / 排行 / 早报 / B站 / 术语</text>
+
+            <!-- 箭头 apps -> packages -->
+            <line x1="470" y1="94" x2="470" y2="126" stroke="#A8A29E" stroke-width="2" marker-end="url(#arrow)"/>
+            <text x="486" y="115" font-family="sans-serif" font-size="12" fill="#57534E">只允许向下依赖</text>
+
+            <text x="40" y="150" font-family="sans-serif" font-size="15" font-weight="700" fill="#1C1917">packages（包层 · 11 个 · 每个只做一件事）</text>
+
+            <!-- 第一层：基础设施 -->
+            <text x="40" y="176" font-family="sans-serif" font-size="12" font-weight="700" fill="#57534E">基础设施 · 底座，只有别人依赖它</text>
+            <g font-family="sans-serif" text-anchor="middle">
+              <rect x="120" y="186" width="220" height="70" rx="10" fill="#FFFFFF" stroke="#E7E2DF"/>
+              <text x="230" y="211" font-size="14" font-weight="700" fill="#1C1917">@aihub/db</text>
+              <text x="230" y="232" font-size="11" fill="#57534E">Prisma · 字段加密 · 单例</text>
+              <rect x="360" y="186" width="220" height="70" rx="10" fill="#FFFFFF" stroke="#E7E2DF"/>
+              <text x="470" y="211" font-size="14" font-weight="700" fill="#1C1917">@aihub/observability</text>
+              <text x="470" y="232" font-size="11" fill="#57534E">日志 · 告警 · 分布式锁</text>
+              <rect x="600" y="186" width="220" height="70" rx="10" fill="#FFFFFF" stroke="#E7E2DF"/>
+              <text x="710" y="211" font-size="14" font-weight="700" fill="#1C1917">@aihub/config</text>
+              <text x="710" y="232" font-size="11" fill="#57534E">tsconfig / eslint / prettier</text>
+            </g>
+
+            <!-- 第二层：领域能力 -->
+            <text x="40" y="288" font-family="sans-serif" font-size="12" font-weight="700" fill="#57534E">领域能力 · 各自独立，禁止横向引用对方内部实现</text>
+            <g font-family="sans-serif" text-anchor="middle">
+              <rect x="40" y="298" width="160" height="70" rx="10" fill="#FAF9F8" stroke="#E7E2DF"/>
+              <text x="120" y="323" font-size="13" font-weight="700" fill="#1C1917">@aihub/ai-core</text>
+              <text x="120" y="344" font-size="10.5" fill="#57534E">路由 · 定价 · Key</text>
+              <rect x="215" y="298" width="160" height="70" rx="10" fill="#FAF9F8" stroke="#E7E2DF"/>
+              <text x="295" y="323" font-size="13" font-weight="700" fill="#1C1917">@aihub/news</text>
+              <text x="295" y="344" font-size="10.5" fill="#57534E">多源聚合 · 去重</text>
+              <rect x="390" y="298" width="160" height="70" rx="10" fill="#FAF9F8" stroke="#E7E2DF"/>
+              <text x="470" y="323" font-size="13" font-weight="700" fill="#1C1917">@aihub/rankings</text>
+              <text x="470" y="344" font-size="10.5" fill="#57534E">性价比算法 · 爬虫</text>
+              <rect x="565" y="298" width="160" height="70" rx="10" fill="#FAF9F8" stroke="#E7E2DF"/>
+              <text x="645" y="323" font-size="13" font-weight="700" fill="#1C1917">@aihub/bilibili</text>
+              <text x="645" y="344" font-size="10.5" fill="#57534E">WBI 签名 · UP 追踪</text>
+              <rect x="740" y="298" width="160" height="70" rx="10" fill="#FAF9F8" stroke="#E7E2DF"/>
+              <text x="820" y="323" font-size="13" font-weight="700" fill="#1C1917">@aihub/multimodal</text>
+              <text x="820" y="344" font-size="10.5" fill="#57534E">跨模型事件聚合</text>
+            </g>
+
+            <!-- 第三层：编排与共享 -->
+            <text x="40" y="410" font-family="sans-serif" font-size="12" font-weight="700" fill="#57534E">编排与共享 · 编排层可依赖一切下层</text>
+            <g font-family="sans-serif" text-anchor="middle">
+              <rect x="120" y="420" width="220" height="70" rx="10" fill="#FFF1F2" stroke="#F43F5E"/>
+              <text x="230" y="445" font-size="14" font-weight="700" fill="#1C1917">@aihub/daily-briefing</text>
+              <text x="230" y="466" font-size="11" fill="#57534E">采集 → LLM 成稿 → 排版</text>
+              <rect x="360" y="420" width="220" height="70" rx="10" fill="#FAF9F8" stroke="#E7E2DF"/>
+              <text x="470" y="445" font-size="14" font-weight="700" fill="#1C1917">@aihub/slide-engine</text>
+              <text x="470" y="466" font-size="11" fill="#57534E">页型 · 布局 · QA 门禁</text>
+              <rect x="600" y="420" width="220" height="70" rx="10" fill="#FAF9F8" stroke="#E7E2DF"/>
+              <text x="710" y="445" font-size="14" font-weight="700" fill="#1C1917">@aihub/ui</text>
+              <text x="710" y="466" font-size="11" fill="#57534E">跨业务复用展示组件</text>
+            </g>
+
+            <!-- 依赖方向 -->
+            <line x1="40" y1="514" x2="40" y2="538" stroke="#10B981" stroke-width="2" marker-end="url(#arrow)"/>
+            <text x="56" y="532" font-family="sans-serif" font-size="13" font-weight="600" fill="#10B981">依赖方向：仅向下 —— 下层不得反向 import 上层，包间只能走 index.ts 入口</text>
+
+            <!-- 基础设施（外部依赖） -->
+            <rect x="40" y="552" width="860" height="40" rx="10" fill="#1C1917"/>
+            <text x="470" y="577" text-anchor="middle" font-family="sans-serif" font-size="12.5" fill="#E7E2DF">PostgreSQL / SQLite · Cloudflare R2 · Upstash Redis · OpenAI / Anthropic / Gemini / DeepSeek</text>
+          </svg>
+          <p class="diagram-note">图注：apps 依赖 packages，packages 内部依赖方向自上而下；下层不得反向 import 上层，包间只能通过 <code>index.ts</code> 入口访问。</p>
+        </div>
+
+        <div class="section__head reveal mt-5">
+          <span class="section__eyebrow">逐包职责</span>
+          <h3 class="section__title">11 个包，每个只做一件事</h3>
+          <p class="section__lead">「一个包只做一件事」是硬约束：<code>@aihub/news</code> 不含 LLM 调用，<code>@aihub/ai-core</code> 不含任何业务字段。下表是每个包的一句话职责、对外依赖白名单，以及拆分时的优先级与独立难度。</p>
+        </div>
+        <div class="table-wrap reveal" role="region" aria-label="11 个包的职责、依赖白名单与拆分优先级，可横向滚动查看" tabindex="0">
+          <table class="data">
+            <thead>
+              <tr><th>包</th><th>一句话职责</th><th>依赖白名单</th><th>拆分优先级 · 难度</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>@aihub/db</code></td><td>Prisma schema + 字段加密 + 数据库 client 单例</td><td>叶节点，不依赖任何包</td><td>P0 · ★</td></tr>
+              <tr><td><code>@aihub/observability</code></td><td>JSON 日志、Slack 告警、Redis 分布式锁</td><td><code>db</code></td><td>P0 · ★</td></tr>
+              <tr><td><code>@aihub/config</code></td><td>共享 tsconfig / eslint / prettier 配置</td><td>叶节点</td><td>随 workspace 初始化</td></tr>
+              <tr><td><code>@aihub/ai-core</code></td><td>多 Provider LLM 调用、模型白名单、定价表、Key 解析</td><td><code>db</code> · <code>observability</code> · <code>config</code></td><td>P1 · ★★</td></tr>
+              <tr><td><code>@aihub/multimodal</code></td><td>跨 News + Model 联合查询的关键词事件聚合</td><td>+ <code>news</code>（domain）· <code>rankings</code>（domain）</td><td>P1 · ★</td></tr>
+              <tr><td><code>@aihub/slide-engine</code></td><td>页型注册、布局测量、容量校验、QA 门禁、PPTX / Web 渲染</td><td><code>config</code>，零业务依赖</td><td>P1 · ★★</td></tr>
+              <tr><td><code>@aihub/rankings</code></td><td>性价比公式、爬虫、快照持久化、帕累托计算</td><td><code>db</code> · <code>observability</code> · <code>config</code></td><td>P2 · ★★★</td></tr>
+              <tr><td><code>@aihub/news</code></td><td>多 RSS / HTML 源抓取、去重、意图搜索、入库</td><td>+ <code>ai-core</code>（interface）· <code>rankings</code>（domain）</td><td>P2 · ★★★★</td></tr>
+              <tr><td><code>@aihub/bilibili</code></td><td>B 站公开 API + WBI 签名 + RSSHub 兜底 + UP 主追踪</td><td>+ <code>news</code>（domain / parsers）</td><td>P3 · ★★★★★</td></tr>
+              <tr><td><code>@aihub/daily-briefing</code></td><td>早报采集 → LLM 生成 → slide-engine 排版 → 持久化 + PPTX 下载</td><td>+ <code>ai-core</code> · <code>news</code> · <code>rankings</code>（domain）· <code>slide-engine</code>（domain）</td><td>P3 · ★★★★★</td></tr>
+              <tr><td><code>@aihub/ui</code></td><td>跨业务复用的展示型组件（标题栏 / 统计卡 / 迷你折线图）</td><td><code>config</code></td><td>随 apps 一并迁移</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="section__head reveal mt-5">
+          <span class="section__eyebrow">边界怎么钉死</span>
+          <h3 class="section__title">三重强制约束，违规直接阻断合并</h3>
+          <p class="section__lead">边界不靠「约定俗成」，而是让工具在 IDE、Pre-commit 与 CI 三处同时卡住。</p>
+        </div>
+        <div class="grid grid--4 reveal">
+          <div class="card"><div class="card__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 3l9 4.5-9 4.5-9-4.5z"/><path d="M3 12.5l9 4.5 9-4.5"/><path d="M3 17l9 4.5 9-4.5"/></svg></div><h4 class="card__title">包内三层结构</h4><p class="card__text"><code>domain</code>（纯逻辑，可独立单测）→ <code>infra</code>（Prisma / HTTP）→ <code>interface</code>（tRPC / React / CLI），只有 <code>index.ts</code> 对外。</p></div>
+          <div class="card"><div class="card__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 3l7 3.5v5c0 4.2-2.9 8-7 9.5-4.1-1.5-7-5.3-7-9.5v-5z"/><path d="M9 12l2 2 4-4"/></svg></div><h4 class="card__title">exports 锁死入口</h4><p class="card__text"><code>package.json#exports</code> 精确声明哪些路径可被 import；<code>import '@aihub/news/src/parsers/wechat-mp'</code> 在 Node 解析期就直接失败。</p></div>
+          <div class="card"><div class="card__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/></svg></div><h4 class="card__title">ESLint 边界规则</h4><p class="card__text">各包独立配置 <code>no-restricted-imports</code>，反向依赖与跨包深路径穿透在 IDE 里就报错，写不出来自然也提交不了。</p></div>
+          <div class="card"><div class="card__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="6" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="12" r="2.5"/><path d="M6 8.5v7"/><path d="M8.5 6H12a3 3 0 0 1 3 3v1"/></svg></div><h4 class="card__title">CI 阶段阻断</h4><p class="card__text"><code>dependency-cruiser</code> 在 Pre-commit 与 CI 两处校验：循环依赖、<code>db</code> 越界、跨包内部引用一律判 error，阻断 merge。</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- S3 技术栈总览 -->
+    <section class="section section--subtle" id="stack">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="section__eyebrow">技术栈总览</span>
+          <h2 class="section__title">每一层都选了成熟方案</h2>
+        </div>
+        <div class="table-wrap reveal" role="region" aria-label="数据表格，可横向滚动查看" tabindex="0">
+          <table class="data">
+            <thead>
+              <tr><th>层</th><th>技术</th><th>用途</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>前端</td><td>Next.js 14 (App Router) · React 18 · Tailwind 3</td><td>工作台 UI、SSR</td></tr>
+              <tr><td>类型 / 接口</td><td>TypeScript 5 · tRPC 11 · zod · superjson</td><td>端到端类型安全</td></tr>
+              <tr><td>数据</td><td>Prisma 6 · PostgreSQL(生产) / SQLite(开发)</td><td>ORM + 多租户查询层</td></tr>
+              <tr><td>认证</td><td>NextAuth 4</td><td>邮箱密码 + GitHub OAuth</td></tr>
+              <tr><td>存储</td><td>Cloudflare R2 · Upstash Redis</td><td>文件/项目 · 缓存与速率</td></tr>
+              <tr><td>AI</td><td>OpenAI / Anthropic / Gemini / DeepSeek</td><td>多 Provider 统一抽象</td></tr>
+              <tr><td>产物</td><td>pptxgenjs</td><td>早报 PPT 生成</td></tr>
+              <tr><td>部署</td><td>Vercel + 7 条 Cron</td><td>托管与定时任务</td></tr>
+              <tr><td>测试</td><td>tsx 单测 · Playwright e2e · ci:check</td><td>typecheck + lint + react-hooks</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- S4 数据层与存储 + 数据流 -->
+    <section class="section" id="data">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="section__eyebrow">数据层与存储</span>
+          <h2 class="section__title">双形态数据库，统一隔离</h2>
+          <p class="section__lead">PostgreSQL（生产）/ SQLite（开发）双形态；R2 存项目与文件；Upstash Redis 做缓存与限流；9 个模型软删除 + <code>tenantId</code> 强制隔离。</p>
+        </div>
+
+        <div class="diagram-box reveal" tabindex="0" role="img" aria-label="每日早报生成链路：Cron 触发，经分布式锁、采集新闻、LLM 成稿、slide-engine 排版，最终持久化并写入 R2">
+          <svg viewBox="0 0 940 220" preserveAspectRatio="xMidYMid meet">
+            <defs><marker id="flow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#F43F5E"/></marker></defs>
+            <g font-family="sans-serif" font-size="14" fill="#292524" text-anchor="middle">
+              <rect x="10" y="80" width="130" height="60" rx="12" fill="#FFF1F2" stroke="#F43F5E"/>
+              <text x="75" y="106">Cron</text><text x="75" y="126" font-size="11" fill="#57534E">北京 7:00</text>
+              <rect x="185" y="80" width="130" height="60" rx="12" fill="#FFFFFF" stroke="#E7E2DF"/>
+              <text x="250" y="106">分布式锁</text><text x="250" y="126" font-size="11" fill="#57534E">防并发重复</text>
+              <rect x="360" y="80" width="130" height="60" rx="12" fill="#FFFFFF" stroke="#E7E2DF"/>
+              <text x="425" y="106">采集新闻</text><text x="425" y="126" font-size="11" fill="#57534E">多源聚合</text>
+              <rect x="535" y="80" width="130" height="60" rx="12" fill="#ECFDF5" stroke="#10B981"/>
+              <text x="600" y="106">LLM 成稿</text><text x="600" y="126" font-size="11" fill="#57534E">三幕叙事</text>
+              <rect x="710" y="80" width="150" height="60" rx="12" fill="#FFFFFF" stroke="#E7E2DF"/>
+              <text x="785" y="106">slide-engine</text><text x="785" y="126" font-size="11" fill="#57534E">排版 / QA</text>
+            </g>
+            <g stroke="#F43F5E" stroke-width="2.5" marker-end="url(#flow)">
+              <line x1="140" y1="110" x2="183" y2="110"/>
+              <line x1="315" y1="110" x2="358" y2="110"/>
+              <line x1="490" y1="110" x2="533" y2="110"/>
+              <line x1="665" y1="110" x2="708" y2="110"/>
+            </g>
+            <path d="M860 110 C 905 110 905 180 700 180 L 175 180 L 75 180 C 20 180 20 150 20 150" fill="none" stroke="#A8A29E" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#flow)"/>
+            <text x="470" y="200" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#57534E">持久化（PostgreSQL）+ 产物写入 Cloudflare R2</text>
+          </svg>
+          <p class="diagram-note">每日早报生成链路：从定时触发到 PPT 落盘，全程可测试、可追踪。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- S5 AI 集成 -->
+    <section class="section section--subtle" id="ai">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="section__eyebrow">AI 集成</span>
+          <h2 class="section__title">多 Provider 统一抽象</h2>
+          <p class="section__lead">OpenAI / Anthropic / Gemini / DeepSeek 一套路由；Key 三级解析（租户自配 AES-256-GCM 密文 → 平台 Key 兜底）；历史裁剪与风格注入复用。</p>
+        </div>
+        <div class="grid grid--4 reveal">
+          <div class="card"><div class="card__icon card__icon--primary"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12h8M12 8v8"/></svg></div><h3 class="card__title">统一路由</h3><p class="card__text">四种 Provider 同一套接口，随时热切换。</p></div>
+          <div class="card"><div class="card__icon card__icon--primary"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></div><h3 class="card__title">Key 三级解析</h3><p class="card__text">租户自配密文优先，平台 Key 兜底。</p></div>
+          <div class="card"><div class="card__icon card__icon--primary"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h10M4 17h7"/></svg></div><h3 class="card__title">历史裁剪</h3><p class="card__text">长会话自动裁剪，控制成本与延迟。</p></div>
+          <div class="card"><div class="card__icon card__icon--primary"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 3l2.5 5 5.5.8-4 3.9.9 5.5-4.9-2.6L6.6 18.2 7.5 12.7l-4-3.9 5.5-.8z"/></svg></div><h3 class="card__title">风格注入</h3><p class="card__text">系统级风格注入，输出稳定可控。</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- S6 工程化与质量 -->
+    <section class="section" id="engineering">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="section__eyebrow">工程化与质量</span>
+          <h2 class="section__title">把质量做成默认项</h2>
+        </div>
+        <div class="grid grid--3 reveal">
+          <div class="card"><div class="card__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg></div><h3 class="card__title">结构化日志</h3><p class="card__text">结构化 JSON 日志 + Slack 告警 + 分布式锁，异常及时可见。</p></div>
+          <div class="card"><div class="card__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></div><h3 class="card__title">ci:check 门禁</h3><p class="card__text"><code>tsc</code> 0 error；ci:check（typecheck + lint + react-hooks）随 PR 运行。</p></div>
+          <div class="card"><div class="card__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 4h16v12H4z"/><path d="M8 20h8M12 16v4"/></svg></div><h3 class="card__title">文档可追溯</h3><p class="card__text">2 轮安全审计修复；169 份文档可追溯开发全过程。</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- S7 部署与 Cron -->
+    <section class="section section--subtle" id="deploy">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="section__eyebrow">部署与 Cron</span>
+          <h2 class="section__title">7 条自动化定时任务</h2>
+        </div>
+        <div class="table-wrap reveal" role="region" aria-label="数据表格，可横向滚动查看" tabindex="0">
+          <table class="data">
+            <thead><tr><th>Cron</th><th>频率</th><th>作用</th></tr></thead>
+            <tbody>
+              <tr><td>新闻聚合</td><td>每 3 小时</td><td>34 源抓取与去重</td></tr>
+              <tr><td>模型发现</td><td>每日</td><td>从近 7 天新闻提取新模型</td></tr>
+              <tr><td>模型排行</td><td>每日</td><td>价格 / 能力刷新</td></tr>
+              <tr><td>术语词典</td><td>每周日</td><td>同义词扩展</td></tr>
+              <tr><td>AI 早报</td><td>每日（北京 7:00）</td><td>生成 11 页 PPT</td></tr>
+              <tr><td>B 站追踪</td><td>每 6 小时</td><td>UP 主数据更新</td></tr>
+              <tr><td>孤儿文件清理</td><td>每日</td><td>R2 存储回收</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- S8 架构演进 -->
+    <section class="section" id="evolution">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="section__eyebrow">架构演进</span>
+          <h2 class="section__title">诚实的下一步</h2>
+        </div>
+        <div class="card reveal">
+          <span class="tag tag--muted">规划中 · 方案已定</span>
+          <h3 class="card__title mt-2">pnpm workspace Monorepo</h3>
+          <p class="card__text">已规划 <code>apps/web</code> + <code>apps/cron</code> + 11 个 <code>packages</code>；目标态含 ESLint <code>no-restricted-imports</code> + <code>dependency-cruiser</code> 强制依赖方向。当前为单仓，方案已定、尚未执行——详见路线图边界清单。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- S9 底部 CTA -->
+    <section class="section" id="cta">
+      <div class="container">
+        <div class="cta reveal">
+          <h2 class="cta__title">隔离与可观测，是底座也是承诺</h2>
+          <p class="cta__text">多看一眼安全设计，少一分上线顾虑。</p>
+          <div class="cta__actions">
+            <a class="btn btn--light" href="security.html#isolation">看安全合规设计</a>
+            <a class="btn btn--secondary" href="features.html">回功能总览</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brandcol">
+          <div class="footer__brand">
+            <svg width="24" height="24" viewBox="0 0 28 28" aria-hidden="true">
+              <defs><linearGradient id="lgf" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#BE123C"/><stop offset="0.35" stop-color="#C2410C"/><stop offset="0.65" stop-color="#B45309"/><stop offset="1" stop-color="#047857"/></linearGradient></defs>
+              <rect width="28" height="28" rx="8" fill="url(#lgf)"/>
+              <text x="14" y="19" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#fff">AI</text>
+            </svg>
+            AIHub
+          </div>
+          <p class="footer__desc">AI 行业信息聚合与决策辅助平台，把分散的情报收拢成一个可操作的工作台。</p>
+        </div>
+        <div class="footer__col">
+          <h3>产品</h3>
+          <ul>
+            <li><a href="features.html#news">四大模块</a></li>
+            <li><a href="screenshots.html">真实截图</a></li>
+            <li><a href="architecture.html">技术架构</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h3>资源</h3>
+          <ul>
+            <li><span class="footer__soon">在线 Demo<em>即将开放</em></span></li>
+            <li><span class="footer__soon">GitHub 仓库<em>整理后公开</em></span></li>
+            <li><a href="roadmap.html">路线图</a></li>
+            <li><a href="faq.html">常见问题</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h3>关于</h3>
+          <ul>
+            <li><a href="faq.html#product">项目背景（毕业设计 MVP）</a></li>
+            <li><a href="security.html">安全合规</a></li>
+            <li><a href="roadmap.html#shipped">工程亮点</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>© 2026 AIHub · Built with Next.js &amp; Vercel · 浅色主题</span>
+        <span class="footer__clock" aria-hidden="true">UTC+8 <span data-clock>00:00:00</span></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js?v=20260913c"></script>
+</body>
+</html>

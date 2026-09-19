@@ -1,0 +1,554 @@
+/* ============================================================
+   AIHub 落地站 · ② 流动极光背景系统（Aurora）
+   ------------------------------------------------------------
+   为什么要重写（旧版「竖线」的根因）：
+     旧实现 = background-size:200% + background-repeat:repeat + 平铺渐变。
+     而它的渐变首色是 #1E3A8A、尾色是 #9D174D —— 首尾异色。
+     平铺时「尾块」与「头块」相接处就出现一条硬边；配合 115deg 角度，
+     在扁宽的按钮上看起来就是那条竖直的色块切割线（截图 2 / 截图 4）。
+     另一层原因是把 background-position 从 0% 线性推到 200%，
+     平铺缝会随动画一起滑动，越动越明显。
+
+   新实现（大厂同款做法）：
+     ① 用多层 radial-gradient 组成「网格渐变」色场，每个光斑都从
+        同色透明（rgba(h,s,l,0)）柔和收边 —— 结构上不存在「边缘」，
+        因此不可能出现接缝。不用 filter: blur()，因为径向渐变本身
+        就是平滑的，省掉一层高开销的全屏模糊。
+     ② 冷暖两套色场分置于 body::before / body::after，各自用
+        transform 漂移（GPU 合成，不触发重绘）+ opacity 呼吸。
+        两层的周期互不通约（46s / 61s），因此色相组合长时间不重复，
+        呈现「持续流动且持续变色」。
+     ③ 冷暖呼吸相位相反，总亮度近似恒定 —— 只有色彩在变，没有闪烁。
+     ④ 叠一层 SVG feTurbulence 噪点做抖动（dither），消除大面积
+        浅色渐变的色带；噪点内联为 data URI，全站依然零外链。
+
+   层序（自下而上）：
+     html 背景色 = 画布底色
+     body::before  = 暖相色场（漂移 + 呼吸）
+     body::after   = 冷相色场（反向漂移 + 反向呼吸）
+     html::after   = 噪点（静态，压在色场之上、正文之下）
+     body 内容     = 正文（负 z-index 组之后绘制，天然压在最上层）
+
+   为什么用负 z-index 就能「压住极光又不遮正文」：
+     html 背景 → 根栈上下文中所有负 z-index 后代 → body 的块级内容 → 行内内容。
+     三个伪元素都是负 z-index，按树序绘制（body::before → body::after →
+     html::after），全部早于 body 的内容，所以正文永远清晰可读。
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. 画布分层
+   html 只负责最底下的画布色；**整页一层冷白罩画在 body 上**。
+   ------------------------------------------------------------
+   为什么罩放在 body 而不是 html：
+     html 的背景是最先绘制的（垫在极光下面，起不到罩的作用）；
+     而 body 是「非定位的普通块级后代」，它自己的背景绘制顺序
+     **晚于 z-index:-1 的极光伪元素**，所以能正常盖在极光上面。
+     这一点也是「罩只能有一层」的原因 —— 一旦下放到每个区块各画一份，
+     区块边界处就会出现横向台阶（实测整页 10 条硬边界）。
+   ------------------------------------------------------------ */
+html {
+  background-color: var(--canvas);
+}
+
+body {
+  background: var(--page-veil);
+  /* 兜底：body 的背景只画在自己的盒子上，而 body 的盒子高度 = 内容高度。
+     万一某个页面比视口还短（超大屏 / 大幅缩小浏览），内容结束线以下就会
+     露出「没罩住的极光」，又变成一条横向台阶。撑到至少一屏即可根除。
+     本页内容远超一屏，所以这条是纯保险，不改变现有观感。 */
+  min-height: 100vh;
+}
+
+/* 可调项：想要极光更浓 / 更淡，只改这两个值即可 */
+:root {
+  --aurora-strength: 1;      /* 色场整体强度倍率（乘在各层 opacity 上） */
+  --grain-opacity: 0.10;     /* 噪点强度，0 即关闭 */
+}
+
+/* ------------------------------------------------------------
+   2. 暖相色场（body::before）
+   ------------------------------------------------------------ */
+body::before {
+  content: "";
+  position: fixed;
+  inset: -24%;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    /* 紫罗兰 —— 左上主光 */
+    radial-gradient(38% 40% at 10% 16%,
+      rgba(124, 58, 237, 0.34) 0%, rgba(124, 58, 237, 0.18) 36%,
+      rgba(124, 58, 237, 0) 72%),
+    /* 品红 —— 上中 */
+    radial-gradient(34% 36% at 46% 6%,
+      rgba(192, 38, 211, 0.28) 0%, rgba(192, 38, 211, 0.14) 38%,
+      rgba(192, 38, 211, 0) 74%),
+    /* 玫红 —— 右上 */
+    radial-gradient(32% 34% at 80% 20%,
+      rgba(225, 29, 72, 0.24) 0%, rgba(225, 29, 72, 0.12) 40%,
+      rgba(225, 29, 72, 0) 76%),
+    /* 琥珀 —— 右下 */
+    radial-gradient(30% 32% at 90% 64%,
+      rgba(245, 158, 11, 0.26) 0%, rgba(245, 158, 11, 0.13) 38%,
+      rgba(245, 158, 11, 0) 74%),
+    /* 橙 —— 左下 */
+    radial-gradient(30% 32% at 26% 78%,
+      rgba(249, 115, 22, 0.22) 0%, rgba(249, 115, 22, 0.11) 40%,
+      rgba(249, 115, 22, 0) 76%);
+  opacity: var(--aurora-strength);
+  animation:
+    aurora-drift-warm var(--aurora-dur-a) var(--ease-breath) infinite,
+    breathe-warm      var(--aurora-dur-breath) var(--ease-breath) infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes aurora-drift-warm {
+  0%, 100% { transform: translate3d(-3%, 1%, 0) scale(1.06) rotate(0deg); }
+  25%      { transform: translate3d(2%, -3%, 0) scale(1.12) rotate(1.6deg); }
+  50%      { transform: translate3d(4%, 2%, 0) scale(1.08) rotate(0deg); }
+  75%      { transform: translate3d(-1%, -2%, 0) scale(1.13) rotate(-1.6deg); }
+}
+
+/* 呼吸：亮度峰值与冷层错开，色彩组合因此持续变化
+   冷暖两层共用同一周期、相位相反，且都是「互补」的两端：
+       暖层 1.00 → 0.44   冷层 0.44 → 1.00
+   两者之和恒为 1.44，所以画面总亮度完全不变，
+   视觉上只有色相在「暖相主导 ↔ 冷相主导」之间来回交替 ——
+   这就是「颜色本身在变」而「不会闪」的原因。 */
+@keyframes breathe-warm {
+  0%, 100% { opacity: calc(1.00 * var(--aurora-strength)); }
+  50%      { opacity: calc(0.44 * var(--aurora-strength)); }
+}
+
+/* ------------------------------------------------------------
+   3. 冷相色场（body::after）—— 反向漂移，形成冷暖交替
+   ------------------------------------------------------------ */
+body::after {
+  content: "";
+  position: fixed;
+  inset: -24%;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    /* 靛蓝 —— 左上偏内 */
+    radial-gradient(36% 38% at 22% 12%,
+      rgba(99, 102, 241, 0.30) 0%, rgba(99, 102, 241, 0.15) 38%,
+      rgba(99, 102, 241, 0) 74%),
+    /* 天青 —— 右上偏内 */
+    radial-gradient(32% 34% at 66% 22%,
+      rgba(14, 165, 233, 0.24) 0%, rgba(14, 165, 233, 0.12) 40%,
+      rgba(14, 165, 233, 0) 76%),
+    /* 青绿 —— 右中 */
+    radial-gradient(30% 32% at 92% 50%,
+      rgba(20, 184, 166, 0.24) 0%, rgba(20, 184, 166, 0.12) 40%,
+      rgba(20, 184, 166, 0) 76%),
+    /* 紫罗兰 —— 左中（与暖层同色但位置不同，交叠处最浓） */
+    radial-gradient(32% 34% at 12% 56%,
+      rgba(124, 58, 237, 0.26) 0%, rgba(124, 58, 237, 0.13) 38%,
+      rgba(124, 58, 237, 0) 74%),
+    /* 青 —— 中下 */
+    radial-gradient(30% 32% at 46% 70%,
+      rgba(6, 182, 212, 0.20) 0%, rgba(6, 182, 212, 0.10) 40%,
+      rgba(6, 182, 212, 0) 78%),
+    /* 靛蓝 —— 右下收尾 */
+    radial-gradient(28% 30% at 80% 90%,
+      rgba(99, 102, 241, 0.20) 0%, rgba(99, 102, 241, 0.10) 42%,
+      rgba(99, 102, 241, 0) 78%);
+  opacity: calc(0.44 * var(--aurora-strength));
+  animation:
+    aurora-drift-cool var(--aurora-dur-b) var(--ease-breath) infinite,
+    breathe-cool      var(--aurora-dur-breath) var(--ease-breath) infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes aurora-drift-cool {
+  0%, 100% { transform: translate3d(3%, -2%, 0) scale(1.08) rotate(0deg); }
+  25%      { transform: translate3d(-2%, 3%, 0) scale(1.04) rotate(-1.4deg); }
+  50%      { transform: translate3d(-4%, -1%, 0) scale(1.11) rotate(0deg); }
+  75%      { transform: translate3d(1%, 2%, 0) scale(1.05) rotate(1.4deg); }
+}
+
+@keyframes breathe-cool {
+  0%, 100% { opacity: calc(0.44 * var(--aurora-strength)); }
+  50%      { opacity: calc(1.00 * var(--aurora-strength)); }
+}
+
+/* ------------------------------------------------------------
+   4. 噪点抖动层（html::after）
+   静态、压在色场之上、压在正文之下 —— 只消除色带，不打扰阅读
+
+   ⚠ 2026-09-13 起它**多了一层夹心**：整页那层罩画在 body 的背景上，
+     而 body 的背景属于「普通流内块级后代的背景」，绘制顺序**晚于**
+     所有 z-index:-1 的伪元素 —— 也就是说噪点现在被罩住了。
+     后果：噪点的可见幅度按透过率折算（0.70 罩 → 只剩 0.30）。
+     这不影响它「给极光做 dither」的职责（它乘在极光上，
+     作用仍落在真正会出色带的那一层），只是整体更淡。
+     想加深就调 --grain-opacity，**不要**把噪点挪到 z-index:0 ——
+     那会让它盖到正文上，正文会发毛。
+   ------------------------------------------------------------ */
+html::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='180'%20height='180'%3E%3Cfilter%20id='n'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.82'%20numOctaves='4'%20stitchTiles='stitch'/%3E%3CfeColorMatrix%20type='saturate'%20values='0'/%3E%3C/filter%3E%3Crect%20width='180'%20height='180'%20filter='url(%23n)'%20opacity='0.6'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 180px 180px;
+  opacity: var(--grain-opacity);
+  mix-blend-mode: multiply;
+}
+
+/* ------------------------------------------------------------
+   5. Hero 局部增强：顶部一道更浓的彩色辉光 + 一道多彩发丝线
+   只作用于 .hero，8 页的 hero 结构性一致，无需改 HTML
+   ------------------------------------------------------------ */
+.hero {
+  position: relative;
+  background: transparent;
+}
+
+/* ⚠ 末端色标必须落在 76% 而不是 100%（2026-09-13 修）：
+   这个伪元素的盒子是 top:-30% / height:170% → 纵向跨度为 hero 高度的 1.7 倍，
+   而 .hero 有 overflow:hidden，真正的裁切线（hero 底边）落在盒子的
+        (1 - (-0.3)) / 1.7 = 76.47%
+   处。旧写法把透明色标放在 100%，等于在裁切线处还剩 alpha≈0.03 的琥珀，
+   被裁成一条横贯整页的硬边（实测 y=675，ΔRGB 7.6，隔离度 16.8 倍）。
+   把透明提前到 74% 并保持到 100%，辉光在裁切之前就已经衰减干净 ——
+   观感不变，硬边消失。 */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: -30% -10% auto -10%;
+  height: 170%;
+  z-index: 0;
+  pointer-events: none;
+  background-image: linear-gradient(180deg,
+    rgba(99, 102, 241, 0.10) 0%,
+    rgba(192, 38, 211, 0.07) 25%,
+    rgba(245, 158, 11, 0.05) 46%,
+    rgba(252, 252, 253, 0) 74%,
+    rgba(252, 252, 253, 0) 100%);
+  background-repeat: no-repeat;
+  animation: hero-veil var(--aurora-dur-c) var(--ease-breath) infinite;
+}
+
+@keyframes hero-veil {
+  0%, 100% { opacity: 0.9; }
+  50%      { opacity: 0.55; }
+}
+
+/* Hero 顶部发丝光带：两端淡出，中间多彩 —— 无接缝（不重复、不平铺） */
+.hero::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 1;
+  pointer-events: none;
+  background-image: linear-gradient(90deg,
+    rgba(99, 102, 241, 0) 0%,
+    rgba(99, 102, 241, 0.70) 18%,
+    rgba(192, 38, 211, 0.70) 40%,
+    rgba(225, 29, 72, 0.65) 62%,
+    rgba(245, 158, 11, 0.60) 82%,
+    rgba(245, 158, 11, 0) 100%);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+/* ------------------------------------------------------------
+   6. 区块底：**不再各自画罩**（2026-09-13 改）
+   ------------------------------------------------------------
+   旧写法：每个 .section--subtle / .footer 各画一份 62%/72% 冷白罩。
+   后果：罩与不罩的交界处是一条横贯整页的硬台阶 ——
+   在 1920×9000 整页渲染上用 hline-scan.py 数出 **10 条孤立硬边界**
+   （隔离度 30~72 倍，远超渐变自身的 2~6 倍陡坡，见 _spec/_lines-before.txt）。
+
+   现在整页只有一层罩，画在 body 上（见本文件第 1 节），
+   所以这里必须把这两种区块的底色交还给 body —— 写成 transparent，
+   而不是删掉规则：留着规则能显式说明「这里**故意**没有底色」，
+   避免后来者又给它加回一层半透明白。
+
+   对比度由 body 那一层统一负责
+   （浓度 0.70，直接量已上线页面：--ink-4 实测 4.62:1，达标 AA）。
+   ⚠ 唯一例外是打印：@media print 里仍强制 #fff 实底（见文件末）。
+   ------------------------------------------------------------ */
+.section--subtle,
+.footer {
+  background: transparent;
+}
+
+/* ============================================================
+   6.5 色相轮转：让「颜色本身」会变，而不只是滑动
+   ------------------------------------------------------------
+   旧代码的做法是注册 21 个颜色属性、写 3 套关键帧、再叠两重动画，
+   代价极高。这里换成一套更省的机制：
+
+     把 --g1 ~ --g5 五个色相槽位注册成 <color> 类型，
+     然后在 :root 上跑一条 48s 的线性关键帧，每一格把整个调色板
+     整体挪一位。**挪 8 格刚好回到起点**（见下面 261 行的约束），
+     所以是无缝闭环。
+
+   三个好处：
+     ① 色相**只会**在「靛 → 紫 → 品红 → 玫 → 橙」这条光谱上往返，
+        不会转出绿色或青色，标题永远不会变得刺眼；
+     ② 五个深色号对白底都 ≥5.0:1，因此挪到任何一格都仍然达标 AA；
+     ③ 只在 :root 上跑**一条**动画，所有用到 --grad-text / --grad-solid /
+        --grad-btn 的元素自动跟着变，不用各自声明动画。
+
+   ⚠ 关键约束（2026-09-12 查明并修掉，**别再改回「绕环一圈」**）：
+     五个色号在色轮上是**不均匀**分布的，色相依次为
+       靛 277.0° / 紫 292.6° / 品红 323.9° / 玫 376.9° / 橙 400.3°
+     环内四步只有 15.6° / 31.3° / 53° / 23.4°，
+     而**闭合那一步「橙 → 靛」是 123.3° 的反向大跳**。
+
+     浏览器对「注册成 <color> 的自定义属性」用的是
+     **gamma 编码 sRGB 直线插值** —— 既不是 linear-light，也不是 OKLab。
+     （实测 t=14 的 --g4 = #893F5D，与「gamma sRGB 直线」算出的 #893E5D
+       只差 ΔRGB 0.70；而 linear-light 差 51.99、OKLab 差 34.59，都不符。）
+     直线在 a/b 平面上会横穿灰区（OKLab 色度掉到 0.107），
+     所以闭合那一格**必然**在按钮/大标题上留下一块发闷的灰紫。
+     实测代价：按钮底色低色度（C<0.12）时长占比 27.6%，
+     最糟的 t=34 谷深比只有 0.64（判定为「明显发闷」）。
+
+     改法：**让调色板往返，而不是绕环一圈。**
+     把环扩成一张 8 成员回文表
+       P = [靛, 紫, 品红, 玫, 橙, 玫, 品红, 紫]
+     仍然是「每格把整个调色板挪一位」，但**没有任何一步超过 53°**，
+     123.3° 的闭合跳被彻底消除。色号仍**只用品牌五色**，
+     不会转出绿/青，对白底的 AA 对比度依旧全部达标。
+
+     实测收益（9600 点采样 + 真实渲染双证）：
+       最低色度        0.1067 → 0.1745（正好等于品牌色里最淡的「橙」本身）
+       低色度时长占比  27.6%  → 0%
+       谷深比最差相位  0.64   → 0.87（全部「干净」）
+       峰值变化速率    123.3°/格 → 53°/格（颜色变化更均匀，不显躁）
+     代价：往返方式下个别相位调色板的色相跨度略窄，
+     但实测**各相位均值色度反而更高**（0.19~0.22 vs 0.16~0.19），观感更鲜艳。
+
+   不支持 @property 的浏览器（老 Safari / Firefox 早于 128）：
+   --g1~--g5 未被注册成 <color>，无法插值，颜色会在每个关键帧**跳变**
+   （每 6s 一次，48s ÷ 8 格），而不是平滑流转。跳变的目标值仍是同一组品牌色，
+   所以只会「不那么顺」，不会破图、不会出现隐形文字。
+   tokens.css 里写的那套静态值是防「变量完全取不到」的兜底。
+   ============================================================ */
+@property --g1 { syntax: "<color>"; inherits: true; initial-value: #4338CA; }
+@property --g2 { syntax: "<color>"; inherits: true; initial-value: #6D28D9; }
+@property --g3 { syntax: "<color>"; inherits: true; initial-value: #A21CAF; }
+@property --g4 { syntax: "<color>"; inherits: true; initial-value: #BE123C; }
+@property --g5 { syntax: "<color>"; inherits: true; initial-value: #C44400; }
+
+:root {
+  animation: hue-cycle var(--hue-dur) linear infinite;
+}
+
+/* 八格往返：每格把整个调色板挪一位，100% 回到 0%，天然无缝。
+   表是**回文**的（靛 紫 品 玫 橙 玫 品 紫），所以最大步长只有 53°，
+   不存在「橙 → 靛」那道 123.3° 的闭合跳。详见上面 6.5 的说明。
+
+   各格调色板（左 → 右 = 渐变 0% → 100%）：
+     0%     靛 紫 品 玫 橙      12.5%  紫 品 玫 橙 玫
+     25%    品 玫 橙 玫 品      37.5%  玫 橙 玫 品 紫
+     50%    橙 玫 品 紫 靛      62.5%  玫 品 紫 靛 紫
+     75%    品 紫 靛 紫 品      87.5%  紫 靛 紫 品 玫
+   注意 12.5% / 25% / 62.5% / 75% 这几格两端会出现同色号（回文的必然结果），
+   那是「暖端/冷端折返」而不是错误：整体色相仍然沿一条路径单调排列，
+   没有乱序，所以视觉效果是顺畅的，不会出现突兀色块。 */
+@keyframes hue-cycle {
+  0%, 100% {
+    --g1: #4338CA; --g2: #6D28D9; --g3: #A21CAF; --g4: #BE123C; --g5: #C44400;
+  }
+  12.5% {
+    --g1: #6D28D9; --g2: #A21CAF; --g3: #BE123C; --g4: #C44400; --g5: #BE123C;
+  }
+  25% {
+    --g1: #A21CAF; --g2: #BE123C; --g3: #C44400; --g4: #BE123C; --g5: #A21CAF;
+  }
+  37.5% {
+    --g1: #BE123C; --g2: #C44400; --g3: #BE123C; --g4: #A21CAF; --g5: #6D28D9;
+  }
+  50% {
+    --g1: #C44400; --g2: #BE123C; --g3: #A21CAF; --g4: #6D28D9; --g5: #4338CA;
+  }
+  62.5% {
+    --g1: #BE123C; --g2: #A21CAF; --g3: #6D28D9; --g4: #4338CA; --g5: #6D28D9;
+  }
+  75% {
+    --g1: #A21CAF; --g2: #6D28D9; --g3: #4338CA; --g4: #6D28D9; --g5: #A21CAF;
+  }
+  87.5% {
+    --g1: #6D28D9; --g2: #4338CA; --g3: #6D28D9; --g4: #A21CAF; --g5: #BE123C;
+  }
+}
+
+/* ------------------------------------------------------------
+   6.7 渐变本身的 OKLCH 插值（提升过渡品质，**不负责**修色槽浑浊）
+   ------------------------------------------------------------
+   作用范围要说清楚，否则很容易把功劳记错地方：
+
+     ✅ 它改的是**这一条 linear-gradient 内部**两个色站之间怎么插值。
+        `in oklch` 走**色相短路径**，橙→靛会绕经红 → 品红 → 紫，
+        全程保持饱和，所以渐变自己的过渡更鲜更干净。
+        （不支持 `in oklch` 的环境 Chrome<111 / Safari<16.4 / FF<113
+          直接不匹配这个 @supports，自动落回 tokens.css 的 sRGB 版本。）
+
+     ❌ 它**改不动** var(--g1)~var(--g5) 这五个色槽自己是怎么插值的 ——
+        那是 @property <color> 的注册动画，走的是另一套规则
+        （gamma 编码 sRGB 直线，见 6.5）。所以早先「OKLCH 修好了浑浊」
+        这个结论是**错的**：真正修掉浑浊的是 6.5 里改成往返的 hue-cycle。
+
+     顺带纠正一个直觉错误：把关键帧色值改写成 oklch() 让插值落到 OKLab，
+     并**不能**解决问题 —— OKLab 在 a/b 直角坐标上做直线插值，
+     橙→靛的直线会直接穿过原点（灰），实测最低色度 0.1067 → 0.0913，
+     反而更糟。只有让路径本身绕开那道大跳才有效（= 6.5 的往返）。
+
+   并入一处声明而不是改 --grad-* 的原始值：只写一处，不用把三份渐变各写两遍。
+   --------------------------------------------------------- */
+@supports (background: linear-gradient(in oklch, red, blue)) {
+  :root {
+    --grad-text: linear-gradient(in oklch 100deg,
+      var(--g1) 0%, var(--g2) 24%, var(--g3) 47%,
+      var(--g4) 70%, var(--g5) 100%);
+
+    --grad-solid: linear-gradient(in oklch 100deg,
+      var(--g1) 0%, var(--g2) 26%, var(--g3) 50%,
+      var(--g4) 74%, var(--g5) 100%);
+
+    --grad-btn: linear-gradient(in oklch 100deg,
+      var(--g1) 0%, var(--g2) 26%, var(--g3) 50%,
+      var(--g4) 74%, var(--g5) 100%);
+
+    --grad-spectrum: linear-gradient(in oklch 100deg,
+      var(--hue-indigo) 0%, var(--hue-violet) 22%, var(--hue-fuchsia) 44%,
+      var(--hue-rose) 65%, var(--hue-orange) 84%, var(--hue-amber) 100%);
+  }
+}
+
+/* ------------------------------------------------------------
+   6.8 鼠标光晕
+   ------------------------------------------------------------
+   .cursor-glow 由 main.js 注入（无 JS 则不存在，纯装饰）。
+   它是压在正文**之上**的一层柔光，所以需要：
+     · z-index 3 —— 高于卡片（1/x）与顶级光晕（0），低于导航（100）与返回顶部（90）
+     · pointer-events: none —— 绝不挡点击
+     · 极低透明度 —— 保证压在最浓处的小字仍达 AA
+       （原始浓度 0.16 时实测 4.89:1；现在 --cursor-glow-tint: 0.5，
+         最浓处只有 0.08，对比度余量更大）
+
+   两个旋钮都在 tokens.css：
+     --cursor-glow-size   直径（340px，即原 680px 的一半）
+     --cursor-glow-tint   浓度倍率（0.5 = 减半）
+
+   跟随手感：位置由 --cursor-x / --cursor-y 驱动，
+   再给 transform 一个 150ms 缓出过渡 → 光晕会「轻轻拖着」跟在指针后面，
+   而不是生硬地钉在指针上。
+   ============================================================ */
+:root {
+  --cursor-x: 50vw;
+  --cursor-y: 50vh;
+}
+
+.cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  /* 尺寸与浓度都是令牌，改 tokens.css 即可，不必回这里 */
+  width: var(--cursor-glow-size);
+  height: var(--cursor-glow-size);
+  margin: calc(var(--cursor-glow-size) / -2) 0 0 calc(var(--cursor-glow-size) / -2);
+  z-index: 3;
+  pointer-events: none;
+  border-radius: 50%;
+  opacity: 0;
+  transform: translate3d(var(--cursor-x), var(--cursor-y), 0);
+  transition:
+    opacity 520ms var(--ease-out-quart),
+    transform 150ms ease-out;
+  will-change: transform, opacity;
+  /* 中心到边缘依次走过 紫 → 品红 → 玫 → 琥珀，与全站光谱同一语言。
+     先给一遍硬编码值（= tint 0.5 时的结果）兜底，再给 calc 版；
+     万一某环境不支持在颜色函数里用 calc()，只是退回固定浓度，不会整条失效。 */
+  background-image: radial-gradient(circle at center,
+    rgba(124, 58, 237, 0.080) 0%,
+    rgba(124, 58, 237, 0.065) 12%,
+    rgba(192, 38, 211, 0.050) 30%,
+    rgba(225, 29, 72,  0.033) 50%,
+    rgba(245, 158, 11, 0.023) 68%,
+    rgba(245, 158, 11, 0) 80%);
+  /* 每个 stop 都乘 --cursor-glow-tint，所以「整体再淡一半」只要改那一个数 */
+  background-image: radial-gradient(circle at center,
+    rgba(124, 58, 237, calc(0.16  * var(--cursor-glow-tint))) 0%,
+    rgba(124, 58, 237, calc(0.13  * var(--cursor-glow-tint))) 12%,
+    rgba(192, 38, 211, calc(0.10  * var(--cursor-glow-tint))) 30%,
+    rgba(225, 29, 72,  calc(0.065 * var(--cursor-glow-tint))) 50%,
+    rgba(245, 158, 11, calc(0.045 * var(--cursor-glow-tint))) 68%,
+    rgba(245, 158, 11, 0) 80%);
+}
+
+.cursor-glow.is-on {
+  opacity: var(--cursor-glow-opacity);
+}
+
+/* 触屏设备没有「鼠标位置」这回事，直接不显示 */
+@media (hover: none) {
+  .cursor-glow {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------
+   7. 不支持 / 需降级的环境
+   ------------------------------------------------------------ */
+
+/* 不支持 background-clip:text 的浏览器：文字回退为实色，不丢内容 */
+@supports not ((-webkit-background-clip: text) or (background-clip: text)) {
+  .grad-text,
+  .hero__title,
+  .stat--accent .stat__num {
+    background: none !important;
+    -webkit-text-fill-color: currentColor !important;
+    color: var(--ink-1) !important;
+  }
+}
+
+/* 减少动效：所有运动与流转停止，但完整多色配色全部保留（静态也好看） */
+@media (prefers-reduced-motion: reduce) {
+  body::before,
+  body::after,
+  .hero::before,
+  .hero::after {
+    animation: none !important;
+  }
+
+  /* 静止时冷暖各取中间值，亮度与动画播放时一致（1.44） */
+  body::before { opacity: calc(0.82 * var(--aurora-strength)); }
+  body::after  { opacity: calc(0.62 * var(--aurora-strength)); }
+
+  /* 色相轮转停下：--g1~--g5 回落到 tokens.css 的静态值，仍是完整五色 */
+  :root {
+    animation: none !important;
+  }
+
+  /* 跟随指针的光晕属于「运动」，对前庭敏感人群不友好，直接不显示 */
+  .cursor-glow {
+    display: none !important;
+  }
+}
+
+/* 打印：彻底移除装饰层，纯白出片 */
+@media print {
+  body::before,
+  body::after,
+  html::after,
+  .cursor-glow,
+  .hero::before,
+  .hero::after {
+    display: none !important;
+  }
+  html { background: #fff !important; }
+  .section--subtle,
+  .footer { background: #fff !important; }
+}

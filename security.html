@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light" />
+  <title>AIHub · 安全合规：隔离、加密、fail-closed</title>
+  <meta name="description" content="AIHub 安全合规设计：多租户隔离由中间件强制注入 tenantId，密钥 AES-256-GCM 密文双存，越权返回 NOT_FOUND，爬虫风控与可观测告警一应俱全。" />
+  <meta name="author" content="AIHub" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="zh_CN" />
+  <meta property="og:title" content="AIHub · 安全合规" />
+  <meta property="og:description" content="隔离、加密、fail-closed：多租户隔离与密钥密文双存的安全设计。" />
+  <meta property="og:image" content="assets/og/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="AIHub · AI 行业情报，一个工作台全部搞定" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Crect width='28' height='28' rx='8' fill='%23BE123C'/%3E%3Ctext x='14' y='19' text-anchor='middle' font-family='Arial' font-size='13' font-weight='700' fill='white'%3EAI%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="assets/css/tokens.css?v=20260913c" />
+  <link rel="stylesheet" href="assets/css/base.css?v=20260913c" />
+  <link rel="stylesheet" href="assets/css/aurora.css?v=20260913c" />
+  <link rel="stylesheet" href="assets/css/components.css?v=20260913c" />
+  <link rel="stylesheet" href="assets/css/pages.css?v=20260913c" />
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主内容</a>
+
+  <header class="nav">
+    <div class="container nav__inner">
+      <a class="nav__brand" href="index.html" aria-label="AIHub 首页">
+        <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true">
+          <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#BE123C"/><stop offset="0.35" stop-color="#C2410C"/><stop offset="0.65" stop-color="#B45309"/><stop offset="1" stop-color="#047857"/></linearGradient></defs>
+          <rect width="28" height="28" rx="8" fill="url(#lg)"/>
+          <text x="14" y="19" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#fff">AI</text>
+        </svg>
+        AIHub
+      </a>
+      <nav class="nav__links" aria-label="主导航">
+        <a class="nav__link" href="index.html">首页</a>
+        <a class="nav__link" href="features.html">功能</a>
+        <a class="nav__link" href="briefing.html">每日早报</a>
+        <a class="nav__link" href="screenshots.html">截图</a>
+        <a class="nav__link" href="architecture.html">架构</a>
+        <a class="nav__link" href="security.html" aria-current="page">安全合规</a>
+        <a class="nav__link" href="roadmap.html">路线图</a>
+        <a class="nav__link" href="faq.html">常见问题</a>
+      </nav>
+      <div class="nav__actions">
+        <a class="btn btn--primary btn--sm" href="screenshots.html">看真实截图</a>
+      </div>
+      <button class="nav__toggle" aria-label="打开导航菜单" aria-expanded="false" aria-controls="nav-drawer">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="nav__drawer" id="nav-drawer">
+      <nav aria-label="移动端导航">
+        <a class="nav__link" href="index.html">首页</a>
+        <a class="nav__link" href="features.html">功能</a>
+        <a class="nav__link" href="briefing.html">每日早报</a>
+        <a class="nav__link" href="screenshots.html">截图</a>
+        <a class="nav__link" href="architecture.html">架构</a>
+        <a class="nav__link" href="security.html" aria-current="page">安全合规</a>
+        <a class="nav__link" href="roadmap.html">路线图</a>
+        <a class="nav__link" href="faq.html">常见问题</a>
+      </nav>
+      <div class="nav__drawer-actions">
+        <a class="btn btn--primary btn--block" href="screenshots.html">看真实截图</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- S1 Hero -->
+    <section class="hero" id="hero">
+      <div class="container hero__inner">
+        <div class="hero__copy">
+          <span class="tag tag--accent">安全合规</span>
+          <h1 class="hero__title">安全合规：隔离、加密、fail-closed</h1>
+          <p class="hero__lead">多租户隔离做成中间件而非人工纪律，密钥密文双存，越权返回 NOT_FOUND。</p>
+          <div class="hero__cta">
+            <a class="btn btn--primary" href="#isolation">看隔离设计</a>
+            <a class="btn btn--secondary" href="roadmap.html">看安全规划</a>
+          </div>
+        </div>
+        <div class="hero__media">
+          <div class="window">
+            <div class="window__bar">
+              <span class="window__dot"></span><span class="window__dot"></span><span class="window__dot"></span>
+              <span class="window__addr">aihub.app/cleanup</span>
+            </div>
+            <div class="window__body window__body--flush">
+              <img class="window__img" src="assets/screenshots/06-cleanup.png" srcset="assets/screenshots/06-cleanup-720.png 720w, assets/screenshots/06-cleanup.png 2880w" sizes="(max-width: 768px) 92vw, 620px" alt="AIHub 清理中心：展示真实应用界面，扫描 / 处理 / 报告三视图" width="2880" height="1800" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- S2 租户隔离 -->
+    <section class="section" id="isolation">
+      <div class="container split">
+        <div class="split__body">
+          <span class="section__eyebrow">租户隔离</span>
+          <h2>隔离是中间件，不是纪律</h2>
+          <div class="split__list">
+            <div class="split__item">
+              <h3>强制注入 tenantId + deletedAt</h3>
+              <p>Prisma 中间件在每次查询自动注入租户与软删除过滤，开发者无需逐处关心。</p>
+            </div>
+            <div class="split__item">
+              <h3>9 个模型软删除</h3>
+              <p>业务模型统一软删除语义，避免物理删除造成跨租户残留。</p>
+            </div>
+            <div class="split__item">
+              <h3>越权返回 NOT_FOUND</h3>
+              <p>越权探测返回 NOT_FOUND 而非 FORBIDDEN，不暴露资源是否存在，降低信息泄露。</p>
+            </div>
+          </div>
+        </div>
+        <div class="split__media">
+          <div class="code" role="img" aria-label="Prisma 中间件强制注入 tenantId 与 deletedAt 的代码片段示意">
+            <div class="code__bar"><span class="code__lang">ts</span><button class="code__copy" type="button" aria-live="polite">复制</button></div>
+<pre><span class="tok-com">// Prisma 中间件：强制租户隔离</span>
+prisma.<span class="tok-fn">$use</span>(<span class="tok-key">async</span> (params, next) =&gt; {
+  <span class="tok-key">if</span> (params.model &amp;&amp; TENANT_MODELS.<span class="tok-fn">has</span>(params.model)) {
+    params.args.data = { ...params.args.data,
+      tenantId, deletedAt: <span class="tok-key">null</span> };
+  }
+  <span class="tok-key">return</span> <span class="tok-fn">next</span>(params);
+});</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- S3 密钥与凭证 -->
+    <section class="section section--subtle" id="secrets">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="section__eyebrow">密钥与凭证</span>
+          <h2 class="section__title">明文只出现一次</h2>
+        </div>
+        <div class="grid grid--3">
+          <div class="card reveal" data-delay="0">
+            <div class="card__icon card__icon--primary"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></div>
+            <h3 class="card__title">hash 校验 + 密文双存</h3>
+            <p class="card__text">Key 采用 hash 校验 + AES-256-GCM 密文双存，原始密钥永不落库明文。</p>
+          </div>
+          <div class="card reveal" data-delay="60">
+            <div class="card__icon card__icon--primary"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M3 12h18M3 6h18M3 18h18"/></svg></div>
+            <h3 class="card__title">明文仅创建时返回</h3>
+            <p class="card__text">明文仅在创建接口一次性返回，之后无法再次读取，降低泄露面。</p>
+          </div>
+          <div class="card reveal" data-delay="120">
+            <div class="card__icon card__icon--primary"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-9-9"/><path d="M12 7v5l3 2"/></svg></div>
+            <h3 class="card__title">Key 三级解析</h3>
+            <p class="card__text">租户自配 → 平台 Key 兜底，逐层降级，缺省可用。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- S4 安全审计与防护 -->
+    <section class="section" id="audit">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="section__eyebrow">安全审计与防护</span>
+          <h2 class="section__title">2 轮审计，逐项收紧</h2>
+        </div>
+        <div class="table-wrap reveal" role="region" aria-label="数据表格，可横向滚动查看" tabindex="0">
+          <table class="data">
+            <thead><tr><th>防护项</th><th>现状</th><th>说明</th></tr></thead>
+            <tbody>
+              <tr><td>受保护 router</td><td><span class="badge badge--success">14 个</span></td><td>核心接口全部纳入鉴权守卫</td></tr>
+              <tr><td>cron fail-closed</td><td><span class="badge badge--success">7 条</span></td><td>异常即失败关闭，不静默放行</td></tr>
+              <tr><td>tenantId 隔离</td><td><span class="badge badge--success">已落地</span></td><td>中间件强制注入，越权返回 NOT_FOUND</td></tr>
+              <tr><td>AES-256-GCM</td><td><span class="badge badge--success">已落地</span></td><td>密钥密文双存 + hash 校验</td></tr>
+              <tr><td>统一 sanitizeError</td><td><span class="badge badge--success">已落地</span></td><td>分级脱敏，避免堆栈外泄</td></tr>
+              <tr><td>env 校验</td><td><span class="badge badge--warning">fail-fast</span></td><td>缺失关键环境变量立即启动失败</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- S5 爬虫风控 -->
+    <section class="section section--subtle" id="crawler">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="section__eyebrow">爬虫风控</span>
+          <h2 class="section__title">抓得动，也抓得稳</h2>
+        </div>
+        <div class="grid grid--2 reveal">
+          <div class="card"><div class="card__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 3l8 4v6c0 4-3.5 7-8 8-4.5-1-8-4-8-8V7z"/></svg></div><h3 class="card__title">wbi 官方签名 1:1 复刻</h3><p class="card__text">mixin key 缓存，请求合规稳定，贴合官方签名链路。</p></div>
+          <div class="card"><div class="card__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M3 12h4l3-7 4 14 3-7h4"/></svg></div><h3 class="card__title">风控指数退避</h3><p class="card__text">命中风控自动退避，降低封禁概率，保护采集连续性。</p></div>
+          <div class="card"><div class="card__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/></svg></div><h3 class="card__title">写保护合并</h3><p class="card__text">逐 UP 主写保护合并，抓挂不丢旧数据，保证历史完整。</p></div>
+          <div class="card"><div class="card__icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18"/></svg></div><h3 class="card__title">SSRF 域名白名单</h3><p class="card__text">字幕抓取限定白名单域名，阻断内网探测类 SSRF 风险。</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- S6 可观测与告警 -->
+    <section class="section" id="observability">
+      <div class="container split">
+        <div class="split__body">
+          <span class="section__eyebrow">可观测与告警</span>
+          <h2>看得见，才放心</h2>
+          <div class="split__list">
+            <div class="split__item">
+              <h3>结构化 JSON 日志 + Slack 告警</h3>
+              <p>关键路径结构化输出，异常实时推送，响应不靠碰运气。</p>
+            </div>
+            <div class="split__item">
+              <h3>分布式锁</h3>
+              <p>Cron 任务经分布式锁串行化，避免重复执行与资源争用。</p>
+            </div>
+            <div class="split__item">
+              <h3>OpenTelemetry 已装未接线</h3>
+              <p class="card__text"><span class="badge badge--warning">诚实标注</span> OTel 包已引入，正式接线列入 Roadmap，尚未产出链路数据。</p>
+            </div>
+          </div>
+        </div>
+        <div class="split__media">
+          <div class="code" role="img" aria-label="分布式锁包裹 Cron 任务的代码示意">
+            <div class="code__bar"><span class="code__lang">ts</span><button class="code__copy" type="button" aria-live="polite">复制</button></div>
+<pre><span class="tok-com">// 分布式锁包裹 Cron，防并发重复</span>
+<span class="tok-key">await</span> redis.<span class="tok-fn">lock</span>(<span class="tok-str">'briefing:daily'</span>, <span class="tok-key">async</span> () =&gt; {
+  <span class="tok-key">await</span> <span class="tok-fn">generateBriefing</span>();
+});</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- S7 底部 CTA -->
+    <section class="section" id="cta">
+      <div class="container">
+        <div class="cta reveal">
+          <h2 class="cta__title">安全能力，仍在持续补齐</h2>
+          <p class="cta__text">可观测接线、价格解析器落地、SQLite→PostgreSQL 迁移，都在路线图上。</p>
+          <div class="cta__actions">
+            <a class="btn btn--light" href="roadmap.html#planned">看路线图</a>
+            <a class="btn btn--secondary" href="features.html">回功能总览</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brandcol">
+          <div class="footer__brand">
+            <svg width="24" height="24" viewBox="0 0 28 28" aria-hidden="true">
+              <defs><linearGradient id="lgf" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#BE123C"/><stop offset="0.35" stop-color="#C2410C"/><stop offset="0.65" stop-color="#B45309"/><stop offset="1" stop-color="#047857"/></linearGradient></defs>
+              <rect width="28" height="28" rx="8" fill="url(#lgf)"/>
+              <text x="14" y="19" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#fff">AI</text>
+            </svg>
+            AIHub
+          </div>
+          <p class="footer__desc">AI 行业信息聚合与决策辅助平台，把分散的情报收拢成一个可操作的工作台。</p>
+        </div>
+        <div class="footer__col">
+          <h3>产品</h3>
+          <ul>
+            <li><a href="features.html#news">四大模块</a></li>
+            <li><a href="screenshots.html">真实截图</a></li>
+            <li><a href="architecture.html">技术架构</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h3>资源</h3>
+          <ul>
+            <li><span class="footer__soon">在线 Demo<em>即将开放</em></span></li>
+            <li><span class="footer__soon">GitHub 仓库<em>整理后公开</em></span></li>
+            <li><a href="roadmap.html">路线图</a></li>
+            <li><a href="faq.html">常见问题</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h3>关于</h3>
+          <ul>
+            <li><a href="faq.html#product">项目背景（毕业设计 MVP）</a></li>
+            <li><a href="security.html">安全合规</a></li>
+            <li><a href="roadmap.html#shipped">工程亮点</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>© 2026 AIHub · Built with Next.js &amp; Vercel · 浅色主题</span>
+        <span class="footer__clock" aria-hidden="true">UTC+8 <span data-clock>00:00:00</span></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js?v=20260913c"></script>
+</body>
+</html>
