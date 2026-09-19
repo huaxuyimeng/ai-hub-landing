@@ -1,17 +1,17 @@
 /**
  * api/jobs/[id].js — GET /api/jobs/:id
  *
- * 前端轮询这个接口，每 700ms 一次，看任务进度。
- * 注意：冷启动后任务状态会丢 → 前端应降级到「看产物是否已写盘」。
+ * ⚠ 已废弃：Vercel Functions 跨实例内存不共享，无法跨调用追踪 job 状态。
+ * 请改用 POST /api/generate 的同步阻塞模式（最长 270s）。
+ *
+ * 这里保留仅为向前兼容：返回 410 Gone + 友好提示。
  */
-import { getJob } from '../_lib/kit.js'
-
 export default async function handler(req, res) {
   if (req.method === 'OPTIONS') { res.status(204).end(); return }
   res.setHeader('Cache-Control', 'no-store')
-  const id = req.query?.id
-  if (!id) { res.status(400).json({ ok: false, error: '缺少 job id' }); return }
-  const job = getJob(id)
-  if (!job) { res.status(404).json({ ok: false, error: `没有这个作业：${id}` }); return }
-  res.status(200).json({ ok: true, job })
+  res.status(410).json({
+    ok: false,
+    error: '本接口在 Vercel 上已废弃。请改用 POST /api/generate 的同步模式（阻塞等完成）。',
+    hint: '前端 generate.js 已切换到「提交后一直等，直到拿到完整结果」。',
+  })
 }

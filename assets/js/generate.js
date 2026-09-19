@@ -199,8 +199,9 @@
 
   function call(path, opts) {
     opts = opts || {};
+    var timeoutMs = opts.timeoutMs || DEFAULTS.reqTimeout;
     var ctl = typeof AbortController !== "undefined" ? new AbortController() : null;
-    var timer = window.setTimeout(function () { if (ctl) ctl.abort(); }, DEFAULTS.reqTimeout);
+    var timer = window.setTimeout(function () { if (ctl) ctl.abort(); }, timeoutMs);
     var init = { method: opts.method || "GET", signal: ctl ? ctl.signal : undefined };
     var headers = { "Content-Type": "application/json" };
     if (_currentKey) headers["X-Api-Key"] = _currentKey;
@@ -280,12 +281,44 @@
     return '<span class="genx-lv genx-lv--' + esc(lv) + '">' + esc(lv) + "</span>";
   }
 
+  function b64ToBlob(b64, mime) {
+    var bin = atob(b64 || "");
+    var arr = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+    return new Blob([arr], { type: mime });
+  }
+  function mdTextToBlob(text, mime) {
+    return new Blob([text || ""], { type: mime });
+  }
+
   function renderResult(job) {
     if (!elResult) return;
     var r = job.result || {};
     var isDraft = r.mode === "draft";
-    var dlPptx = API + "/api/download?date=" + encodeURIComponent(r.date) + "&kind=pptx" + (isDraft ? "&draft=1" : "");
-    var dlMd   = API + "/api/download?date=" + encodeURIComponent(r.date) + "&kind=md"   + (isDraft ? "&draft=1" : "");
+    var pptxName = (r.pptx && r.pptx.name) || ("AI日报_" + r.date + (isDraft ? "_机器草稿" : "") + ".pptx");
+    var mdName = (r.md && r.md.name) || ("AI新闻推送_" + r.date + (isDraft ? "_机器草稿" : "") + ".md");
+
+    var pptxBlob = null, mdBlob = null;
+    if (r.pptxB64) pptxBlob = b64ToBlob(r.pptxB64, "application/vnd.openxmlformats-officedocument.presentationml.presentation");
+    if (r.mdB64)   mdBlob   = mdTextToBlob(r.mdB64, "text/markdown;charset=utf-8");
+
+    var dlPptxFallback = API + "/api/download?date=" + encodeURIComponent(r.date) + "&kind=pptx" + (isDraft ? "&draft=1" : "");
+    var dlMdFallback   = API + "/api/download?date=" + encodeURIComponent(r.date) + "&kind=md"   + (isDraft ? "&draft=1" : "");
+
+    function attachDownload(anchor, blob, fallbackUrl) {
+      if (!anchor) return;
+      if (blob) {
+        var url = URL.createObjectURL(blob);
+        anchor.href = url;
+        anchor.setAttribute("download", anchor.getAttribute("data-name") || "");
+        anchor.addEventListener("click", function () {
+          setTimeout(function () { URL.revokeObjectURL(url); }, 60_000);
+        }, { once: true });
+      } else {
+        anchor.href = fallbackUrl;
+        anchor.setAttribute("download", "");
+      }
+    }
 
     var warnHtml = (job.warnings || []).length
       ? '<ul class="genx-warn">' + job.warnings.map(function (w) { return "<li>" + esc(w) + "</li>"; }).join("") + "</ul>"
@@ -307,11 +340,14 @@
       "</p>" +
       warnHtml +
       '<div class="genx-downloads">' +
-        '<a class="btn btn--primary btn--sm" href="' + esc(dlPptx) + '">下载 PPTX</a>' +
-        '<a class="btn btn--secondary btn--sm" href="' + esc(dlMd) + '">下载 Markdown</a>' +
-        '<span class="genx-result__file">' + esc(r.pptx && r.pptx.name || "") + "</span>" +
+        '<a class="btn btn--primary btn--sm" data-gen-dl-pptx data-name="' + esc(pptxName) + '" href="' + esc(dlPptxFallback) + '" download>下载 PPTX</a>' +
+        '<a class="btn btn--secondary btn--sm" data-gen-dl-md data-name="' + esc(mdName) + '" href="' + esc(dlMdFallback) + '" download>下载 Markdown</a>' +
+        '<span class="genx-result__file">' + esc(pptxName) + "</span>" +
       "</div>" +
-      '<div class="genx-picks" data-gen-picks></div>";
+      '<div class="genx-picks" data-gen-picks></div>';
+
+    attachDownload(elResult.querySelector("[data-gen-dl-pptx]"), pptxBlob, dlPptxFallback);
+    attachDownload(elResult.querySelector("[data-gen-dl-md]"),   mdBlob,   dlMdFallback);
 
     renderPicks(r.date);
   }
@@ -365,12 +401,18 @@
     setHint("已提交任务，正在执行流水线。这一步是真实运行，不要关页面。", "busy");
 
     // 凭证随 POST body 传，后端用它们调 DeepSeek
-    call("/api/generate", { method: "POST", body: { date: date, mode: mode, noFetch: noFetch, force: true, apiKey: _currentKey, model: _currentModel } })
+    // Vercel Serverless 跨实例内存不共享 → 后端改为同步阻塞模式（最长 270s），前端 reqTimeout 也提到 280s
+    call("/api/generate", { method: "POST", body: { date: date, mode: mode, noFetch: noFetch, force: true, apiKey: _currentKey, model: _currentModel }, timeoutMs: 280000 })
       .then(function (res) {
-        if (!res.ok || !res.data || !res.data.jobId) {
+        if (!res.ok || !res.data) {
           throw new Error((res.data && res.data.error) || "服务返回 " + res.status);
         }
-        return poll(res.data.jobId, 0);
+        var job = res.data.job;
+        if (!job) throw new Error("服务没返回 job 对象");
+        renderSteps(job);
+        if (job.status === "done") return finish(job);
+        if (job.status === "error") return failed(job);
+        throw new Error("未知 job 状态：" + job.status);
       })
       .catch(function (e) {
         polling = false;
@@ -402,19 +444,10 @@
     }
   }
 
-  function poll(jobId, n) {
-    if (n > DEFAULTS.pollLimit) throw new Error("等待超时（服务仍在跑，可稍后刷新看结果）");
-    return call("/api/jobs/" + encodeURIComponent(jobId)).then(function (res) {
-      var job = res.data && res.data.job;
-      if (!job) throw new Error("取不到任务状态");
-      renderSteps(job);
-      if (job.status === "done") return finish(job);
-      if (job.status === "error") return failed(job);
-      setStatus("busy", job.phase || "生成中…");
-      return new Promise(function (r) { window.setTimeout(r, DEFAULTS.pollEvery); }).then(function () {
-        return poll(jobId, n + 1);
-      });
-    });
+  function poll() {
+    /* 旧的轮询函数已废弃——Vercel Serverless 跨实例内存不共享，job 状态无法跨请求追踪。
+       现在 /api/generate 是同步阻塞模式，跑完直接返回完整 job 对象。保留空函数以防误调。 */
+    throw new Error("poll() 已废弃，请刷新页面（前端已切换到同步阻塞模式）");
   }
 
   function finish(job) {
