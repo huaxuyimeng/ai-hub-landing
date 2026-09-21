@@ -2,7 +2,7 @@
 
 > 公开演示站：GitHub Pages + Vercel Functions
 > 在线访问：[https://huaxuyimeng.github.io/ai-hub-landing/](https://huaxuyimeng.github.io/ai-hub-landing/)
-
+完整项目仓库：https://github.com/huaxuyimeng/AI-Hub
 ---
 
 ## 目录
